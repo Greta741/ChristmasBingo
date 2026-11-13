@@ -3,6 +3,7 @@ import { FUNNY_DEFAULT_PROMPTS } from './funnyPrompts'
 import { HARD_DEFAULT_PROMPTS } from './hardPrompts'
 import { MEDIUM_DEFAULT_PROMPTS } from './mediumPrompts'
 
+export { DEFAULT_CATEGORY_ALLOCATION } from './categoryAllocation'
 export { EASY_DEFAULT_PROMPTS } from './easyPrompts'
 export type { DefaultBuiltInPrompt } from './defineDefaultPrompts'
 export { FUNNY_DEFAULT_PROMPTS } from './funnyPrompts'

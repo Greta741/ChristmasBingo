@@ -1,35 +1,39 @@
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
 import Link from '@mui/material/Link'
+import { styled } from '@mui/material/styles'
 import { Outlet, useLocation } from 'react-router'
+import { PersistenceErrorAlert } from '../PersistenceErrorAlert'
 import { AppHeader } from './AppHeader'
 import { AppFooter } from './AppFooter'
+
+const SkipLink = styled(Link)(({ theme }) => ({
+  position: 'fixed',
+  top: theme.spacing(1),
+  left: theme.spacing(1),
+  padding: theme.spacing(1.5),
+  backgroundColor: theme.palette.background.paper,
+  zIndex: theme.zIndex.tooltip,
+  transform: 'translateY(-200%)',
+  '&:focus': { transform: 'translateY(0)' },
+}))
 
 export function AppLayout() {
   const isHome = useLocation().pathname === '/'
 
   return (
     <Box sx={{ minHeight: '100dvh', display: 'flex', flexDirection: 'column' }}>
-      <Link
+      <SkipLink
         href="#main-content"
         onClick={(event) => {
           event.preventDefault()
           document.getElementById('main-content')?.focus()
         }}
-        sx={{
-          position: 'fixed',
-          top: 8,
-          left: 8,
-          p: 1.5,
-          bgcolor: 'background.paper',
-          zIndex: 'tooltip',
-          transform: 'translateY(-200%)',
-          '&:focus': { transform: 'translateY(0)' },
-        }}
       >
         Pereiti prie turinio
-      </Link>
+      </SkipLink>
       <AppHeader />
+      <PersistenceErrorAlert />
       <Container
         component="main"
         id="main-content"

@@ -1,4 +1,4 @@
-import type { BuiltInPrompt, Language } from '../models'
+import type { BuiltInPrompt, Language } from '../domain/models'
 
 export type DefaultBuiltInPrompt = Readonly<
   Omit<BuiltInPrompt, 'text'> & {

@@ -34,8 +34,16 @@ export interface CustomPrompt extends BasePrompt {
 
 export type Prompt = BuiltInPrompt | CustomPrompt
 
-export interface PromptLibraryState {
+export interface CategoryState {
   prompts: Prompt[]
+  amount: number
+}
+
+export type CategoriesState = Record<CategoryId, CategoryState>
+
+export interface AppState {
+  categories: CategoriesState
+  language: Language | null
 }
 
 export interface BingoCell {

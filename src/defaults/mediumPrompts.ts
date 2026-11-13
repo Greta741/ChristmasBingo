@@ -1,4 +1,4 @@
-import { CategoryId, PromptSource } from '../models'
+import { CategoryId, PromptSource } from '../domain/models'
 import { defineDefaultPrompts } from './defineDefaultPrompts'
 
 export const MEDIUM_DEFAULT_PROMPTS = defineDefaultPrompts([

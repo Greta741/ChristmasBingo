@@ -5,15 +5,17 @@ import {
   CUSTOM_PROMPT_MAX_LENGTH,
   CategoryId,
   PromptSource,
+  type AppState,
   type BasePrompt,
   type BingoCard,
   type BingoCell,
   type BingoGrid,
   type BuiltInPrompt,
   type CategoryAllocation,
+  type CategoriesState,
+  type CategoryState,
   type CustomPrompt,
   type Prompt,
-  type PromptLibraryState,
 } from './models'
 
 export const LOCAL_STORAGE_SCHEMA_VERSION = 1
@@ -55,25 +57,71 @@ export const promptSchema = z.discriminatedUnion('source', [
   customPromptSchema,
 ]) satisfies z.ZodType<Prompt>
 
-export const promptLibraryStateSchema: z.ZodType<PromptLibraryState> = z
-  .object({
-    prompts: z.array(promptSchema),
-  })
-  .superRefine(({ prompts }, context) => {
-    const seenPromptIds = new Set<string>()
+const promptArraySchema = z.array(promptSchema)
 
-    prompts.forEach((prompt, index) => {
-      if (seenPromptIds.has(prompt.id)) {
+export const categoryStateSchema: z.ZodType<CategoryState> = z.object({
+  prompts: promptArraySchema,
+  amount: z.number().int().nonnegative(),
+})
+
+export const categoriesStateSchema: z.ZodType<CategoriesState> = z
+  .object({
+    [CategoryId.Easy]: categoryStateSchema,
+    [CategoryId.Medium]: categoryStateSchema,
+    [CategoryId.Hard]: categoryStateSchema,
+    [CategoryId.Funny]: categoryStateSchema,
+  })
+  .superRefine((categories, context) => {
+    const seenPromptIds = new Set<string>()
+    let totalAmount = 0
+
+    Object.entries(categories).forEach(([categoryId, category]) => {
+      totalAmount += category.amount
+
+      if (category.amount > category.prompts.length) {
         context.addIssue({
           code: 'custom',
-          message: 'Prompt IDs must be unique in the active library',
-          path: ['prompts', index, 'id'],
+          message: 'Category amount cannot exceed its available prompt count',
+          path: [categoryId, 'amount'],
         })
       }
 
-      seenPromptIds.add(prompt.id)
+      category.prompts.forEach((prompt, index) => {
+        if (prompt.categoryId !== categoryId) {
+          context.addIssue({
+            code: 'custom',
+            message: 'Prompt category must match its category bucket',
+            path: [categoryId, 'prompts', index, 'categoryId'],
+          })
+        }
+
+        if (seenPromptIds.has(prompt.id)) {
+          context.addIssue({
+            code: 'custom',
+            message: 'Prompt IDs must be unique across all categories',
+            path: [categoryId, 'prompts', index, 'id'],
+          })
+        }
+
+        seenPromptIds.add(prompt.id)
+      })
     })
+
+    if (totalAmount > 25) {
+      context.addIssue({
+        code: 'custom',
+        message: 'Total category amount cannot exceed 25',
+        path: [],
+      })
+    }
   })
+
+const appStateShape = {
+  categories: categoriesStateSchema,
+  language: languageSchema.nullable(),
+}
+
+export const appStateSchema: z.ZodType<AppState> = z.object(appStateShape)
 
 export const bingoCellSchema: z.ZodType<BingoCell> = z.object({
   promptId: z.string().min(1),
@@ -127,9 +175,7 @@ export const bingoCardSchema: z.ZodType<BingoCard> = z.object({
 
 export const persistedLocalStateSchema = z.object({
   schemaVersion: z.literal(LOCAL_STORAGE_SCHEMA_VERSION),
-  promptLibrary: promptLibraryStateSchema,
-  categoryAllocation: categoryAllocationSchema,
-  language: languageSchema,
+  ...appStateShape,
 })
 
 export const persistedBingoCardSchema = bingoCardSchema.and(
