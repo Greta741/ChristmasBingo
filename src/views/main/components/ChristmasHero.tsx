@@ -4,10 +4,13 @@ import Button from '@mui/material/Button'
 import Container from '@mui/material/Container'
 import Paper from '@mui/material/Paper'
 import Typography from '@mui/material/Typography'
+import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router'
 import { ChristmasScene } from './ChristmasScene'
 
 export function ChristmasHero() {
+  const { t } = useTranslation()
+
   return (
     <Paper
       component="section"
@@ -55,7 +58,7 @@ export function ChristmasHero() {
                 mb: 1,
               }}
             >
-              KALĖDINIS BINGO
+              {t('hero.eyebrow')}
             </Typography>
             <Typography
               component="h1"
@@ -63,11 +66,10 @@ export function ChristmasHero() {
               id="hero-title"
               sx={{ mb: 1.5 }}
             >
-              Atrask Kalėdas savo kaimynystėje
+              {t('hero.title')}
             </Typography>
             <Typography sx={{ color: '#e0ece5', maxWidth: 350, mb: 2.5 }}>
-              Šviečiantys langai, papuoštos eglutės ir maži atradimai! Išeik
-              pasivaikščioti ir surink savo bingo!
+              {t('hero.description')}
             </Typography>
             <Button
               component={Link}
@@ -77,7 +79,7 @@ export function ChristmasHero() {
               startIcon={<PlayArrowRoundedIcon />}
               sx={{ width: { xs: '100%', sm: 260 }, maxWidth: '100%' }}
             >
-              Žaisti
+              {t('navigation.play')}
             </Button>
           </Box>
         </Box>

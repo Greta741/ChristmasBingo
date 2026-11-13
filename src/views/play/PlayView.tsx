@@ -1,10 +1,10 @@
+import { useTranslation } from 'react-i18next'
 import { PageHeader } from '../../components/layout/PageHeader'
 
 export function PlayView() {
+  const { t } = useTranslation()
+
   return (
-    <PageHeader
-      title="Žaisti bingo"
-      description="Dairykis kalėdinių dekoracijų. Kiekvienas atradimas priartina prie bingo."
-    />
+    <PageHeader title={t('play.title')} description={t('play.description')} />
   )
 }

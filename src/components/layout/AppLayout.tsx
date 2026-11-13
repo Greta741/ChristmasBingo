@@ -2,6 +2,7 @@ import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
 import Link from '@mui/material/Link'
 import { styled } from '@mui/material/styles'
+import { useTranslation } from 'react-i18next'
 import { Outlet, useLocation } from 'react-router'
 import { PersistenceErrorAlert } from '../PersistenceErrorAlert'
 import { AppHeader } from './AppHeader'
@@ -19,6 +20,7 @@ const SkipLink = styled(Link)(({ theme }) => ({
 }))
 
 export function AppLayout() {
+  const { t } = useTranslation()
   const isHome = useLocation().pathname === '/'
 
   return (
@@ -30,7 +32,7 @@ export function AppLayout() {
           document.getElementById('main-content')?.focus()
         }}
       >
-        Pereiti prie turinio
+        {t('app.skipToContent')}
       </SkipLink>
       <AppHeader />
       <PersistenceErrorAlert />

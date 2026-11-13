@@ -5,11 +5,13 @@ import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { useTheme } from '@mui/material/styles'
+import { useTranslation } from 'react-i18next'
 import { Link as RouterLink } from 'react-router'
 import { MobileMenu } from './MobileMenu'
 import { NavigationLinks } from './NavigationLinks'
 
 export function AppHeader() {
+  const { t } = useTranslation()
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
 
@@ -47,7 +49,7 @@ export function AppHeader() {
               component="span"
               sx={{ fontWeight: 750, fontSize: '0.95rem' }}
             >
-              Kalėdinis bingo
+              {t('app.name')}
             </Typography>
           </Link>
           {isMobile ? <MobileMenu /> : <NavigationLinks />}

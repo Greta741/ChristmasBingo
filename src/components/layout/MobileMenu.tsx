@@ -6,15 +6,17 @@ import Drawer from '@mui/material/Drawer'
 import IconButton from '@mui/material/IconButton'
 import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
+import { useTranslation } from 'react-i18next'
 import { NavigationLinks } from './NavigationLinks'
 
 export function MobileMenu() {
+  const { t } = useTranslation()
   const [open, setOpen] = useState(false)
 
   return (
     <>
       <IconButton
-        aria-label="Atidaryti meniu"
+        aria-label={t('mobileMenu.open')}
         aria-expanded={open}
         aria-haspopup="dialog"
         aria-controls={open ? 'mobile-navigation' : undefined}
@@ -55,10 +57,10 @@ export function MobileMenu() {
           }}
         >
           <Typography id="mobile-menu-title" component="h2" variant="h2">
-            Meniu
+            {t('mobileMenu.title')}
           </Typography>
           <IconButton
-            aria-label="Uždaryti meniu"
+            aria-label={t('mobileMenu.close')}
             color="inherit"
             onClick={() => setOpen(false)}
             sx={{ width: 44, height: 44 }}

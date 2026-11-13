@@ -7,6 +7,8 @@ import { ThemeProvider } from '@mui/material/styles'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 import App from './App.tsx'
+import { LocalizationGate } from './app/localization/LocalizationGate'
+import { getDeviceLanguage } from './app/localization/language'
 import { persistor, store } from './app/store'
 import { theme } from './app/theme'
 
@@ -26,11 +28,15 @@ createRoot(document.getElementById('root')!).render(
                 justifyContent: 'center',
               }}
             >
-              <Typography>Kraunama…</Typography>
+              <Typography>
+                {getDeviceLanguage() === 'lt' ? 'Kraunama…' : 'Loading…'}
+              </Typography>
             </Stack>
           }
         >
-          <App />
+          <LocalizationGate>
+            <App />
+          </LocalizationGate>
         </PersistGate>
       </ThemeProvider>
     </Provider>

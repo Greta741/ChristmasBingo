@@ -1,8 +1,11 @@
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
 import Typography from '@mui/material/Typography'
+import { useTranslation } from 'react-i18next'
 
 export function AppFooter() {
+  const { t } = useTranslation()
+
   return (
     <Box
       component="footer"
@@ -10,7 +13,7 @@ export function AppFooter() {
     >
       <Container maxWidth="md">
         <Typography variant="body2" color="text.secondary">
-          Maži atradimai. Daugiau kalėdinės nuotaikos.
+          {t('app.footer')}
         </Typography>
       </Container>
     </Box>

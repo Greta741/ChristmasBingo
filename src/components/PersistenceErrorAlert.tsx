@@ -3,12 +3,14 @@ import Alert from '@mui/material/Alert'
 import AlertTitle from '@mui/material/AlertTitle'
 import Container from '@mui/material/Container'
 import Typography from '@mui/material/Typography'
+import { useTranslation } from 'react-i18next'
 import {
   getPersistenceFailureSnapshot,
   subscribeToPersistenceFailures,
 } from '../app/store/persistence/persistenceStorage'
 
 export function PersistenceErrorAlert() {
+  const { t } = useTranslation()
   const failure = useSyncExternalStore(
     subscribeToPersistenceFailures,
     getPersistenceFailureSnapshot,
@@ -26,11 +28,10 @@ export function PersistenceErrorAlert() {
       <Alert severity="error">
         <AlertTitle>
           {isWriteFailure
-            ? 'Nepavyko išsaugoti duomenų'
-            : 'Nepavyko perskaityti išsaugotų duomenų'}
+            ? t('persistence.writeTitle')
+            : t('persistence.readTitle')}
         </AlertTitle>
-        Naršyklėje buvę duomenys nebuvo ištrinti. Kol klaida neišspręsta, nauji
-        pakeitimai nebus išsaugomi.
+        {t('persistence.description')}
         <Typography variant="caption" component="p" sx={{ mt: 0.5 }}>
           {failure.message}
         </Typography>

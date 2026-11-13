@@ -1,0 +1,120 @@
+export const resources = {
+  lt: {
+    translation: {
+      app: {
+        name: 'Kalėdinis bingo',
+        loading: 'Kraunama…',
+        skipToContent: 'Pereiti prie turinio',
+        footer: 'Maži atradimai. Daugiau kalėdinės nuotaikos.',
+      },
+      navigation: {
+        label: 'Pagrindinė navigacija',
+        create: 'Kurti',
+        history: 'Istorija',
+        play: 'Žaisti',
+      },
+      mobileMenu: {
+        open: 'Atidaryti meniu',
+        close: 'Uždaryti meniu',
+        title: 'Meniu',
+      },
+      hero: {
+        eyebrow: 'KALĖDINIS BINGO',
+        title: 'Atrask Kalėdas savo kaimynystėje',
+        description:
+          'Šviečiantys langai, papuoštos eglutės ir maži atradimai! Išeik pasivaikščioti ir surink savo bingo!',
+      },
+      history: {
+        title: 'Mano kortelės',
+        empty: 'Dar neturi sukurtų kortelių.',
+      },
+      create: {
+        title: 'Kurti bingo',
+        description:
+          'Tavo kortelė, tavo atradimai. Pasirink dekoracijas kitam žiemos pasivaikščiojimui.',
+      },
+      play: {
+        title: 'Žaisti bingo',
+        description:
+          'Dairykis kalėdinių dekoracijų. Kiekvienas atradimas priartina prie bingo.',
+      },
+      print: {
+        title: 'Spausdinti korteles',
+        description:
+          'Kalėdiniai atradimai ir popieriuje. Pasiimk bingo kortelę į pasivaikščiojimą.',
+        empty: 'Pirmiausia susikurk korteles, kurias norėsi spausdinti.',
+        create: 'Kurti korteles',
+      },
+      language: {
+        label: 'Programėlės kalba',
+        lt: 'Lietuvių',
+        en: 'English',
+      },
+      persistence: {
+        readTitle: 'Nepavyko perskaityti išsaugotų duomenų',
+        writeTitle: 'Nepavyko išsaugoti duomenų',
+        description:
+          'Naršyklėje buvę duomenys nebuvo ištrinti. Kol klaida neišspręsta, nauji pakeitimai nebus išsaugomi.',
+      },
+    },
+  },
+  en: {
+    translation: {
+      app: {
+        name: 'Christmas Bingo',
+        loading: 'Loading…',
+        skipToContent: 'Skip to content',
+        footer: 'Small discoveries. More Christmas cheer.',
+      },
+      navigation: {
+        label: 'Main navigation',
+        create: 'Create',
+        history: 'History',
+        play: 'Play',
+      },
+      mobileMenu: {
+        open: 'Open menu',
+        close: 'Close menu',
+        title: 'Menu',
+      },
+      hero: {
+        eyebrow: 'CHRISTMAS BINGO',
+        title: 'Discover Christmas in your neighbourhood',
+        description:
+          'Glowing windows, decorated Christmas trees, and little discoveries! Go for a walk and complete your bingo!',
+      },
+      history: {
+        title: 'My cards',
+        empty: 'You have not created any cards yet.',
+      },
+      create: {
+        title: 'Create bingo',
+        description:
+          'Your card, your discoveries. Choose decorations for your next winter walk.',
+      },
+      play: {
+        title: 'Play bingo',
+        description:
+          'Look around for Christmas decorations. Every discovery brings you closer to bingo.',
+      },
+      print: {
+        title: 'Print cards',
+        description:
+          'Take your Christmas discoveries onto paper and bring a bingo card on your walk.',
+        empty: 'First create the cards you want to print.',
+        create: 'Create cards',
+      },
+      language: {
+        label: 'App language',
+        lt: 'Lietuvių',
+        en: 'English',
+      },
+      persistence: {
+        readTitle: 'Could not read saved data',
+        writeTitle: 'Could not save data',
+        description:
+          'Existing browser data was not deleted. New changes will not be saved until the problem is resolved.',
+      },
+    },
+  },
+} as const
