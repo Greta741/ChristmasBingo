@@ -1,4 +1,4 @@
-import { PageHeader } from '../../shared/components/layout/PageHeader'
+import { PageHeader } from '../../components/layout/PageHeader'
 
 export function CreateView() {
   return (

@@ -2,7 +2,7 @@ import Button from '@mui/material/Button'
 import Paper from '@mui/material/Paper'
 import Typography from '@mui/material/Typography'
 import { Link } from 'react-router'
-import { PageHeader } from '../../shared/components/layout/PageHeader'
+import { PageHeader } from '../../components/layout/PageHeader'
 
 export function PrintView() {
   return (
