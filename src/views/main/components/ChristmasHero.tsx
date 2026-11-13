@@ -1,5 +1,4 @@
 import PlayArrowRoundedIcon from '@mui/icons-material/PlayArrowRounded'
-import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import { PageContainer as Container } from '../../../components/layout/PageContainer'
 import Paper from '@mui/material/Paper'
@@ -23,7 +22,7 @@ const HeroSection = styled(Paper)(({ theme }) => ({
 
 const HeroBody = styled('div')(({ theme }) => ({
   display: 'grid',
-  gridTemplateAreas: '"content" "illustration"',
+  gridTemplateAreas: '"scene" "action"',
   alignItems: 'center',
   gap: theme.spacing(2),
   paddingBlock: theme.spacing(4),
@@ -42,12 +41,36 @@ const HeroBody = styled('div')(({ theme }) => ({
 }))
 
 const HeroIllustration = styled('div')(({ theme }) => ({
-  gridArea: 'illustration',
+  gridArea: 'scene',
   width: '100%',
-  maxWidth: 340,
+  maxWidth: 640,
+  opacity: 0.14,
+  transform: 'translateY(32px)',
   justifySelf: 'center',
   pointerEvents: 'none',
-  [theme.breakpoints.up('sm')]: { maxWidth: 640 },
+  [theme.breakpoints.up('sm')]: {
+    gridArea: 'illustration',
+    opacity: 1,
+    transform: 'none',
+  },
+}))
+
+const HeroContent = styled('div')(({ theme }) => ({
+  display: 'contents',
+  [theme.breakpoints.up('sm')]: {
+    display: 'block',
+    gridArea: 'content',
+  },
+}))
+
+const HeroText = styled('div')(({ theme }) => ({
+  gridArea: 'scene',
+  position: 'relative',
+  minHeight: 220,
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  [theme.breakpoints.up('sm')]: { minHeight: 0, display: 'block' },
 }))
 
 const HeroEyebrow = styled(Typography)(({ theme }) => ({
@@ -68,30 +91,36 @@ export function ChristmasHero() {
           <HeroIllustration>
             <ChristmasScene />
           </HeroIllustration>
-          <Box sx={{ gridArea: 'content' }}>
-            <HeroEyebrow as="p">{t('hero.eyebrow')}</HeroEyebrow>
-            <Typography
-              component="h1"
-              variant="h1"
-              id="hero-title"
-              sx={{ mb: 1.5 }}
-            >
-              {t('hero.title')}
-            </Typography>
-            <Typography sx={{ color: '#e0ece5', maxWidth: 350, mb: 2.5 }}>
-              {t('hero.description')}
-            </Typography>
+          <HeroContent>
+            <HeroText>
+              <HeroEyebrow as="p">{t('hero.eyebrow')}</HeroEyebrow>
+              <Typography
+                component="h1"
+                variant="h1"
+                id="hero-title"
+                sx={{ mb: 1.5 }}
+              >
+                {t('hero.title')}
+              </Typography>
+              <Typography sx={{ color: '#e0ece5', maxWidth: 350, mb: 2.5 }}>
+                {t('hero.description')}
+              </Typography>
+            </HeroText>
             <Button
               component={Link}
               to="/play/1"
               variant="contained"
               color="secondary"
               startIcon={<PlayArrowRoundedIcon />}
-              sx={{ width: { xs: '100%', sm: 260 }, maxWidth: '100%' }}
+              sx={{
+                gridArea: 'action',
+                width: { xs: '100%', sm: 260 },
+                maxWidth: '100%',
+              }}
             >
               {t('navigation.play')}
             </Button>
-          </Box>
+          </HeroContent>
         </HeroBody>
       </Container>
     </HeroSection>
