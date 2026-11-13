@@ -1,65 +1,70 @@
 import PlayArrowRoundedIcon from '@mui/icons-material/PlayArrowRounded'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
-import Container from '@mui/material/Container'
+import { PageContainer as Container } from '../../../components/layout/PageContainer'
 import Paper from '@mui/material/Paper'
 import Typography from '@mui/material/Typography'
+import { styled } from '@mui/material/styles'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router'
 import { ChristmasScene } from './ChristmasScene'
+
+const HeroSection = styled(Paper)(({ theme }) => ({
+  position: 'relative',
+  overflow: 'hidden',
+  marginBottom: theme.spacing(2.5),
+  backgroundColor: '#0d3529',
+  borderRadius: 0,
+  borderTop: '1px solid rgba(255, 255, 255, 0.24)',
+  color: theme.palette.primary.contrastText,
+  backgroundImage:
+    'radial-gradient(ellipse at 100% 100%, #2d6950, transparent 70%)',
+}))
+
+const HeroBody = styled('div')(({ theme }) => ({
+  display: 'grid',
+  gridTemplateAreas: '"content" "illustration"',
+  alignItems: 'center',
+  gap: theme.spacing(2),
+  paddingBlock: theme.spacing(4),
+  [theme.breakpoints.up('sm')]: {
+    minHeight: 380,
+    boxSizing: 'border-box',
+    gridTemplateAreas: '"content illustration"',
+    gridTemplateColumns: 'minmax(0, 3fr) minmax(0, 2fr)',
+    paddingBlock: theme.spacing(5),
+  },
+}))
+
+const HeroIllustration = styled('div')(({ theme }) => ({
+  gridArea: 'illustration',
+  width: '100%',
+  maxWidth: 240,
+  justifySelf: 'center',
+  pointerEvents: 'none',
+  [theme.breakpoints.up('sm')]: { maxWidth: 340 },
+}))
+
+const HeroEyebrow = styled(Typography)(({ theme }) => ({
+  color: '#efcf8c',
+  fontWeight: 700,
+  fontSize: '0.7rem',
+  letterSpacing: '0.1em',
+  marginBottom: theme.spacing(1),
+}))
 
 export function ChristmasHero() {
   const { t } = useTranslation()
 
   return (
-    <Paper
-      component="section"
-      aria-labelledby="hero-title"
-      sx={{
-        position: 'relative',
-        overflow: 'hidden',
-        mb: 2.5,
-        bgcolor: '#0d3529',
-        borderRadius: 0,
-        borderTop: '1px solid rgba(255, 255, 255, 0.24)',
-        color: 'primary.contrastText',
-        backgroundImage:
-          'radial-gradient(ellipse at 100% 100%, #2d6950, transparent 70%)',
-      }}
-    >
-      <Container maxWidth="md">
-        <Box
-          sx={{
-            position: 'relative',
-            pt: { xs: 2.5, sm: 3.5 },
-            pb: { xs: 2.5, sm: 3.5 },
-          }}
-        >
-          <Box
-            sx={{
-              position: 'absolute',
-              width: { xs: 220, sm: '40%' },
-              right: { xs: -34, sm: 8 },
-              bottom: { xs: -5, sm: 12 },
-              opacity: { xs: 0.16, sm: 1 },
-              pointerEvents: 'none',
-            }}
-          >
+    <HeroSection as="section" aria-labelledby="hero-title">
+      <Container>
+        <HeroBody>
+          <HeroIllustration>
             <ChristmasScene />
-          </Box>
-          <Box sx={{ position: 'relative', width: { xs: '100%', sm: '60%' } }}>
-            <Typography
-              component="p"
-              sx={{
-                color: '#efcf8c',
-                fontWeight: 700,
-                fontSize: '0.7rem',
-                letterSpacing: '0.1em',
-                mb: 1,
-              }}
-            >
-              {t('hero.eyebrow')}
-            </Typography>
+          </HeroIllustration>
+          <Box sx={{ gridArea: 'content' }}>
+            <HeroEyebrow as="p">{t('hero.eyebrow')}</HeroEyebrow>
             <Typography
               component="h1"
               variant="h1"
@@ -82,8 +87,8 @@ export function ChristmasHero() {
               {t('navigation.play')}
             </Button>
           </Box>
-        </Box>
+        </HeroBody>
       </Container>
-    </Paper>
+    </HeroSection>
   )
 }

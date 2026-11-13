@@ -60,16 +60,10 @@ export function AllocationControls() {
             aria-live="polite"
           />
         </AllocationHeading>
-        {available < 25 ? (
+        {available < 25 && (
           <Alert severity="warning">
             {t('allocation.insufficient', { missing: 25 - available })}
           </Alert>
-        ) : (
-          total < 25 && (
-            <Alert severity="info">
-              {t('allocation.random', { remaining: 25 - total })}
-            </Alert>
-          )
         )}
         <CategoryGrid>
           {Object.values(CategoryId).map((categoryId) => (

@@ -1,5 +1,5 @@
 import Box from '@mui/material/Box'
-import Container from '@mui/material/Container'
+import { PageContainer as Container } from './PageContainer'
 import Typography from '@mui/material/Typography'
 import { useTranslation } from 'react-i18next'
 
@@ -11,7 +11,7 @@ export function AppFooter() {
       component="footer"
       sx={{ py: 1.5, borderTop: 1, borderColor: 'divider' }}
     >
-      <Container maxWidth="md">
+      <Container>
         <Typography variant="body2" color="text.secondary">
           {t('app.footer')}
         </Typography>

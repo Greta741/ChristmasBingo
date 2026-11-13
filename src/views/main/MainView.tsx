@@ -1,5 +1,5 @@
 import Paper from '@mui/material/Paper'
-import Container from '@mui/material/Container'
+import { PageContainer as Container } from '../../components/layout/PageContainer'
 import Typography from '@mui/material/Typography'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -22,7 +22,7 @@ export function MainView() {
   return (
     <>
       <ChristmasHero />
-      <Container maxWidth="md">
+      <Container>
         <Paper
           component="section"
           id="card-history"

@@ -1,7 +1,7 @@
 import { useSyncExternalStore } from 'react'
 import Alert from '@mui/material/Alert'
 import AlertTitle from '@mui/material/AlertTitle'
-import Container from '@mui/material/Container'
+import { PageContainer as Container } from './layout/PageContainer'
 import Typography from '@mui/material/Typography'
 import { useTranslation } from 'react-i18next'
 import {
@@ -24,7 +24,7 @@ export function PersistenceErrorAlert() {
   const isWriteFailure = failure.operation === 'write'
 
   return (
-    <Container maxWidth="md" sx={{ pt: 2 }}>
+    <Container sx={{ pt: 2 }}>
       <Alert severity="error">
         <AlertTitle>
           {isWriteFailure

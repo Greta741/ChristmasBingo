@@ -20,14 +20,20 @@ const SkipLink = styled(Link)(({ theme }) => ({
 }))
 
 const MainContainer = styled(Container, {
-  shouldForwardProp: (prop) => prop !== 'isCreate',
-})<{ isCreate: boolean }>(({ isCreate }) => ({
-  ...(isCreate && {
-    display: 'flex',
-    flexDirection: 'column',
-    paddingBottom: 0,
+  shouldForwardProp: (prop) => prop !== 'isCreate' && prop !== 'fullBleed',
+})<{ isCreate: boolean; fullBleed: boolean }>(
+  ({ isCreate, fullBleed, theme }) => ({
+    maxWidth: fullBleed ? 'none' : 1440,
+    flex: 1,
+    paddingTop: fullBleed ? 0 : theme.spacing(3),
+    paddingBottom: isCreate ? 0 : theme.spacing(3),
+    ...(isCreate && {
+      display: 'flex',
+      flexDirection: 'column',
+      paddingBottom: 0,
+    }),
   }),
-}))
+)
 
 export function AppLayout() {
   const { t } = useTranslation()
@@ -50,15 +56,11 @@ export function AppLayout() {
       <MainContainer
         as="main"
         isCreate={pathname === '/create'}
+        fullBleed={fullWidth}
         id="main-content"
         tabIndex={-1}
-        maxWidth={fullWidth ? false : 'md'}
+        maxWidth={false}
         disableGutters={fullWidth}
-        sx={{
-          flex: 1,
-          pt: fullWidth ? 0 : 3,
-          pb: pathname === '/create' ? 0 : 3,
-        }}
       >
         <Outlet />
       </MainContainer>

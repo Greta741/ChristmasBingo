@@ -1,5 +1,5 @@
 import Box from '@mui/material/Box'
-import Container from '@mui/material/Container'
+import { PageContainer as Container } from './PageContainer'
 import Link from '@mui/material/Link'
 import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
@@ -24,7 +24,7 @@ export function AppHeader() {
         color: 'primary.contrastText',
       }}
     >
-      <Container maxWidth="md">
+      <Container>
         <Stack
           direction="row"
           spacing={1}
