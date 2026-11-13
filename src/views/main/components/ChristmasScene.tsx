@@ -1,20 +1,110 @@
+import { keyframes } from '@emotion/react'
+import { styled } from '@mui/material/styles'
+
+const twinkle = keyframes`
+  0%, 100% { opacity: 0.45; }
+  50% { opacity: 1; }
+`
+
+const snowfall = keyframes`
+  0% { opacity: 1; transform: translateY(var(--snow-start)); }
+  92% { opacity: 1; transform: translateY(var(--snow-end)); }
+  100% { opacity: 0; transform: translateY(var(--snow-end)); }
+`
+
+const ChristmasSceneSvg = styled('svg')`
+  display: block;
+  width: 100%;
+
+  @media (prefers-reduced-motion: no-preference) {
+    .scene-stars > * {
+      animation: ${twinkle} 4.8s ease-in-out infinite;
+    }
+
+    .scene-stars > :nth-child(2n) {
+      animation-duration: 6.2s;
+      animation-delay: -3.2s;
+    }
+
+    .scene-stars > :nth-child(3n) {
+      animation-duration: 5.5s;
+      animation-delay: -1.7s;
+    }
+
+    .scene-stars > :nth-child(5) {
+      animation-delay: -2.6s;
+    }
+
+    .scene-snow > * {
+      animation: ${snowfall} 8s linear infinite;
+    }
+
+    .scene-snow > :nth-child(1) {
+      --snow-start: -96px;
+      --snow-end: 151px;
+    }
+
+    .scene-snow > :nth-child(2) {
+      --snow-start: -64px;
+      --snow-end: 183px;
+    }
+
+    .scene-snow > :nth-child(3) {
+      --snow-start: -153px;
+      --snow-end: 94px;
+    }
+
+    .scene-snow > :nth-child(4) {
+      --snow-start: -176px;
+      --snow-end: 71px;
+    }
+
+    .scene-snow > :nth-child(5) {
+      --snow-start: -204px;
+      --snow-end: 43px;
+      animation-delay: -2s;
+    }
+
+    .scene-snow > :nth-child(6) {
+      --snow-start: -107px;
+      --snow-end: 140px;
+    }
+
+    .scene-snow > :nth-child(2n) {
+      animation-duration: 10.5s;
+      animation-delay: -4.5s;
+    }
+
+    .scene-snow > :nth-child(3n) {
+      animation-duration: 12s;
+      animation-delay: -7s;
+    }
+  }
+
+  @media print {
+    .scene-stars > *,
+    .scene-snow > * {
+      animation: none;
+    }
+  }
+`
+
 export function ChristmasScene() {
   return (
-    <svg
+    <ChristmasSceneSvg
       viewBox="0 0 320 280"
       fill="none"
       aria-hidden="true"
       focusable="false"
-      style={{ display: 'block', width: '100%' }}
     >
-      <g fill="#e9ca83">
+      <g className="scene-stars" fill="#e9ca83">
         <path d="m73 27 3 9 9 3-9 3-3 9-3-9-9-3 9-3Z" />
         <path d="m256 33 2 6 6 2-6 2-2 6-2-6-6-2 6-2Z" />
         <path d="m286 99 2 6 6 2-6 2-2 6-2-6-6-2 6-2Z" />
-        <circle cx="119" cy="50" r="2" />
+        <path d="m119 44 2 4 4 2-4 2-2 4-2-4-4-2 4-2Z" />
         <circle cx="203" cy="20" r="2" />
       </g>
-      <g fill="#fff" opacity=".55">
+      <g className="scene-snow" fill="#fff" opacity=".55">
         <circle cx="45" cy="94" r="2" />
         <circle cx="179" cy="62" r="2" />
         <circle cx="303" cy="151" r="2" />
@@ -95,6 +185,6 @@ export function ChristmasScene() {
         strokeWidth="5"
         strokeLinecap="round"
       />
-    </svg>
+    </ChristmasSceneSvg>
   )
 }

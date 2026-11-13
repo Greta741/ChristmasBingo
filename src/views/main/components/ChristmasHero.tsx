@@ -25,7 +25,7 @@ export function ChristmasHero() {
       }}
     >
       <Container maxWidth="md">
-        <Box sx={{ position: 'relative', p: { xs: 2.5, sm: 3.5 } }}>
+        <Box sx={{ position: 'relative', pt: { xs: 2.5, sm: 3.5} , pb: { xs: 2.5, sm: 3.5 } }}>
           <Box
             sx={{
               position: 'absolute',
