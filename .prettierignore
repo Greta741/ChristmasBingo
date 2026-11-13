@@ -1,0 +1,8 @@
+node_modules/
+dist/
+dist-ssr/
+.idea/
+package-lock.json
+
+# Preserve the existing product and planning documents.
+/docs/
