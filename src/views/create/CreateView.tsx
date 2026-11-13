@@ -10,6 +10,7 @@ import { Link } from 'react-router'
 import { PageHeader } from '../../components/layout/PageHeader'
 import { AllocationControls } from './components/AllocationControls'
 import { CreateActions } from './components/CreateActions'
+import { CreationDecorations } from './components/CreationDecorations'
 
 const CreateLayout = styled('div')({
   width: '100%',
@@ -33,12 +34,17 @@ const PreviewArea = styled('div')(({ theme }) => ({
 }))
 
 const CreationSection = styled('section')(({ theme }) => ({
+  position: 'relative',
+  isolation: 'isolate',
   backgroundColor: theme.palette.secondary.main,
+  backgroundImage:
+    'radial-gradient(ellipse at top right, rgba(239,207,140,0.13), transparent 60%), linear-gradient(135deg, rgba(0,0,0,0.08), transparent 55%)',
   color: theme.palette.secondary.contrastText,
   '& header .MuiTypography-root': { color: 'inherit' },
 }))
 
 const CreationContent = styled('div')(({ theme }) => ({
+  position: 'relative',
   maxWidth: 1440,
   marginInline: 'auto',
   boxSizing: 'border-box',
@@ -67,6 +73,7 @@ export function CreateView() {
     <>
       <CreateLayout>
         <CreationSection aria-label={t('create.title')}>
+          <CreationDecorations />
           <CreationContent>
             <PageHeader
               title={t('create.title')}
