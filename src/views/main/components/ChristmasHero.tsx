@@ -34,15 +34,20 @@ const HeroBody = styled('div')(({ theme }) => ({
     gridTemplateColumns: 'minmax(0, 3fr) minmax(0, 2fr)',
     paddingBlock: theme.spacing(5),
   },
+  [theme.breakpoints.up('md')]: {
+    minHeight: 420,
+    gridTemplateColumns: 'minmax(0, 5fr) minmax(0, 7fr)',
+    gap: theme.spacing(4),
+  },
 }))
 
 const HeroIllustration = styled('div')(({ theme }) => ({
   gridArea: 'illustration',
   width: '100%',
-  maxWidth: 240,
+  maxWidth: 340,
   justifySelf: 'center',
   pointerEvents: 'none',
-  [theme.breakpoints.up('sm')]: { maxWidth: 340 },
+  [theme.breakpoints.up('sm')]: { maxWidth: 640 },
 }))
 
 const HeroEyebrow = styled(Typography)(({ theme }) => ({

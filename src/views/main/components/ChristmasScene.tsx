@@ -92,11 +92,62 @@ const ChristmasSceneSvg = styled('svg')`
 export function ChristmasScene() {
   return (
     <ChristmasSceneSvg
-      viewBox="0 0 320 280"
+      viewBox="-200 0 640 290"
       fill="none"
       aria-hidden="true"
       focusable="false"
     >
+      <path
+        d="M-184 254C-191 244-165 240-147 244Q-50 229 46 249T250 249Q345 228 402 245C424 246 426 259 406 264Q324 278 245 269T48 271Q-73 281-164 268C-181 267-191 261-184 254Z"
+        fill="#dae9dc"
+        opacity=".12"
+      />
+      <g opacity=".8">
+        <path d="M-148 163h116v85h-116Z" fill="#a9c3b0" />
+        <path d="m-160 163 70-62 70 62Z" fill="#a84a50" />
+        <path
+          d="m-160 163 70-62 70 62"
+          stroke="#f9f4e9"
+          strokeWidth="7"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <path d="M-134 141V96h16v31Z" fill="#a9c3b0" />
+        <path
+          d="M-138 96h24"
+          stroke="#f9f4e9"
+          strokeWidth="5"
+          strokeLinecap="round"
+        />
+        <path d="M-102 248v-45a12 12 0 0 1 24 0v45" fill="#134b38" />
+        <g fill="#efbb64" stroke="#fff3d6" strokeWidth="2">
+          <rect x="-137" y="181" width="22" height="26" rx="2" />
+          <rect x="-65" y="181" width="22" height="26" rx="2" />
+          <path d="M-126 181v26m-11-13h22m61-13v26m-11-13h22" />
+        </g>
+        <path d="M-143 167q53 17 106 0" stroke="#215c47" strokeWidth="4" />
+        <g fill="#e9ca83">
+          <circle cx="-130" cy="171" r="2.5" />
+          <circle cx="-107" cy="177" r="2.5" />
+          <circle cx="-78" cy="177" r="2.5" />
+          <circle cx="-50" cy="171" r="2.5" />
+        </g>
+      </g>
+      <g fill="#275c46" stroke="#b6cdb9" strokeWidth="3" strokeLinejoin="round">
+        <path d="m-166 172-20 36h8l-14 26h52l-14-26h8Z" />
+        <path d="m350 136-26 47h10l-23 34h13l-18 26h88l-18-26h13l-23-34h10Z" />
+      </g>
+      <path d="M350 243v9m-516-18v13" stroke="#b79364" strokeWidth="6" />
+      <g className="scene-stars" fill="#e9ca83">
+        <path d="m-122 42 2 6 6 2-6 2-2 6-2-6-6-2 6-2Z" />
+        <path d="m-16 78 2 5 5 2-5 2-2 5-2-5-5-2 5-2Z" />
+        <path d="m350 50 3 8 8 3-8 3-3 8-3-8-8-3 8-3Z" />
+      </g>
+      <g className="scene-snow" fill="#fff" opacity=".55">
+        <circle cx="-155" cy="94" r="2" />
+        <circle cx="-54" cy="62" r="2" />
+        <circle cx="399" cy="151" r="2" />
+      </g>
       <g className="scene-stars" fill="#e9ca83">
         <path d="m73 27 3 9 9 3-9 3-3 9-3-9-9-3 9-3Z" />
         <path d="m256 33 2 6 6 2-6 2-2 6-2-6-6-2 6-2Z" />
@@ -112,14 +163,6 @@ export function ChristmasScene() {
         <circle cx="272" cy="202" r="2" />
         <circle cx="99" cy="105" r="2" />
       </g>
-      <ellipse
-        cx="166"
-        cy="252"
-        rx="139"
-        ry="13"
-        fill="#dae9dc"
-        opacity=".18"
-      />
       <path d="M75 150h146v99H75z" fill="#eadfc6" />
       <path d="M63 151 148 78l85 73" fill="#963b43" />
       <path
