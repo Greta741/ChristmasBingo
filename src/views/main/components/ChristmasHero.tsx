@@ -66,8 +66,8 @@ export function ChristmasHero() {
               Atrask Kalėdas savo kaimynystėje
             </Typography>
             <Typography sx={{ color: '#e0ece5', maxWidth: 350, mb: 2.5 }}>
-              Šviečiantys langai, papuoštos eglutės ir maži atradimai. Išeik
-              pasivaikščioti ir surink savo bingo.
+              Šviečiantys langai, papuoštos eglutės ir maži atradimai! Išeik
+              pasivaikščioti ir surink savo bingo!
             </Typography>
             <Button
               component={Link}
