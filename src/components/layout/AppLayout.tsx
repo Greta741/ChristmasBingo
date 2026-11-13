@@ -19,9 +19,20 @@ const SkipLink = styled(Link)(({ theme }) => ({
   '&:focus': { transform: 'translateY(0)' },
 }))
 
+const MainContainer = styled(Container, {
+  shouldForwardProp: (prop) => prop !== 'isCreate',
+})<{ isCreate: boolean }>(({ isCreate }) => ({
+  ...(isCreate && {
+    display: 'flex',
+    flexDirection: 'column',
+    paddingBottom: 0,
+  }),
+}))
+
 export function AppLayout() {
   const { t } = useTranslation()
-  const isHome = useLocation().pathname === '/'
+  const { pathname } = useLocation()
+  const fullWidth = pathname === '/' || pathname === '/create'
 
   return (
     <Box sx={{ minHeight: '100dvh', display: 'flex', flexDirection: 'column' }}>
@@ -36,16 +47,21 @@ export function AppLayout() {
       </SkipLink>
       <AppHeader />
       <PersistenceErrorAlert />
-      <Container
-        component="main"
+      <MainContainer
+        as="main"
+        isCreate={pathname === '/create'}
         id="main-content"
         tabIndex={-1}
-        maxWidth={isHome ? false : 'md'}
-        disableGutters={isHome}
-        sx={{ flex: 1, pt: isHome ? 0 : 3, pb: 3 }}
+        maxWidth={fullWidth ? false : 'md'}
+        disableGutters={fullWidth}
+        sx={{
+          flex: 1,
+          pt: fullWidth ? 0 : 3,
+          pb: pathname === '/create' ? 0 : 3,
+        }}
       >
         <Outlet />
-      </Container>
+      </MainContainer>
       <AppFooter />
     </Box>
   )

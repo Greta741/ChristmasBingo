@@ -1,6 +1,27 @@
 export const resources = {
   lt: {
     translation: {
+      allocation: {
+        title: 'Dekoracijų paskirstymas',
+        edit: 'Pasirinkti dekoracijas',
+        close: 'Uždaryti dekoracijų pasirinkimą',
+        addPrompt: 'Pridėti dekoraciją',
+        easy: 'Lengvi',
+        medium: 'Vidutiniai',
+        hard: 'Sunkūs',
+        funny: 'Juokingi',
+        decrease: 'Sumažinti: {{category}}',
+        increase: 'Padidinti: {{category}}',
+        total: 'Pasirinkta: {{total}} / 25',
+        random:
+          'Likę {{remaining}} langeliai bus atsitiktinai užpildyti iš visų kategorijų.',
+        insufficient:
+          'Nepakanka dekoracijų. Pridėk dar bent {{missing}} skirtingų dekoracijų.',
+        batchSize: 'Kortelių skaičius',
+        generate: 'Generuoti korteles',
+        preview: 'Kortelės peržiūra',
+        previewHint: 'Sugeneruota bingo kortelė bus rodoma čia.',
+      },
       app: {
         name: 'Kalėdinis bingo',
         loading: 'Kraunama…',
@@ -60,6 +81,27 @@ export const resources = {
   },
   en: {
     translation: {
+      allocation: {
+        title: 'Decoration allocation',
+        edit: 'Choose decorations',
+        close: 'Close decoration selection',
+        addPrompt: 'Add a decoration',
+        easy: 'Easy',
+        medium: 'Medium',
+        hard: 'Hard',
+        funny: 'Funny',
+        decrease: 'Decrease: {{category}}',
+        increase: 'Increase: {{category}}',
+        total: 'Selected: {{total}} / 25',
+        random:
+          'The remaining {{remaining}} cells will be randomly filled from all categories.',
+        insufficient:
+          'Not enough decorations. Add at least {{missing}} more distinct decorations.',
+        batchSize: 'Number of cards',
+        generate: 'Generate cards',
+        preview: 'Card preview',
+        previewHint: 'Your generated bingo card will appear here.',
+      },
       app: {
         name: 'Christmas Bingo',
         loading: 'Loading…',
