@@ -1,12 +1,8 @@
-import AddRoundedIcon from '@mui/icons-material/AddRounded'
-import PlayArrowRoundedIcon from '@mui/icons-material/PlayArrowRounded'
-import Button from '@mui/material/Button'
 import Paper from '@mui/material/Paper'
-import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
 import { useEffect } from 'react'
-import { Link, useLocation, useSearchParams } from 'react-router'
-import { PageHeader } from '../../shared/components/layout/PageHeader'
+import { useLocation, useSearchParams } from 'react-router'
+import { ChristmasHero } from './components/ChristmasHero'
 
 export function MainView() {
   const [searchParams] = useSearchParams()
@@ -22,33 +18,7 @@ export function MainView() {
 
   return (
     <>
-      <PageHeader
-        title="Kalėdinis bingo"
-        description="Paversk pasivaikščiojimą mažais kalėdiniais atradimais. Rask dekoracijas ir surink savo bingo."
-      />
-      <Stack
-        direction={{ xs: 'column', sm: 'row' }}
-        spacing={1}
-        sx={{ mb: 2.5 }}
-      >
-        <Button
-          component={Link}
-          to="/create"
-          variant="contained"
-          startIcon={<AddRoundedIcon />}
-        >
-          Kurti
-        </Button>
-        <Button
-          component={Link}
-          to="/play/1"
-          variant="outlined"
-          color="secondary"
-          startIcon={<PlayArrowRoundedIcon />}
-        >
-          Žaisti
-        </Button>
-      </Stack>
+      <ChristmasHero />
       <Paper
         component="section"
         id="card-history"
