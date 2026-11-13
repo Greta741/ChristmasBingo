@@ -17,7 +17,17 @@ npm ci
 npm run dev
 ```
 
+Open [localhost:3005](http://localhost:3005/). The development port is fixed; Vite reports an error if it is already occupied.
+
 If PowerShell blocks `npm.ps1`, use `npm.cmd` instead of `npm`; no execution-policy change is needed.
+
+## Base path and navigation
+
+The default base path is `/`. For a repository subpath, copy `.env.example` to `.env.local`, set `VITE_BASE_PATH=/ChristmasBingo/`, and restart Vite or rebuild. This configures asset URLs without changing the hash routes or setting up deployment.
+
+The four page shells are available at `/#/`, `/#/create`, `/#/play/<id>`, and `/#/print`. Print selection parameters belong after the hash route, for example `/#/print?id=a&id=b`.
+
+The logo returns home. Header navigation contains Create, History, and Play. History scrolls to the card list without automatically focusing or highlighting it on the main page. On phones, these actions are available in a right-side slide-out menu. Layout components live under `src/shared/components/layout/`, with compact spacing and a green/gold header.
 
 ## Commands
 
@@ -35,9 +45,9 @@ Prettier excludes the existing requirements/planning documents, generated files,
 
 ## Current scope
 
-Setup steps 01–03 are implemented and awaiting review: the React/TypeScript scaffold, agreed dependencies, strict TypeScript configuration, ESLint, and Prettier. No automated tests or CI/deployment configuration are included.
+Setup steps 01–03 and step 04 are implemented: the React/TypeScript scaffold, agreed dependencies, strict TypeScript configuration, ESLint, Prettier, a shared responsive MUI layout/theme, and four hash-routed page shells. Step 04 is awaiting review. No automated tests or CI/deployment configuration are included.
 
-MUI, Redux Toolkit, redux-persist, React Router, i18next, Zod, and vite-plugin-pwa are installed. Their integration belongs to later steps: routing, the theme, persistence, game features, and PWA registration are not implemented yet.
+MUI uses primary colour `#134b38`, with red and gold theme accents and system fonts. Game actions, card generation, persistence, localisation, and PWA registration belong to later steps; Play buttons temporarily navigate to `/play/1`; generation will be connected in the quick-play step. Creation settings and generated-card previews will remain within `/create`.
 
 Local requirements and planning documents are kept in the git-ignored `docs/` directory: [implementation-steps.md](docs/implementation-steps.md), [requirements.md](docs/requirements.md), and [Tech requirements.md](<docs/Tech requirements.md>).
 
