@@ -1,4 +1,5 @@
 import Paper from '@mui/material/Paper'
+import Container from '@mui/material/Container'
 import Typography from '@mui/material/Typography'
 import { useEffect } from 'react'
 import { useLocation, useSearchParams } from 'react-router'
@@ -19,25 +20,27 @@ export function MainView() {
   return (
     <>
       <ChristmasHero />
-      <Paper
-        component="section"
-        id="card-history"
-        aria-labelledby="history-heading"
-        variant="outlined"
-        sx={{ p: 2.5 }}
-      >
-        <Typography
-          id="history-heading"
-          component="h2"
-          variant="h2"
-          sx={{ mb: 1 }}
+      <Container maxWidth="md">
+        <Paper
+          component="section"
+          id="card-history"
+          aria-labelledby="history-heading"
+          variant="outlined"
+          sx={{ p: 2.5 }}
         >
-          Mano kortelės
-        </Typography>
-        <Typography color="text.secondary">
-          Dar neturi sukurtų kortelių.
-        </Typography>
-      </Paper>
+          <Typography
+            id="history-heading"
+            component="h2"
+            variant="h2"
+            sx={{ mb: 1 }}
+          >
+            Mano kortelės
+          </Typography>
+          <Typography color="text.secondary">
+            Dar neturi sukurtų kortelių.
+          </Typography>
+        </Paper>
+      </Container>
     </>
   )
 }

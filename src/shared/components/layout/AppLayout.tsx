@@ -1,11 +1,13 @@
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
 import Link from '@mui/material/Link'
-import { Outlet } from 'react-router'
+import { Outlet, useLocation } from 'react-router'
 import { AppHeader } from './AppHeader'
 import { AppFooter } from './AppFooter'
 
 export function AppLayout() {
+  const isHome = useLocation().pathname === '/'
+
   return (
     <Box sx={{ minHeight: '100dvh', display: 'flex', flexDirection: 'column' }}>
       <Link
@@ -32,8 +34,9 @@ export function AppLayout() {
         component="main"
         id="main-content"
         tabIndex={-1}
-        maxWidth="md"
-        sx={{ flex: 1, py: 3 }}
+        maxWidth={isHome ? false : 'md'}
+        disableGutters={isHome}
+        sx={{ flex: 1, pt: isHome ? 0 : 3, pb: 3 }}
       >
         <Outlet />
       </Container>
