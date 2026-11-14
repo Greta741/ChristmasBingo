@@ -254,8 +254,9 @@ export function CardHistory() {
                     sx={{
                       border: '1px solid #d9cba9',
                       borderRadius: '2px',
-                      bgcolor:
-                        (Math.floor(index / 5) + (index % 5)) % 2 === 0
+                      bgcolor: cell.found
+                        ? '#134b38'
+                        : (Math.floor(index / 5) + (index % 5)) % 2 === 0
                           ? '#fffdf7'
                           : '#f0e6ce',
                     }}
