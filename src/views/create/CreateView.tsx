@@ -41,6 +41,9 @@ const CreationSection = styled('section')(({ theme }) => ({
     'radial-gradient(ellipse at top right, rgba(239,207,140,0.13), transparent 60%), linear-gradient(135deg, rgba(0,0,0,0.08), transparent 55%)',
   color: theme.palette.secondary.contrastText,
   '& header .MuiTypography-root': { color: 'inherit' },
+  [theme.breakpoints.down('sm')]: {
+    backgroundImage: `linear-gradient(to top, ${theme.palette.secondary.main} 120px, transparent 280px), radial-gradient(ellipse at top right, rgba(239,207,140,0.13), transparent 60%), linear-gradient(135deg, rgba(0,0,0,0.08), transparent 55%)`,
+  },
 }))
 
 const CreationContent = styled('div')(({ theme }) => ({
@@ -65,6 +68,21 @@ const PlaceholderGrid = styled('div')(({ theme }) => ({
   },
 }))
 
+const GenerateBar = styled('div')(({ theme }) => ({
+  display: 'flex',
+  justifyContent: 'center',
+  padding: theme.spacing(0, 3, 3),
+  [theme.breakpoints.down('sm')]: {
+    position: 'sticky',
+    bottom: 0,
+    zIndex: 1,
+    padding: theme.spacing(1.5, 2),
+    paddingBottom: `max(${theme.spacing(1.5)}, env(safe-area-inset-bottom))`,
+    backgroundColor: theme.palette.secondary.main,
+    '& > button': { width: '100%', minWidth: 0 },
+  },
+}))
+
 export function CreateView() {
   const { t } = useTranslation()
   const [batchSize, setBatchSize] = useState(1)
@@ -84,17 +102,27 @@ export function CreateView() {
             <CreateActions
               batchSize={batchSize}
               onBatchSizeChange={setBatchSize}
-              onGenerate={() =>
+            />
+          </CreationContent>
+          <GenerateBar>
+            <Button
+              variant="contained"
+              color="primary"
+              sx={{ minWidth: 220 }}
+              onClick={() =>
                 previewRef.current?.scrollIntoView({
-                  behavior: window.matchMedia('(prefers-reduced-motion: reduce)')
-                    .matches
+                  behavior: window.matchMedia(
+                    '(prefers-reduced-motion: reduce)',
+                  ).matches
                     ? 'instant'
                     : 'smooth',
                   block: 'start',
                 })
               }
-            />
-          </CreationContent>
+            >
+              {t('allocation.generate')}
+            </Button>
+          </GenerateBar>
         </CreationSection>
         <PreviewArea ref={previewRef}>
           {Array.from({ length: batchSize }, (_, cardIndex) => (

@@ -1,6 +1,5 @@
 import AddIcon from '@mui/icons-material/Add'
 import RemoveIcon from '@mui/icons-material/Remove'
-import Button from '@mui/material/Button'
 import IconButton from '@mui/material/IconButton'
 import InputBase from '@mui/material/InputBase'
 import Typography from '@mui/material/Typography'
@@ -46,25 +45,14 @@ const CountInput = styled(InputBase)(({ theme }) => ({
   },
 }))
 
-const GenerateButton = styled(Button)(({ theme }) => ({
-  minWidth: 220,
-  '&.Mui-disabled': {
-    backgroundColor: theme.palette.primary.main,
-    color: theme.palette.primary.contrastText,
-    opacity: 0.65,
-  },
-}))
-
 interface CreateActionsProps {
   batchSize: number
   onBatchSizeChange: (value: number) => void
-  onGenerate: () => void
 }
 
 export function CreateActions({
   batchSize,
   onBatchSizeChange,
-  onGenerate,
 }: CreateActionsProps) {
   const { t } = useTranslation()
   return (
@@ -112,9 +100,6 @@ export function CreateActions({
           <AddIcon />
         </IconButton>
       </CountStepper>
-      <GenerateButton variant="contained" color="primary" onClick={onGenerate}>
-        {t('allocation.generate')}
-      </GenerateButton>
     </ActionBar>
   )
 }
