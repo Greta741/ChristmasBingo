@@ -105,8 +105,6 @@ export const bingoGenerator = {
       cells: Array.from({ length: 5 }, (_, row) =>
         cells.slice(row * 5, row * 5 + 5),
       ) as BingoGrid,
-      bingoCelebrated: false,
-      fullCardCelebrated: false,
     }
   },
 }

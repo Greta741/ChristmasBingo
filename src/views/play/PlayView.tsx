@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import Alert from '@mui/material/Alert'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
@@ -8,8 +8,10 @@ import { useTranslation } from 'react-i18next'
 import { Link, useParams } from 'react-router'
 import { BingoCardFrame } from '../../components/BingoCardFrame'
 import { BingoCardGrid } from '../../components/BingoCardGrid'
-import type { BingoCard, BingoGrid } from '../../domain/models'
+import type { BingoCard, BingoGrid, CardCelebration } from '../../domain/models'
 import { bingoCardRepository } from '../../services/bingoCardRepository'
+import { getCompletedLines } from '../../services/bingoLines'
+import { BingoCelebration } from './BingoCelebration'
 
 export function PlayView() {
   const { id = '' } = useParams()
@@ -25,6 +27,19 @@ function SavedCard({ id }: { id: string }) {
   const [saveError, setSaveError] = useState(false)
   const [pendingCells, setPendingCells] = useState<Set<string>>(new Set())
   const pendingRef = useRef(new Set<string>())
+  const [celebration, setCelebration] = useState<{
+    key: number
+    kind: CardCelebration
+  } | null>(null)
+  const celebrationKey = useRef(0)
+  const closeCelebration = useCallback(() => setCelebration(null), [])
+  const winningCells = new Set(
+    card
+      ? getCompletedLines(card.cells).flatMap((line) =>
+          line.cells.map((cell) => cell.promptId),
+        )
+      : [],
+  )
 
   function setCellFound(promptId: string, found: boolean) {
     setCard((previous) =>
@@ -50,7 +65,12 @@ function SavedCard({ id }: { id: string }) {
     setSaveError(false)
     setCellFound(promptId, !previousFound)
     try {
-      await bingoCardRepository.updateCardCell(id, promptId, !previousFound)
+      const kind = await bingoCardRepository.updateCardCell(
+        id,
+        promptId,
+        !previousFound,
+      )
+      if (kind) setCelebration({ key: ++celebrationKey.current, kind })
     } catch {
       setCellFound(promptId, previousFound)
       setSaveError(true)
@@ -81,6 +101,13 @@ function SavedCard({ id }: { id: string }) {
 
   return (
     <Box sx={{ maxWidth: 520, mx: 'auto', width: '100%' }} aria-busy={loading}>
+      {celebration && (
+        <BingoCelebration
+          key={celebration.key}
+          kind={celebration.kind}
+          onClose={closeCelebration}
+        />
+      )}
       {loading ? (
         <LinearProgress aria-label={t('app.loading')} />
       ) : error ? (
@@ -124,6 +151,7 @@ function SavedCard({ id }: { id: string }) {
             cells={card.cells}
             onCellClick={toggleCell}
             pendingCells={pendingCells}
+            winningCells={winningCells}
           />
         </BingoCardFrame>
       ) : (

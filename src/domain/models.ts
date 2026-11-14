@@ -2,6 +2,7 @@ export const CARD_NAME_MAX_LENGTH = 80
 export const CUSTOM_PROMPT_MAX_LENGTH = 200
 
 export type Language = 'lt' | 'en'
+export type CardCelebration = 'bingo' | 'fullCard'
 
 export enum CategoryId {
   Easy = 'easy',
@@ -61,6 +62,4 @@ export interface BingoCard {
   createdAt: string
   language: Language
   cells: BingoGrid
-  bingoCelebrated: boolean
-  fullCardCelebrated: boolean
 }

@@ -169,8 +169,6 @@ export const bingoCardSchema: z.ZodType<BingoCard> = z.object({
   createdAt: z.iso.datetime({ offset: true }),
   language: languageSchema,
   cells: bingoGridSchema,
-  bingoCelebrated: z.boolean(),
-  fullCardCelebrated: z.boolean(),
 })
 
 export const persistedLocalStateSchema = z.object({

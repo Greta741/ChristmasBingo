@@ -1,5 +1,6 @@
 import { CARD_STORE_NAME, CARD_ORDER_INDEX, withStore } from './indexedDb'
-import type { BingoCard } from '../domain/models'
+import type { BingoCard, CardCelebration } from '../domain/models'
+import { getCompletedLines } from './bingoLines'
 import {
   bingoCardSchema,
   INDEXED_DB_SCHEMA_VERSION,
@@ -17,12 +18,13 @@ export interface BingoCardRepository {
   /**
    * Set a cell's found state by its prompt ID, preserving other card data.
    * Reject if the card or cell does not exist.
+   * Derive a celebration from the before/after cells and return it after commit.
    */
   updateCardCell(
     cardId: string,
     promptId: string,
     found: boolean,
-  ): Promise<void>
+  ): Promise<CardCelebration | null>
 
   /** Return the card with this ID, or undefined when it does not exist. */
   getCard(id: string): Promise<BingoCard | undefined>
@@ -89,10 +91,10 @@ export const bingoCardRepository: BingoCardRepository = {
 
   async updateCardCell(cardId, promptId, found) {
     if (typeof found !== 'boolean') throw new Error('Found must be a boolean')
-    await withStore<void>(
+    return withStore<CardCelebration | null>(
       CARD_STORE_NAME,
       'readwrite',
-      ({ store, onSuccess }) => {
+      ({ store, onSuccess, setResult }) => {
         onSuccess(store.get(cardId), (value: unknown) => {
           if (value === undefined) throw new Error(`Card not found: ${cardId}`)
           const card = decode(value)
@@ -100,7 +102,18 @@ export const bingoCardRepository: BingoCardRepository = {
             .flat()
             .find((entry) => entry.promptId === promptId)
           if (!cell) throw new Error(`Card cell not found: ${promptId}`)
+          const hadBingo = getCompletedLines(card.cells).length > 0
+          const wasFullCard = card.cells.flat().every((entry) => entry.found)
           cell.found = found
+          const bingo =
+            found &&
+            !hadBingo &&
+            getCompletedLines(card.cells).length > 0
+          const fullCard =
+            found &&
+            !wasFullCard &&
+            card.cells.flat().every((entry) => entry.found)
+          setResult(fullCard ? 'fullCard' : bingo ? 'bingo' : null)
           store.put(encode(card))
         })
       },

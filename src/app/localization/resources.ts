@@ -76,6 +76,10 @@ export const resources = {
       },
       play: {
         title: 'Žaisti bingo',
+        bingoMessage: 'Linija užpildyta! Tęsk atradimus!',
+        fullCardTitle: 'Visos dekoracijos rastos!',
+        fullCardMessage: '25 iš 25! Kalėdinė misija įveikta!',
+        closeCelebration: 'Uždaryti sveikinimą',
         saveError:
           'Nepavyko išsaugoti žymėjimo. Pakeitimas atšauktas – pabandyk paspausti langelį dar kartą.',
         loadError: 'Nepavyko įkelti kortelės. Bandyk dar kartą.',
@@ -180,6 +184,10 @@ export const resources = {
       },
       play: {
         title: 'Play bingo',
+        bingoMessage: 'Line complete! Keep exploring!',
+        fullCardTitle: 'All decorations found!',
+        fullCardMessage: '25 out of 25! Christmas mission complete!',
+        closeCelebration: 'Dismiss celebration',
         saveError:
           'Could not save the mark. The change was undone; try pressing the cell again.',
         loadError: 'Could not load the card. Try again.',
