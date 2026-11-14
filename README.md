@@ -32,9 +32,9 @@ One-time setup:
 3. Commit and push the project, including the workflow and `package-lock.json`, to `main`.
 4. Wait for **Deploy to GitHub Pages** to finish in the repository's Actions tab.
 
-The published address is **https://greta741.github.io/ChristmasBingo/**. For example, Create opens at `https://greta741.github.io/ChristmasBingo/#/create`.
+The published address is **https://greta741.github.io/ChristmasBingo/**. For example, Create opens at `https://greta741.github.io/ChristmasBingo/create`.
 
-The workflow uses the Node version from `.nvmrc`, runs `npm ci`, ESLint and the production build, and uploads only `dist/`. Vite's base path is taken from GitHub Pages metadata, including `/ChristmasBingo/` for the repository site. Hash routing supports direct links and refreshes without a server-side fallback. No personal access token or additional deploy dependency is needed.
+The workflow uses the Node version from `.nvmrc`, runs `npm ci`, ESLint and the production build, and uploads only `dist/`. Vite's base path is taken from GitHub Pages metadata, including `/ChristmasBingo/` for the repository site. Browser routing uses clean URLs without hashes. The deployment workflow also copies the app entry document to `dist/404.html`, so GitHub Pages can load the application on direct links and refreshes. GitHub serves that fallback with HTTP status 404, but the app renders the requested route without changing its URL. No personal access token or additional deploy dependency is needed.
 
 To preview the same subpath locally in PowerShell:
 
@@ -52,9 +52,9 @@ Cards and custom decorations are stored in the visitor's browser (IndexedDB/loca
 
 The default base path is `/`. For a repository subpath, copy `.env.example` to `.env.local`, set `VITE_BASE_PATH=/ChristmasBingo/`, and restart Vite or rebuild. Deployment automatically sets the correct base path through the workflow.
 
-The four routes are available at `/#/`, `/#/create`, `/#/play/<id>`, and `/#/print`. Print selection parameters belong after the hash route, for example `/#/print?id=a&id=b`.
+The four routes are available at `/`, `/create`, `/play/<id>`, and `/print`. Print selection parameters belong in the URL query, for example `/print?id=a&id=b`. Production routes include the base path: `/ChristmasBingo/play/<id>`.
 
-The logo returns home. Header navigation contains Create, History, and Play. History opens `/#/?section=history` without the home hero. On phones, these actions are available in a right-side slide-out menu. Layout components live under `src/components/layout/`, with compact spacing and a green/gold header.
+The logo returns home. Header navigation contains Create, History, and Play. History opens `/?section=history` without the home hero. On phones, these actions are available in a right-side slide-out menu. Layout components live under `src/components/layout/`, with compact spacing and a green/gold header.
 
 ## Commands
 
