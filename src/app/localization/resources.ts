@@ -50,6 +50,8 @@ export const resources = {
         title: 'Meniu',
       },
       hero: {
+        startError:
+          'Nepavyko pradėti žaidimo. Patikrink dekoracijų paskirstymą ir bandyk dar kartą.',
         eyebrow: 'KALĖDINIS BINGO',
         title: 'Atrask Kalėdas savo kaimynystėje',
         description:
@@ -163,6 +165,8 @@ export const resources = {
         title: 'Menu',
       },
       hero: {
+        startError:
+          'Could not start the game. Check your decoration allocation and try again.',
         eyebrow: 'CHRISTMAS BINGO',
         title: 'Discover Christmas in your neighbourhood',
         description:

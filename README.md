@@ -74,7 +74,7 @@ Prettier excludes the existing requirements/planning documents, generated files,
 
 The app supports card generation, IndexedDB storage, paginated history, card deletion, play with persistent cell marking and Bingo celebrations, LT/EN localisation, and custom decoration management. GitHub Pages deployment is configured through GitHub Actions. Print functionality and PWA registration remain unfinished.
 
-MUI uses primary colour `#134b38`, with red and gold theme accents and system fonts. Individual card Play buttons open their saved `/play/<id>` routes; header/home quick-play actions still use the temporary `/play/1` route. Creation settings and generated-card previews remain within `/create`.
+MUI uses primary colour `#134b38`, with red and gold theme accents and system fonts. Individual card Play buttons open their saved `/play/<id>` routes. The home hero Play button generates and saves one card using current settings, then opens it; the header Play action still uses the temporary `/play/1` route. Creation settings and generated-card previews remain within `/create`.
 
 Local requirements and planning documents are kept in the git-ignored `docs/` directory: [implementation-steps.md](docs/implementation-steps.md), [requirements.md](docs/requirements.md), and [Tech requirements.md](<docs/Tech requirements.md>).
 

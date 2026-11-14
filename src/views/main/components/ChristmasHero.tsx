@@ -1,12 +1,18 @@
+import { useEffect, useRef, useState } from 'react'
 import PlayArrowRoundedIcon from '@mui/icons-material/PlayArrowRounded'
+import Alert from '@mui/material/Alert'
 import Button from '@mui/material/Button'
 import { PageContainer as Container } from '../../../components/layout/PageContainer'
 import Paper from '@mui/material/Paper'
 import Typography from '@mui/material/Typography'
 import { styled } from '@mui/material/styles'
 import { useTranslation } from 'react-i18next'
-import { Link } from 'react-router'
+import { useNavigate } from 'react-router'
 import { ChristmasScene } from './ChristmasScene'
+import { useAppSelector } from '../../../app/store/hooks'
+import { bingoGenerator } from '../../../services/bingoGenerator'
+import { bingoCardRepository } from '../../../services/bingoCardRepository'
+import type { BingoCard } from '../../../domain/models'
 
 const HeroSection = styled(Paper)(({ theme }) => ({
   position: 'relative',
@@ -82,7 +88,45 @@ const HeroEyebrow = styled(Typography)(({ theme }) => ({
 }))
 
 export function ChristmasHero() {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
+  const navigate = useNavigate()
+  const categories = useAppSelector((state) => state.categories)
+  const [starting, setStarting] = useState(false)
+  const [startError, setStartError] = useState(false)
+  const busy = useRef(false)
+  const pendingCard = useRef<BingoCard | null>(null)
+  const active = useRef(true)
+
+  useEffect(() => {
+    active.current = true
+    return () => {
+      active.current = false
+    }
+  }, [])
+
+  async function startPlaying() {
+    if (busy.current) return
+    busy.current = true
+    setStarting(true)
+    setStartError(false)
+    try {
+      const card =
+        pendingCard.current ??
+        bingoGenerator.generateCard(
+          categories,
+          i18n.resolvedLanguage === 'lt' ? 'lt' : 'en',
+        )
+      pendingCard.current = card
+      await bingoCardRepository.saveCard(card)
+      pendingCard.current = null
+      if (active.current) navigate(`/play/${encodeURIComponent(card.id)}`)
+    } catch {
+      if (active.current) setStartError(true)
+    } finally {
+      busy.current = false
+      if (active.current) setStarting(false)
+    }
+  }
 
   return (
     <HeroSection as="section" aria-labelledby="hero-title">
@@ -107,8 +151,8 @@ export function ChristmasHero() {
               </Typography>
             </HeroText>
             <Button
-              component={Link}
-              to="/play/1"
+              onClick={startPlaying}
+              loading={starting}
               variant="contained"
               color="secondary"
               startIcon={<PlayArrowRoundedIcon />}
@@ -122,6 +166,11 @@ export function ChristmasHero() {
             </Button>
           </HeroContent>
         </HeroBody>
+        {startError && (
+          <Alert severity="error" sx={{ mb: 2 }}>
+            {t('hero.startError')}
+          </Alert>
+        )}
       </Container>
     </HeroSection>
   )
