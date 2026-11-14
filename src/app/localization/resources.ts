@@ -30,7 +30,8 @@ export const resources = {
           'Nepavyko išsaugoti {{count}} kortelių. Bandyk dar kartą prieš išeidamas iš puslapio.',
         retrySave: 'Išsaugoti dar kartą',
         preview: 'Kortelės peržiūra',
-        previewHint: 'Sugeneruota bingo kortelė bus rodoma čia.',
+        previewHint:
+          'Pasirink dekoracijas ir spausk „Generuoti korteles“ – metas kalėdiniams atradimams!',
       },
       app: {
         name: 'Kalėdinis bingo',
@@ -145,7 +146,8 @@ export const resources = {
           'Could not save {{count}} cards. Try again before leaving this page.',
         retrySave: 'Retry saving',
         preview: 'Card preview',
-        previewHint: 'Your generated bingo card will appear here.',
+        previewHint:
+          'Choose your decorations and press “Generate cards” – time for some Christmas discoveries!',
       },
       app: {
         name: 'Christmas Bingo',

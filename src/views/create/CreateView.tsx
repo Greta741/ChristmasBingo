@@ -1,5 +1,4 @@
 import { useRef, useState } from 'react'
-import Box from '@mui/material/Box'
 import Alert from '@mui/material/Alert'
 import Button from '@mui/material/Button'
 import PlayArrowRoundedIcon from '@mui/icons-material/PlayArrowRounded'
@@ -61,19 +60,6 @@ const CreationContent = styled('div')(({ theme }) => ({
   [theme.breakpoints.down('sm')]: { padding: theme.spacing(2) },
 }))
 
-const PlaceholderGrid = styled('div')(({ theme }) => ({
-  display: 'grid',
-  gridTemplateColumns: 'repeat(5, minmax(0, 1fr))',
-  aspectRatio: '1',
-  borderTop: `1px solid ${theme.palette.divider}`,
-  borderLeft: `1px solid ${theme.palette.divider}`,
-  '& > div': {
-    borderRight: `1px solid ${theme.palette.divider}`,
-    borderBottom: `1px solid ${theme.palette.divider}`,
-    backgroundColor: theme.palette.action.hover,
-  },
-}))
-
 const GenerateBar = styled('div')(({ theme }) => ({
   display: 'flex',
   justifyContent: 'center',
@@ -104,9 +90,6 @@ export function CreateView() {
       category.prompts.map((prompt) => prompt.id),
     ),
   ).size
-  const previews = cards.length
-    ? cards
-    : Array.from({ length: batchSize }, () => null)
 
   async function saveCards(batch: BingoCard[]) {
     savingRef.current = true
@@ -203,39 +186,26 @@ export function CreateView() {
           </Alert>
         )}
         <PreviewArea ref={previewRef}>
-          {previews.map((card, cardIndex) => (
-            <BingoCardFrame
-              key={card?.id ?? cardIndex}
-              titleId={`preview-title-${cardIndex}`}
-              subtitle={
-                card
-                  ? `${new Date(card.createdAt).toLocaleDateString(i18n.resolvedLanguage === 'lt' ? 'lt-LT' : 'en-GB')}${cards.length > 1 ? ` - ${cardIndex + 1}` : ''}`
-                  : t('allocation.preview')
-              }
+          {cards.length === 0 && (
+            <Typography
+              color="text.secondary"
+              sx={{ gridColumn: '1 / -1', textAlign: 'center', py: 3 }}
             >
-              {card ? (
-                <BingoCardGrid cells={card.cells} />
-              ) : (
-                <Box aria-hidden="true">
-                  <PlaceholderGrid>
-                    {Array.from({ length: 25 }, (_, index) => (
-                      <div key={index} />
-                    ))}
-                  </PlaceholderGrid>
-                </Box>
-              )}
-              {!card && (
-                <Typography color="text.secondary" sx={{ mt: 1.5 }}>
-                  {t('allocation.previewHint')}
-                </Typography>
-              )}
+              {t('allocation.previewHint')}
+            </Typography>
+          )}
+          {cards.map((card, cardIndex) => (
+            <BingoCardFrame
+              key={card.id}
+              titleId={`preview-title-${cardIndex}`}
+              subtitle={`${new Date(card.createdAt).toLocaleDateString(i18n.resolvedLanguage === 'lt' ? 'lt-LT' : 'en-GB')}${cards.length > 1 ? ` - ${cardIndex + 1}` : ''}`}
+            >
+              <BingoCardGrid cells={card.cells} />
               <Button
                 component={Link}
-                to={card ? `/play/${encodeURIComponent(card.id)}` : '#'}
+                to={`/play/${encodeURIComponent(card.id)}`}
                 disabled={
-                  !card ||
-                  saving ||
-                  unsavedCards.some((entry) => entry.id === card.id)
+                  saving || unsavedCards.some((entry) => entry.id === card.id)
                 }
                 variant="contained"
                 startIcon={<PlayArrowRoundedIcon />}
