@@ -96,6 +96,9 @@ export const resources = {
           'Dairykis kalėdinių dekoracijų. Kiekvienas atradimas priartina prie bingo.',
       },
       print: {
+        action: 'Spausdinti',
+        loadError:
+          'Nepavyko įkelti visų pasirinktų kortelių. Patikrink, ar jos nebuvo ištrintos, ir bandyk dar kartą.',
         title: 'Spausdinti korteles',
         description:
           'Kalėdiniai atradimai ir popieriuje. Pasiimk bingo kortelę į pasivaikščiojimą.',
@@ -212,6 +215,9 @@ export const resources = {
           'Look around for Christmas decorations. Every discovery brings you closer to bingo.',
       },
       print: {
+        action: 'Print',
+        loadError:
+          'Could not load all selected cards. Check whether they were deleted and try again.',
         title: 'Print cards',
         description:
           'Take your Christmas discoveries onto paper and bring a bingo card on your walk.',

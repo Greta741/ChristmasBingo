@@ -7,16 +7,27 @@ export function BingoCardGrid({
   onCellClick,
   pendingCells,
   winningCells,
+  printMode = false,
 }: {
   cells: BingoGrid
   onCellClick?: (promptId: string) => void
   pendingCells?: ReadonlySet<string>
   winningCells?: ReadonlySet<string>
+  printMode?: boolean
 }) {
   return (
     <Box
       role="table"
-      sx={{ borderTop: 1, borderLeft: 1, borderColor: '#d9cba9' }}
+      sx={{
+        borderTop: 1,
+        borderLeft: 1,
+        borderColor: '#d9cba9',
+        ...(printMode && {
+          height: '100%',
+          display: 'grid',
+          gridTemplateRows: 'repeat(5, minmax(0, 1fr))',
+        }),
+      }}
     >
       {cells.map((row, index) => (
         <Box
@@ -25,6 +36,7 @@ export function BingoCardGrid({
           sx={{
             display: 'grid',
             gridTemplateColumns: 'repeat(5, minmax(0, 1fr))',
+            ...(printMode && { minHeight: 0 }),
           }}
         >
           {row.map((cell, column) => (
@@ -33,17 +45,18 @@ export function BingoCardGrid({
               role="cell"
               sx={{
                 minWidth: 0,
-                minHeight: { xs: 72, sm: 88 },
-                p: onCellClick ? 0 : { xs: 0.5, sm: 1 },
+                minHeight: printMode ? 0 : { xs: 72, sm: 88 },
+                p: onCellClick ? 0 : printMode ? '1mm' : { xs: 0.5, sm: 1 },
                 borderRight: 1,
                 borderBottom: 1,
                 borderColor: '#d9cba9',
-                backgroundColor: cell.found
-                  ? '#134b38'
-                  : (index + column) % 2 === 0
-                    ? '#fffdf7'
-                    : '#f5efdf',
-                color: cell.found ? '#fff8e8' : '#17372e',
+                backgroundColor:
+                  cell.found && !printMode
+                    ? '#134b38'
+                    : (index + column) % 2 === 0
+                      ? '#fffdf7'
+                      : '#f5efdf',
+                color: cell.found && !printMode ? '#fff8e8' : '#17372e',
                 boxShadow: winningCells?.has(cell.promptId)
                   ? 'inset 0 0 0 2px #e5c780'
                   : undefined,
@@ -51,8 +64,8 @@ export function BingoCardGrid({
                 alignItems: 'center',
                 justifyContent: 'center',
                 textAlign: 'center',
-                fontSize: { xs: '0.7rem', sm: '0.8rem' },
-                lineHeight: 1.35,
+                fontSize: printMode ? '7pt' : { xs: '0.7rem', sm: '0.8rem' },
+                lineHeight: printMode ? 1.15 : 1.35,
                 overflowWrap: 'anywhere',
               }}
             >
@@ -78,7 +91,7 @@ export function BingoCardGrid({
                   {cell.text}
                 </ButtonBase>
               ) : (
-                cell.text
+                <Box component="span">{cell.text}</Box>
               )}
             </Box>
           ))}

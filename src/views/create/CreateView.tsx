@@ -1,6 +1,10 @@
 import { useRef, useState } from 'react'
 import Alert from '@mui/material/Alert'
 import Button from '@mui/material/Button'
+import Box from '@mui/material/Box'
+import Fab from '@mui/material/Fab'
+import Tooltip from '@mui/material/Tooltip'
+import PrintIcon from '@mui/icons-material/PrintRounded'
 import PlayArrowRoundedIcon from '@mui/icons-material/PlayArrowRounded'
 import Typography from '@mui/material/Typography'
 import { styled } from '@mui/material/styles'
@@ -161,6 +165,47 @@ export function CreateView() {
             </Button>
           </GenerateBar>
         </CreationSection>
+        <Box
+          sx={{
+            position: 'relative',
+            height: 0,
+            maxWidth: 1440,
+            mx: 'auto',
+            boxSizing: 'border-box',
+          }}
+        >
+          <Box
+            sx={{
+              position: 'absolute',
+              top: 12,
+              right: { xs: 12, sm: 24 },
+              zIndex: 2,
+            }}
+          >
+            <Tooltip title={t('print.action')}>
+              <span>
+                <Fab
+                  component={Link}
+                  to={`/print?ids=${encodeURIComponent(
+                    cards
+                      .slice(0, 4)
+                      .map((card) => card.id)
+                      .join(','),
+                  )}`}
+                  target="_blank"
+                  rel="noopener"
+                  disabled={
+                    cards.length === 0 || saving || unsavedCards.length > 0
+                  }
+                  color="primary"
+                  aria-label={t('print.action')}
+                >
+                  <PrintIcon fontSize="large" />
+                </Fab>
+              </span>
+            </Tooltip>
+          </Box>
+        </Box>
         {generationError && (
           <Alert severity="error" sx={{ m: 2 }}>
             {t('allocation.generationError')}

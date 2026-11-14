@@ -13,9 +13,9 @@ function App() {
           <Route index element={<MainView />} />
           <Route path="create" element={<CreateView />} />
           <Route path="play/:id" element={<PlayView />} />
-          <Route path="print" element={<PrintView />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Route>
+        <Route path="print" element={<PrintView />} />
       </Routes>
     </BrowserRouter>
   )

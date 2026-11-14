@@ -10,11 +10,13 @@ export function BingoCardFrame({
   subtitle,
   children,
   headingComponent = 'h2',
+  printMode = false,
 }: {
   titleId: string
   subtitle: string
   children: ReactNode
   headingComponent?: 'h1' | 'h2'
+  printMode?: boolean
 }) {
   const { t } = useTranslation()
   return (
@@ -29,6 +31,14 @@ export function BingoCardFrame({
         borderRadius: 3,
         backgroundColor: '#fffaf0',
         boxShadow: '0 6px 24px rgba(19, 75, 56, 0.08)',
+        ...(printMode && {
+          height: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+          boxShadow: 'none',
+          borderRadius: '3mm',
+          breakInside: 'avoid',
+        }),
       }}
     >
       <Box
@@ -44,13 +54,44 @@ export function BingoCardFrame({
           backgroundImage:
             'radial-gradient(ellipse at top, #28634b, transparent 80%)',
           borderBottom: '3px solid #d8bc7b',
+          ...(printMode && {
+            py: 1,
+            px: 4,
+            flexShrink: 0,
+            '& svg': { width: 36, height: 36 },
+          }),
         }}
       >
         <FestiveBranch />
         <FestiveBranch mirrored />
+        <Box
+          aria-hidden="true"
+          sx={{
+            position: 'absolute',
+            inset: 0,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-around',
+            color: '#e5c780',
+            opacity: 0.12,
+            pointerEvents: 'none',
+            lineHeight: 1,
+          }}
+        >
+          {[2.5, 5, 3.5].map((size) => (
+            <Box
+              component="span"
+              key={size}
+              sx={{ fontSize: `${printMode ? size * 0.6 : size}rem` }}
+            >
+              ✦
+            </Box>
+          ))}
+        </Box>
         <Typography
           component="p"
           sx={{
+            position: 'relative',
             color: '#e5c780',
             fontSize: '0.65rem',
             letterSpacing: '0.15em',
@@ -64,27 +105,25 @@ export function BingoCardFrame({
           id={titleId}
           component={headingComponent}
           sx={{
+            position: 'relative',
             fontFamily: 'Georgia, serif',
-            fontSize: { xs: '1.6rem', sm: '2rem' },
+            fontSize: printMode ? '1.1rem' : { xs: '1.6rem', sm: '2rem' },
             fontWeight: 700,
             lineHeight: 1.15,
           }}
         >
           {t('app.name')}
         </Typography>
-        <Box
-          aria-hidden="true"
-          sx={{
-            color: '#e5c780',
-            fontSize: '0.75rem',
-            letterSpacing: '0.6em',
-            mt: 1,
-          }}
-        >
-          ✦ ✧ ✦
-        </Box>
       </Box>
-      <Box sx={{ p: { xs: 1, sm: 2 } }}>{children}</Box>
+      <Box
+        sx={
+          printMode
+            ? { p: '2mm', flex: 1, minHeight: 0 }
+            : { p: { xs: 1, sm: 2 } }
+        }
+      >
+        {children}
+      </Box>
     </Paper>
   )
 }

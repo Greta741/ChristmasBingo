@@ -52,7 +52,7 @@ Cards and custom decorations are stored in the visitor's browser (IndexedDB/loca
 
 The default base path is `/`. For a repository subpath, copy `.env.example` to `.env.local`, set `VITE_BASE_PATH=/ChristmasBingo/`, and restart Vite or rebuild. Deployment automatically sets the correct base path through the workflow.
 
-The four routes are available at `/`, `/create`, `/play/<id>`, and `/print`. Print selection parameters belong in the URL query, for example `/print?id=a&id=b`. Production routes include the base path: `/ChristmasBingo/play/<id>`.
+The four routes are available at `/`, `/create`, `/play/<id>`, and `/print`. Print selection uses comma-separated IDs, for example `/print?ids=a,b,c,d`; only the first four IDs are loaded. It opens without the app header/footer and lays out unmarked cards in a 2 × 2 A4 sheet. Use the browser's Print command (Ctrl+P) to print it. Production routes include the base path: `/ChristmasBingo/play/<id>`.
 
 The logo returns home. Header navigation contains Create, History, and Play. History opens `/?section=history` without the home hero. On phones, these actions are available in a right-side slide-out menu. Layout components live under `src/components/layout/`, with compact spacing and a green/gold header.
 
