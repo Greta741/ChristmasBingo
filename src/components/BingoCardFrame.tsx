@@ -36,7 +36,7 @@ export function BingoCardFrame({
           display: 'flex',
           flexDirection: 'column',
           boxShadow: 'none',
-          borderRadius: '3mm',
+          borderRadius: 0,
           breakInside: 'avoid',
         }),
       }}
@@ -55,7 +55,7 @@ export function BingoCardFrame({
             'radial-gradient(ellipse at top, #28634b, transparent 80%)',
           borderBottom: '3px solid #d8bc7b',
           ...(printMode && {
-            py: 1,
+            py: 0.75,
             px: 4,
             flexShrink: 0,
             '& svg': { width: 36, height: 36 },
@@ -93,7 +93,7 @@ export function BingoCardFrame({
           sx={{
             position: 'relative',
             color: '#e5c780',
-            fontSize: '0.65rem',
+            fontSize: printMode ? '0.5rem' : '0.65rem',
             letterSpacing: '0.15em',
             textTransform: 'uppercase',
             mb: 0.5,
@@ -107,7 +107,7 @@ export function BingoCardFrame({
           sx={{
             position: 'relative',
             fontFamily: 'Georgia, serif',
-            fontSize: printMode ? '1.1rem' : { xs: '1.6rem', sm: '2rem' },
+            fontSize: printMode ? '0.85rem' : { xs: '1.6rem', sm: '2rem' },
             fontWeight: 700,
             lineHeight: 1.15,
           }}

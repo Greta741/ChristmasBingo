@@ -96,6 +96,9 @@ export const resources = {
           'Dairykis kalėdinių dekoracijų. Kiekvienas atradimas priartina prie bingo.',
       },
       print: {
+        monochrome: 'Nespalvotas spausdinimas',
+        enableColors: 'Įjungti spalvas',
+        disableColors: 'Spausdinti nespalvotai',
         action: 'Spausdinti',
         loadError:
           'Nepavyko įkelti visų pasirinktų kortelių. Patikrink, ar jos nebuvo ištrintos, ir bandyk dar kartą.',
@@ -215,6 +218,9 @@ export const resources = {
           'Look around for Christmas decorations. Every discovery brings you closer to bingo.',
       },
       print: {
+        monochrome: 'Black and white printing',
+        enableColors: 'Enable colors',
+        disableColors: 'Print in black and white',
         action: 'Print',
         loadError:
           'Could not load all selected cards. Check whether they were deleted and try again.',

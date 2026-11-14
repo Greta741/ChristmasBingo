@@ -1,9 +1,13 @@
-﻿import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+﻿import { useEffect, useState } from 'react'
 import Alert from '@mui/material/Alert'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import GlobalStyles from '@mui/material/GlobalStyles'
 import LinearProgress from '@mui/material/LinearProgress'
+import Fab from '@mui/material/Fab'
+import Tooltip from '@mui/material/Tooltip'
+import PaletteIcon from '@mui/icons-material/PaletteRounded'
+import TonalityIcon from '@mui/icons-material/TonalityRounded'
 import { useTranslation } from 'react-i18next'
 import { Link, useSearchParams } from 'react-router'
 import { BingoCardFrame } from '../../components/BingoCardFrame'
@@ -12,33 +16,8 @@ import type { BingoCard } from '../../domain/models'
 import { bingoCardRepository } from '../../services/bingoCardRepository'
 
 function PrintCard({ card, index }: { card: BingoCard; index: number }) {
-  const ref = useRef<HTMLDivElement>(null)
-  useLayoutEffect(() => {
-    // Fixed millimetre dimensions are identical on screen and on paper.
-    for (const cell of ref.current?.querySelectorAll<HTMLElement>(
-      '[role="cell"]',
-    ) ?? []) {
-      const text = cell.firstElementChild as HTMLElement | null
-      if (!text) continue
-      const style = getComputedStyle(cell)
-      const availableHeight =
-        cell.clientHeight -
-        parseFloat(style.paddingTop) -
-        parseFloat(style.paddingBottom)
-      let size = 28 / 3 // 7 pt in CSS pixels
-      cell.style.fontSize = `${size}px`
-      while (
-        size > 4 &&
-        (text.getBoundingClientRect().height > availableHeight ||
-          text.scrollWidth > cell.clientWidth)
-      ) {
-        size -= 0.25
-        cell.style.fontSize = `${size}px`
-      }
-    }
-  }, [card])
   return (
-    <Box ref={ref} sx={{ minWidth: 0, minHeight: 0 }}>
+    <Box sx={{ minWidth: 0, minHeight: 0 }}>
       <BingoCardFrame
         titleId={`print-card-${index}`}
         subtitle={card.name}
@@ -66,6 +45,7 @@ function PrintSheet({ ids }: { ids: string[] }) {
   const [loading, setLoading] = useState(ids.length > 0)
   const [error, setError] = useState(false)
   const [revision, setRevision] = useState(0)
+  const [monochrome, setMonochrome] = useState(false)
   const selection = JSON.stringify(ids)
   useEffect(() => {
     let active = true
@@ -104,9 +84,31 @@ function PrintSheet({ ids }: { ids: string[] }) {
             },
             '.print-sheet': { margin: '0 !important' },
             '.print-status': { display: 'none !important' },
+            '.MuiTooltip-popper': { display: 'none !important' },
           },
         }}
       />
+      {!loading && !error && cards.length > 0 && (
+        <Tooltip
+          title={t(monochrome ? 'print.enableColors' : 'print.disableColors')}
+        >
+          <Fab
+            className="print-status"
+            color="primary"
+            aria-label={t('print.monochrome')}
+            aria-pressed={monochrome}
+            onClick={() => setMonochrome((previous) => !previous)}
+            sx={{
+              position: 'fixed',
+              right: 24,
+              bottom: 'max(24px, env(safe-area-inset-bottom))',
+              zIndex: (theme) => theme.zIndex.fab,
+            }}
+          >
+            {monochrome ? <PaletteIcon /> : <TonalityIcon />}
+          </Fab>
+        </Tooltip>
+      )}
       {loading ? (
         <LinearProgress
           className="print-status"
@@ -137,15 +139,28 @@ function PrintSheet({ ids }: { ids: string[] }) {
           component="main"
           className="print-sheet"
           sx={{
-            width: '190mm',
-            height: '277mm',
+            width: '184mm',
+            height: '250mm',
             boxSizing: 'border-box',
             mx: 'auto',
-            my: 2,
+            my: 0,
             display: 'grid',
             gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
             gridTemplateRows: 'repeat(2, minmax(0, 1fr))',
-            gap: '6mm',
+            gap: 0,
+            breakInside: 'avoid',
+            pageBreakInside: 'avoid',
+            ...(monochrome && {
+              '&, & *': {
+                backgroundColor: 'transparent !important',
+                backgroundImage: 'none !important',
+                color: '#111 !important',
+                borderColor: '#444 !important',
+                boxShadow: 'none !important',
+              },
+              '& svg [fill]:not([fill="none"])': { fill: '#444' },
+              '& svg [stroke]:not([stroke="none"])': { stroke: '#444' },
+            }),
           }}
         >
           {cards.map((card, index) => (
