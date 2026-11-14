@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import PlayArrowRoundedIcon from '@mui/icons-material/PlayArrowRounded'
@@ -68,6 +68,7 @@ const PlaceholderGrid = styled('div')(({ theme }) => ({
 export function CreateView() {
   const { t } = useTranslation()
   const [batchSize, setBatchSize] = useState(1)
+  const previewRef = useRef<HTMLDivElement>(null)
 
   return (
     <>
@@ -83,10 +84,19 @@ export function CreateView() {
             <CreateActions
               batchSize={batchSize}
               onBatchSizeChange={setBatchSize}
+              onGenerate={() =>
+                previewRef.current?.scrollIntoView({
+                  behavior: window.matchMedia('(prefers-reduced-motion: reduce)')
+                    .matches
+                    ? 'instant'
+                    : 'smooth',
+                  block: 'start',
+                })
+              }
             />
           </CreationContent>
         </CreationSection>
-        <PreviewArea>
+        <PreviewArea ref={previewRef}>
           {Array.from({ length: batchSize }, (_, cardIndex) => (
             <Paper
               key={cardIndex}

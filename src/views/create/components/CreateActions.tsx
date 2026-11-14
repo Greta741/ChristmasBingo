@@ -58,11 +58,13 @@ const GenerateButton = styled(Button)(({ theme }) => ({
 interface CreateActionsProps {
   batchSize: number
   onBatchSizeChange: (value: number) => void
+  onGenerate: () => void
 }
 
 export function CreateActions({
   batchSize,
   onBatchSizeChange,
+  onGenerate,
 }: CreateActionsProps) {
   const { t } = useTranslation()
   return (
@@ -110,7 +112,7 @@ export function CreateActions({
           <AddIcon />
         </IconButton>
       </CountStepper>
-      <GenerateButton variant="contained" color="primary" disabled>
+      <GenerateButton variant="contained" color="primary" onClick={onGenerate}>
         {t('allocation.generate')}
       </GenerateButton>
     </ActionBar>

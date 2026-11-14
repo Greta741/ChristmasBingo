@@ -12,7 +12,7 @@ export function PageHeader({ title, description }: PageHeaderProps) {
       <Typography component="h1" variant="h1" sx={{ mb: 1 }}>
         {title}
       </Typography>
-      <Typography color="text.secondary" sx={{ maxWidth: 560 }}>
+      <Typography color="text.secondary" sx={{ maxWidth: 700 }}>
         {description}
       </Typography>
     </Box>
