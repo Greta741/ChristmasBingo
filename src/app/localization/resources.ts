@@ -6,6 +6,11 @@ export const resources = {
         edit: 'Pasirinkti dekoracijas',
         close: 'Uždaryti dekoracijų pasirinkimą',
         addPrompt: 'Pridėti dekoraciją',
+        deletePrompt: 'Ištrinti dekoraciją: {{prompt}}',
+        resetCategory: 'Atkurti „{{category}}“ dekoracijas',
+        resetConfirmation:
+          'Kategorijos „{{category}}“ pridėtos dekoracijos bus ištrintos, o pradinės dekoracijos – atkurtos. Sugeneruotos kortelės nesikeis. Ar tęsti?',
+        reset: 'Atkurti',
         easy: 'Lengvi',
         medium: 'Vidutiniai',
         hard: 'Sunkūs',
@@ -114,6 +119,11 @@ export const resources = {
         edit: 'Choose decorations',
         close: 'Close decoration selection',
         addPrompt: 'Add a decoration',
+        deletePrompt: 'Delete decoration: {{prompt}}',
+        resetCategory: 'Restore “{{category}}” decorations',
+        resetConfirmation:
+          'Custom decorations in “{{category}}” will be deleted and the original decorations restored. Generated cards will stay unchanged. Continue?',
+        reset: 'Restore',
         easy: 'Easy',
         medium: 'Medium',
         hard: 'Hard',
