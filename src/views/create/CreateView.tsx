@@ -2,7 +2,6 @@ import { useRef, useState } from 'react'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import PlayArrowRoundedIcon from '@mui/icons-material/PlayArrowRounded'
-import Paper from '@mui/material/Paper'
 import Typography from '@mui/material/Typography'
 import { styled } from '@mui/material/styles'
 import { useTranslation } from 'react-i18next'
@@ -15,6 +14,7 @@ import { useAppSelector } from '../../app/store/hooks'
 import { bingoGenerator } from '../../services/bingoGenerator'
 import type { BingoCard } from '../../domain/models'
 import { BingoCardGrid } from '../../components/BingoCardGrid'
+import { BingoCardFrame } from '../../components/BingoCardFrame'
 
 const CreateLayout = styled('div')({
   width: '100%',
@@ -149,22 +149,11 @@ export function CreateView() {
         </CreationSection>
         <PreviewArea ref={previewRef}>
           {previews.map((card, cardIndex) => (
-            <Paper
+            <BingoCardFrame
               key={card?.id ?? cardIndex}
-              component="section"
-              variant="outlined"
-              sx={{ p: 2 }}
-              aria-labelledby={`preview-title-${cardIndex}`}
+              titleId={`preview-title-${cardIndex}`}
+              subtitle={`${t('allocation.preview')}${previews.length > 1 ? ` ${cardIndex + 1}` : ''}`}
             >
-              <Typography
-                id={`preview-title-${cardIndex}`}
-                component="h2"
-                variant="h2"
-                sx={{ mb: 2 }}
-              >
-                {t('allocation.preview')}
-                {previews.length > 1 ? ` ${cardIndex + 1}` : ''}
-              </Typography>
               {card ? (
                 <BingoCardGrid cells={card.cells} />
               ) : (
@@ -191,7 +180,7 @@ export function CreateView() {
               >
                 {t('navigation.play')}
               </Button>
-            </Paper>
+            </BingoCardFrame>
           ))}
         </PreviewArea>
       </CreateLayout>

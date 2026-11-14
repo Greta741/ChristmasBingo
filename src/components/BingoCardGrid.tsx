@@ -5,7 +5,7 @@ export function BingoCardGrid({ cells }: { cells: BingoGrid }) {
   return (
     <Box
       role="table"
-      sx={{ borderTop: 1, borderLeft: 1, borderColor: 'divider' }}
+      sx={{ borderTop: 1, borderLeft: 1, borderColor: '#d9cba9' }}
     >
       {cells.map((row, index) => (
         <Box
@@ -16,7 +16,7 @@ export function BingoCardGrid({ cells }: { cells: BingoGrid }) {
             gridTemplateColumns: 'repeat(5, minmax(0, 1fr))',
           }}
         >
-          {row.map((cell) => (
+          {row.map((cell, column) => (
             <Box
               key={cell.promptId}
               role="cell"
@@ -26,7 +26,10 @@ export function BingoCardGrid({ cells }: { cells: BingoGrid }) {
                 p: { xs: 0.5, sm: 1 },
                 borderRight: 1,
                 borderBottom: 1,
-                borderColor: 'divider',
+                borderColor: '#d9cba9',
+                backgroundColor:
+                  (index + column) % 2 === 0 ? '#fffdf7' : '#f5efdf',
+                color: '#17372e',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
