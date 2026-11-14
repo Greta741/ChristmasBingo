@@ -1,4 +1,9 @@
+import { useState } from 'react'
 import AddIcon from '@mui/icons-material/Add'
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
+import Box from '@mui/material/Box'
+import ButtonBase from '@mui/material/ButtonBase'
+import useMediaQuery from '@mui/material/useMediaQuery'
 import RemoveIcon from '@mui/icons-material/Remove'
 import Chip from '@mui/material/Chip'
 import IconButton from '@mui/material/IconButton'
@@ -55,6 +60,8 @@ const PromptBadges = styled('div')(({ theme }) => ({
 }))
 
 export function Category({ categoryId }: { categoryId: CategoryId }) {
+  const [expanded, setExpanded] = useState(false)
+  const isMobile = useMediaQuery((theme) => theme.breakpoints.down('sm'))
   const { t, i18n } = useTranslation()
   const dispatch = useAppDispatch()
   const categories = useAppSelector((state) => state.categories)
@@ -72,70 +79,99 @@ export function Category({ categoryId }: { categoryId: CategoryId }) {
 
   return (
     <Section aria-labelledby={`${categoryId}-title`}>
-      <Stack
-        direction="row"
-        sx={{ justifyContent: 'space-between', alignItems: 'center' }}
-      >
-        <Typography id={`${categoryId}-title`} component="h3" variant="h2">
-          {label}
-        </Typography>
-        <Typography component="output" aria-live="polite">
-          {category.amount} / {capacity}
-        </Typography>
-      </Stack>
-      <Stack direction="row" spacing={1} sx={{ alignItems: 'center', mb: 1 }}>
-        <IconButton
-          disabled={category.amount === 0}
-          aria-label={t('allocation.decrease', { category: label })}
-          onClick={() => change(category.amount - 1)}
+      <Typography id={`${categoryId}-title`} component="h3" variant="h2">
+        <Stack
+          component={isMobile ? ButtonBase : 'div'}
+          direction="row"
+          onClick={isMobile ? () => setExpanded((value) => !value) : undefined}
+          aria-expanded={isMobile ? expanded : undefined}
+          aria-controls={isMobile ? `${categoryId}-prompts` : undefined}
+          sx={{
+            width: '100%',
+            minHeight: { xs: 44, sm: 0 },
+            gap: 1,
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            textAlign: 'left',
+            font: 'inherit',
+            borderRadius: 1,
+            '&.Mui-focusVisible': {
+              outline: '2px solid currentColor',
+              outlineOffset: 2,
+            },
+          }}
         >
-          <RemoveIcon />
-        </IconButton>
-        <Slider
-          min={0}
-          max={Math.max(capacity, 1)}
-          step={1}
-          value={category.amount}
-          disabled={capacity === 0}
-          onChange={(_event, value) =>
-            change(Math.min(value as number, maximum))
-          }
-          valueLabelDisplay="auto"
-          aria-label={label}
-          color="primary"
-        />
-        <IconButton
-          disabled={category.amount >= maximum}
-          aria-label={t('allocation.increase', { category: label })}
-          onClick={() => change(category.amount + 1)}
-        >
-          <AddIcon />
-        </IconButton>
-      </Stack>
-      <PromptBadges
-        tabIndex={0}
-        role="region"
-        aria-labelledby={`${categoryId}-title`}
+          <Box component="span" sx={{ flex: 1 }}>
+            {label}
+          </Box>
+          <Typography component="span" aria-live="polite">
+            {category.amount} / {capacity}
+          </Typography>
+          {isMobile && (
+            <ExpandMoreIcon
+              sx={{ transform: expanded ? 'rotate(180deg)' : 'none' }}
+            />
+          )}
+        </Stack>
+      </Typography>
+      <Box
+        id={`${categoryId}-prompts`}
+        sx={{ display: { xs: expanded ? 'block' : 'none', sm: 'block' } }}
       >
-        {category.prompts.map((prompt) => (
-          <Chip
-            key={prompt.id}
-            size="small"
-            label={
-              prompt.source === PromptSource.BuiltIn
-                ? prompt.text[language]
-                : prompt.text
+        <Stack direction="row" spacing={1} sx={{ alignItems: 'center', mb: 1 }}>
+          <IconButton
+            disabled={category.amount === 0}
+            aria-label={t('allocation.decrease', { category: label })}
+            onClick={() => change(category.amount - 1)}
+          >
+            <RemoveIcon />
+          </IconButton>
+          <Slider
+            min={0}
+            max={Math.max(capacity, 1)}
+            step={1}
+            value={category.amount}
+            disabled={capacity === 0}
+            onChange={(_event, value) =>
+              change(Math.min(value as number, maximum))
             }
+            valueLabelDisplay="auto"
+            aria-label={label}
+            color="primary"
           />
-        ))}
-      </PromptBadges>
-      <TextField
-        fullWidth
-        size="small"
-        disabled
-        placeholder={t('allocation.addPrompt')}
-        slotProps={{ htmlInput: { 'aria-label': t('allocation.addPrompt') } }}
-      />
+          <IconButton
+            disabled={category.amount >= maximum}
+            aria-label={t('allocation.increase', { category: label })}
+            onClick={() => change(category.amount + 1)}
+          >
+            <AddIcon />
+          </IconButton>
+        </Stack>
+        <PromptBadges
+          tabIndex={0}
+          role="region"
+          aria-labelledby={`${categoryId}-title`}
+        >
+          {category.prompts.map((prompt) => (
+            <Chip
+              key={prompt.id}
+              size="small"
+              label={
+                prompt.source === PromptSource.BuiltIn
+                  ? prompt.text[language]
+                  : prompt.text
+              }
+            />
+          ))}
+        </PromptBadges>
+        <TextField
+          fullWidth
+          size="small"
+          disabled
+          placeholder={t('allocation.addPrompt')}
+          slotProps={{ htmlInput: { 'aria-label': t('allocation.addPrompt') } }}
+        />
+      </Box>
     </Section>
   )
 }
