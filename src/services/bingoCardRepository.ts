@@ -34,6 +34,8 @@ export interface BingoCardRepository {
    */
   getCardsPage(offset: number, limit: number): Promise<BingoCard[]>
 
+  countCards(): Promise<number>
+
   /** Delete a card by ID. A missing card is a successful no-op. */
   deleteCard(id: string): Promise<void>
 }
@@ -53,6 +55,15 @@ function decode(value: unknown): BingoCard {
 
 /** Lazy IndexedDB implementation. Importing this object does not open a database. */
 export const bingoCardRepository: BingoCardRepository = {
+  async countCards() {
+    return withStore<number>(
+      CARD_STORE_NAME,
+      'readonly',
+      ({ store, onSuccess, setResult }) => {
+        onSuccess(store.count(), setResult)
+      },
+    )
+  },
   async saveCard(card) {
     const record = encode(card)
     await withStore<void>(CARD_STORE_NAME, 'readwrite', ({ store }) => {

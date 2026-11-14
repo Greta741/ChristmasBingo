@@ -52,6 +52,21 @@ export const resources = {
       },
       history: {
         title: 'Mano kortelės',
+        pagination: 'Kortelių istorijos puslapiai',
+        goToPage: 'Puslapis {{page}}',
+        previous: 'Ankstesnis puslapis',
+        next: 'Kitas puslapis',
+        progress: 'Rasta: {{marked}} / 25',
+        loadMore: 'Rodyti daugiau',
+        retry: 'Bandyti dar kartą',
+        loadError: 'Nepavyko įkelti kortelių.',
+        deleteCard: 'Ištrinti kortelę „{{name}}“',
+        deleteTitle: 'Ištrinti kortelę?',
+        deleteConfirmation:
+          'Ar tikrai nori ištrinti kortelę „{{name}}“? Šio veiksmo atšaukti negalima.',
+        delete: 'Ištrinti',
+        cancel: 'Atšaukti',
+        deleteError: 'Nepavyko ištrinti kortelės. Bandyk dar kartą.',
         empty: 'Dar neturi sukurtų kortelių.',
       },
       create: {
@@ -137,6 +152,21 @@ export const resources = {
       },
       history: {
         title: 'My cards',
+        pagination: 'Card history pages',
+        goToPage: 'Page {{page}}',
+        previous: 'Previous page',
+        next: 'Next page',
+        progress: 'Found: {{marked}} / 25',
+        loadMore: 'Show more',
+        retry: 'Try again',
+        loadError: 'Could not load cards.',
+        deleteCard: 'Delete card “{{name}}”',
+        deleteTitle: 'Delete card?',
+        deleteConfirmation:
+          'Are you sure you want to delete “{{name}}”? This cannot be undone.',
+        delete: 'Delete',
+        cancel: 'Cancel',
+        deleteError: 'Could not delete the card. Try again.',
         empty: 'You have not created any cards yet.',
       },
       create: {
