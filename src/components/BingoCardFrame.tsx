@@ -9,10 +9,12 @@ export function BingoCardFrame({
   titleId,
   subtitle,
   children,
+  headingComponent = 'h2',
 }: {
   titleId: string
   subtitle: string
   children: ReactNode
+  headingComponent?: 'h1' | 'h2'
 }) {
   const { t } = useTranslation()
   return (
@@ -60,7 +62,7 @@ export function BingoCardFrame({
         </Typography>
         <Typography
           id={titleId}
-          component="h2"
+          component={headingComponent}
           sx={{
             fontFamily: 'Georgia, serif',
             fontSize: { xs: '1.6rem', sm: '2rem' },

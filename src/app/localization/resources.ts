@@ -76,6 +76,10 @@ export const resources = {
       },
       play: {
         title: 'Žaisti bingo',
+        saveError:
+          'Nepavyko išsaugoti žymėjimo. Pakeitimas atšauktas – pabandyk paspausti langelį dar kartą.',
+        loadError: 'Nepavyko įkelti kortelės. Bandyk dar kartą.',
+        notFound: 'Kortelė nerasta. Ji galėjo būti ištrinta.',
         description:
           'Dairykis kalėdinių dekoracijų. Kiekvienas atradimas priartina prie bingo.',
       },
@@ -176,6 +180,10 @@ export const resources = {
       },
       play: {
         title: 'Play bingo',
+        saveError:
+          'Could not save the mark. The change was undone; try pressing the cell again.',
+        loadError: 'Could not load the card. Try again.',
+        notFound: 'Card not found. It may have been deleted.',
         description:
           'Look around for Christmas decorations. Every discovery brings you closer to bingo.',
       },

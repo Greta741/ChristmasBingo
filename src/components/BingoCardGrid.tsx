@@ -1,7 +1,16 @@
 import Box from '@mui/material/Box'
+import ButtonBase from '@mui/material/ButtonBase'
 import type { BingoGrid } from '../domain/models'
 
-export function BingoCardGrid({ cells }: { cells: BingoGrid }) {
+export function BingoCardGrid({
+  cells,
+  onCellClick,
+  pendingCells,
+}: {
+  cells: BingoGrid
+  onCellClick?: (promptId: string) => void
+  pendingCells?: ReadonlySet<string>
+}) {
   return (
     <Box
       role="table"
@@ -23,13 +32,16 @@ export function BingoCardGrid({ cells }: { cells: BingoGrid }) {
               sx={{
                 minWidth: 0,
                 minHeight: { xs: 72, sm: 88 },
-                p: { xs: 0.5, sm: 1 },
+                p: onCellClick ? 0 : { xs: 0.5, sm: 1 },
                 borderRight: 1,
                 borderBottom: 1,
                 borderColor: '#d9cba9',
-                backgroundColor:
-                  (index + column) % 2 === 0 ? '#fffdf7' : '#f5efdf',
-                color: '#17372e',
+                backgroundColor: cell.found
+                  ? '#134b38'
+                  : (index + column) % 2 === 0
+                    ? '#fffdf7'
+                    : '#f5efdf',
+                color: cell.found ? '#fff8e8' : '#17372e',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -39,7 +51,30 @@ export function BingoCardGrid({ cells }: { cells: BingoGrid }) {
                 overflowWrap: 'anywhere',
               }}
             >
-              {cell.text}
+              {onCellClick ? (
+                <ButtonBase
+                  onClick={() => onCellClick(cell.promptId)}
+                  aria-pressed={cell.found}
+                  aria-busy={pendingCells?.has(cell.promptId) || undefined}
+                  disabled={pendingCells?.has(cell.promptId)}
+                  sx={{
+                    width: '100%',
+                    alignSelf: 'stretch',
+                    p: { xs: 0.5, sm: 1 },
+                    font: 'inherit',
+                    color: 'inherit',
+                    overflowWrap: 'anywhere',
+                    '&.Mui-focusVisible': {
+                      outline: '3px solid #b4862c',
+                      outlineOffset: -3,
+                    },
+                  }}
+                >
+                  {cell.text}
+                </ButtonBase>
+              ) : (
+                cell.text
+              )}
             </Box>
           ))}
         </Box>

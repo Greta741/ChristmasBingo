@@ -231,7 +231,12 @@ export function CreateView() {
               )}
               <Button
                 component={Link}
-                to="/play/1"
+                to={card ? `/play/${encodeURIComponent(card.id)}` : '#'}
+                disabled={
+                  !card ||
+                  saving ||
+                  unsavedCards.some((entry) => entry.id === card.id)
+                }
                 variant="contained"
                 startIcon={<PlayArrowRoundedIcon />}
                 fullWidth
