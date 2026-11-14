@@ -11,6 +11,10 @@ import { PageHeader } from '../../components/layout/PageHeader'
 import { AllocationControls } from './components/AllocationControls'
 import { CreateActions } from './components/CreateActions'
 import { CreationDecorations } from './components/CreationDecorations'
+import { useAppSelector } from '../../app/store/hooks'
+import { bingoGenerator } from '../../services/bingoGenerator'
+import type { BingoCard } from '../../domain/models'
+import { BingoCardGrid } from '../../components/BingoCardGrid'
 
 const CreateLayout = styled('div')({
   width: '100%',
@@ -84,9 +88,36 @@ const GenerateBar = styled('div')(({ theme }) => ({
 }))
 
 export function CreateView() {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
+  const categories = useAppSelector((state) => state.categories)
+  const [cards, setCards] = useState<BingoCard[]>([])
   const [batchSize, setBatchSize] = useState(1)
   const previewRef = useRef<HTMLDivElement>(null)
+  const available = new Set(
+    Object.values(categories).flatMap((category) =>
+      category.prompts.map((prompt) => prompt.id),
+    ),
+  ).size
+  const previews = cards.length
+    ? cards
+    : Array.from({ length: batchSize }, () => null)
+
+  function generate() {
+    const language = i18n.resolvedLanguage === 'lt' ? 'lt' : 'en'
+    setCards(
+      Array.from({ length: batchSize }, () =>
+        bingoGenerator.generateCard(categories, language),
+      ),
+    )
+    requestAnimationFrame(() =>
+      previewRef.current?.scrollIntoView({
+        behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches
+          ? 'instant'
+          : 'smooth',
+        block: 'start',
+      }),
+    )
+  }
 
   return (
     <>
@@ -109,25 +140,17 @@ export function CreateView() {
               variant="contained"
               color="primary"
               sx={{ minWidth: 220 }}
-              onClick={() =>
-                previewRef.current?.scrollIntoView({
-                  behavior: window.matchMedia(
-                    '(prefers-reduced-motion: reduce)',
-                  ).matches
-                    ? 'instant'
-                    : 'smooth',
-                  block: 'start',
-                })
-              }
+              disabled={available < 25}
+              onClick={generate}
             >
               {t('allocation.generate')}
             </Button>
           </GenerateBar>
         </CreationSection>
         <PreviewArea ref={previewRef}>
-          {Array.from({ length: batchSize }, (_, cardIndex) => (
+          {previews.map((card, cardIndex) => (
             <Paper
-              key={cardIndex}
+              key={card?.id ?? cardIndex}
               component="section"
               variant="outlined"
               sx={{ p: 2 }}
@@ -140,18 +163,24 @@ export function CreateView() {
                 sx={{ mb: 2 }}
               >
                 {t('allocation.preview')}
-                {batchSize > 1 ? ` ${cardIndex + 1}` : ''}
+                {previews.length > 1 ? ` ${cardIndex + 1}` : ''}
               </Typography>
-              <Box aria-hidden="true">
-                <PlaceholderGrid>
-                  {Array.from({ length: 25 }, (_, index) => (
-                    <div key={index} />
-                  ))}
-                </PlaceholderGrid>
-              </Box>
-              <Typography color="text.secondary" sx={{ mt: 1.5 }}>
-                {t('allocation.previewHint')}
-              </Typography>
+              {card ? (
+                <BingoCardGrid cells={card.cells} />
+              ) : (
+                <Box aria-hidden="true">
+                  <PlaceholderGrid>
+                    {Array.from({ length: 25 }, (_, index) => (
+                      <div key={index} />
+                    ))}
+                  </PlaceholderGrid>
+                </Box>
+              )}
+              {!card && (
+                <Typography color="text.secondary" sx={{ mt: 1.5 }}>
+                  {t('allocation.previewHint')}
+                </Typography>
+              )}
               <Button
                 component={Link}
                 to="/play/1"
