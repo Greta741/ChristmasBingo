@@ -19,6 +19,11 @@ export const resources = {
           'Nepakanka dekoracijų. Pridėk dar bent {{missing}} skirtingų dekoracijų.',
         batchSize: 'Kortelių skaičius',
         generate: 'Generuoti korteles',
+        generationError:
+          'Nepavyko sugeneruoti kortelių. Patikrink dekoracijų paskirstymą.',
+        saveError:
+          'Nepavyko išsaugoti {{count}} kortelių. Bandyk dar kartą prieš išeidamas iš puslapio.',
+        retrySave: 'Išsaugoti dar kartą',
         preview: 'Kortelės peržiūra',
         previewHint: 'Sugeneruota bingo kortelė bus rodoma čia.',
       },
@@ -99,6 +104,11 @@ export const resources = {
           'Not enough decorations. Add at least {{missing}} more distinct decorations.',
         batchSize: 'Number of cards',
         generate: 'Generate cards',
+        generationError:
+          'Could not generate cards. Check the decoration allocation.',
+        saveError:
+          'Could not save {{count}} cards. Try again before leaving this page.',
+        retrySave: 'Retry saving',
         preview: 'Card preview',
         previewHint: 'Your generated bingo card will appear here.',
       },

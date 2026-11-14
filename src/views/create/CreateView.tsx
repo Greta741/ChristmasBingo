@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react'
 import Box from '@mui/material/Box'
+import Alert from '@mui/material/Alert'
 import Button from '@mui/material/Button'
 import PlayArrowRoundedIcon from '@mui/icons-material/PlayArrowRounded'
 import Typography from '@mui/material/Typography'
@@ -12,6 +13,7 @@ import { CreateActions } from './components/CreateActions'
 import { CreationDecorations } from './components/CreationDecorations'
 import { useAppSelector } from '../../app/store/hooks'
 import { bingoGenerator } from '../../services/bingoGenerator'
+import { bingoCardRepository } from '../../services/bingoCardRepository'
 import type { BingoCard } from '../../domain/models'
 import { BingoCardGrid } from '../../components/BingoCardGrid'
 import { BingoCardFrame } from '../../components/BingoCardFrame'
@@ -92,6 +94,10 @@ export function CreateView() {
   const categories = useAppSelector((state) => state.categories)
   const [cards, setCards] = useState<BingoCard[]>([])
   const [batchSize, setBatchSize] = useState(1)
+  const [saving, setSaving] = useState(false)
+  const [unsavedCards, setUnsavedCards] = useState<BingoCard[]>([])
+  const [generationError, setGenerationError] = useState(false)
+  const savingRef = useRef(false)
   const previewRef = useRef<HTMLDivElement>(null)
   const available = new Set(
     Object.values(categories).flatMap((category) =>
@@ -102,13 +108,36 @@ export function CreateView() {
     ? cards
     : Array.from({ length: batchSize }, () => null)
 
-  function generate() {
+  async function saveCards(batch: BingoCard[]) {
+    savingRef.current = true
+    setSaving(true)
+    try {
+      const results = await Promise.allSettled(
+        batch.map((card) => bingoCardRepository.saveCard(card)),
+      )
+      setUnsavedCards(
+        batch.filter((_, index) => results[index].status === 'rejected'),
+      )
+    } finally {
+      savingRef.current = false
+      setSaving(false)
+    }
+  }
+
+  async function generate() {
+    if (savingRef.current) return
+    setGenerationError(false)
     const language = i18n.resolvedLanguage === 'lt' ? 'lt' : 'en'
-    setCards(
-      Array.from({ length: batchSize }, () =>
+    let batch: BingoCard[]
+    try {
+      batch = Array.from({ length: batchSize }, () =>
         bingoGenerator.generateCard(categories, language),
-      ),
-    )
+      )
+    } catch {
+      setGenerationError(true)
+      return
+    }
+    setCards(batch)
     requestAnimationFrame(() =>
       previewRef.current?.scrollIntoView({
         behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -117,6 +146,7 @@ export function CreateView() {
         block: 'start',
       }),
     )
+    await saveCards(batch)
   }
 
   return (
@@ -140,19 +170,48 @@ export function CreateView() {
               variant="contained"
               color="primary"
               sx={{ minWidth: 220 }}
-              disabled={available < 25}
+              disabled={available < 25 || saving || unsavedCards.length > 0}
+              loading={saving}
               onClick={generate}
             >
               {t('allocation.generate')}
             </Button>
           </GenerateBar>
         </CreationSection>
+        {generationError && (
+          <Alert severity="error" sx={{ m: 2 }}>
+            {t('allocation.generationError')}
+          </Alert>
+        )}
+        {unsavedCards.length > 0 && (
+          <Alert
+            severity="error"
+            sx={{ m: 2 }}
+            action={
+              <Button
+                color="inherit"
+                disabled={saving}
+                onClick={() => {
+                  if (!savingRef.current) void saveCards(unsavedCards)
+                }}
+              >
+                {t('allocation.retrySave')}
+              </Button>
+            }
+          >
+            {t('allocation.saveError', { count: unsavedCards.length })}
+          </Alert>
+        )}
         <PreviewArea ref={previewRef}>
           {previews.map((card, cardIndex) => (
             <BingoCardFrame
               key={card?.id ?? cardIndex}
               titleId={`preview-title-${cardIndex}`}
-              subtitle={`${t('allocation.preview')}${previews.length > 1 ? ` ${cardIndex + 1}` : ''}`}
+              subtitle={
+                card
+                  ? `${new Date(card.createdAt).toLocaleDateString(i18n.resolvedLanguage === 'lt' ? 'lt-LT' : 'en-GB')}${cards.length > 1 ? ` - ${cardIndex + 1}` : ''}`
+                  : t('allocation.preview')
+              }
             >
               {card ? (
                 <BingoCardGrid cells={card.cells} />

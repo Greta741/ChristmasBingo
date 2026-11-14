@@ -6,7 +6,7 @@ import {
   persistedBingoCardSchema,
 } from '../domain/schemas'
 
-/** Contract for IndexedDB card storage; not connected to the application yet. */
+/** Contract for IndexedDB card storage. */
 export interface BingoCardRepository {
   /** Save a new card. Reject if its ID already exists. */
   saveCard(card: BingoCard): Promise<void>
