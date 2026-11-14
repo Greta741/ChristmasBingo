@@ -42,7 +42,7 @@ export const resources = {
       navigation: {
         label: 'Pagrindinė navigacija',
         create: 'Kurti',
-        history: 'Istorija',
+        history: 'Kortelės',
         play: 'Žaisti',
       },
       mobileMenu: {
@@ -164,7 +164,7 @@ export const resources = {
       navigation: {
         label: 'Main navigation',
         create: 'Create',
-        history: 'History',
+        history: 'Cards',
         play: 'Play',
       },
       mobileMenu: {
