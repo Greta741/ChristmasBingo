@@ -21,13 +21,40 @@ Open [localhost:3005](http://localhost:3005/). The development port is fixed; Vi
 
 If PowerShell blocks `npm.ps1`, use `npm.cmd` instead of `npm`; no execution-policy change is needed.
 
-## Base path and navigation
+## GitHub Pages
 
-The default base path is `/`. For a repository subpath, copy `.env.example` to `.env.local`, set `VITE_BASE_PATH=/ChristmasBingo/`, and restart Vite or rebuild. This configures asset URLs without changing the hash routes or setting up deployment.
+The workflow in `.github/workflows/deploy-pages.yml` builds and deploys the site on every push to `main`. It can also be started manually from Actions → Deploy to GitHub Pages → Run workflow.
 
-The four page shells are available at `/#/`, `/#/create`, `/#/play/<id>`, and `/#/print`. Print selection parameters belong after the hash route, for example `/#/print?id=a&id=b`.
+One-time setup:
 
-The logo returns home. Header navigation contains Create, History, and Play. History scrolls to the card list without automatically focusing or highlighting it on the main page. On phones, these actions are available in a right-side slide-out menu. Layout components live under `src/shared/components/layout/`, with compact spacing and a green/gold header.
+1. Open [repository Pages settings](https://github.com/Greta741/ChristmasBingo/settings/pages).
+2. Under **Build and deployment → Source**, select **GitHub Actions**.
+3. Commit and push the project, including the workflow and `package-lock.json`, to `main`.
+4. Wait for **Deploy to GitHub Pages** to finish in the repository's Actions tab.
+
+The published address is **https://greta741.github.io/ChristmasBingo/**. For example, Create opens at `https://greta741.github.io/ChristmasBingo/#/create`.
+
+The workflow uses the Node version from `.nvmrc`, runs `npm ci`, ESLint and the production build, and uploads only `dist/`. Vite's base path is taken from GitHub Pages metadata, including `/ChristmasBingo/` for the repository site. Hash routing supports direct links and refreshes without a server-side fallback. No personal access token or additional deploy dependency is needed.
+
+To preview the same subpath locally in PowerShell:
+
+```powershell
+$env:VITE_BASE_PATH = '/ChristmasBingo/'
+npm.cmd run build
+npm.cmd run preview -- --base=/ChristmasBingo/
+```
+
+Open `http://localhost:4173/ChristmasBingo/`. Remove the environment override afterward with `Remove-Item Env:VITE_BASE_PATH`.
+
+Cards and custom decorations are stored in the visitor's browser (IndexedDB/localStorage); publishing does not upload them to GitHub or transfer development data to the published site.
+
+## Base path and navigation (local development)
+
+The default base path is `/`. For a repository subpath, copy `.env.example` to `.env.local`, set `VITE_BASE_PATH=/ChristmasBingo/`, and restart Vite or rebuild. Deployment automatically sets the correct base path through the workflow.
+
+The four routes are available at `/#/`, `/#/create`, `/#/play/<id>`, and `/#/print`. Print selection parameters belong after the hash route, for example `/#/print?id=a&id=b`.
+
+The logo returns home. Header navigation contains Create, History, and Play. History opens `/#/?section=history` without the home hero. On phones, these actions are available in a right-side slide-out menu. Layout components live under `src/components/layout/`, with compact spacing and a green/gold header.
 
 ## Commands
 
@@ -45,9 +72,9 @@ Prettier excludes the existing requirements/planning documents, generated files,
 
 ## Current scope
 
-Setup steps 01–03 and step 04 are implemented: the React/TypeScript scaffold, agreed dependencies, strict TypeScript configuration, ESLint, Prettier, a shared responsive MUI layout/theme, and four hash-routed page shells. Step 04 is awaiting review. No automated tests or CI/deployment configuration are included.
+The app supports card generation, IndexedDB storage, paginated history, card deletion, play with persistent cell marking and Bingo celebrations, LT/EN localisation, and custom decoration management. GitHub Pages deployment is configured through GitHub Actions. Print functionality and PWA registration remain unfinished.
 
-MUI uses primary colour `#134b38`, with red and gold theme accents and system fonts. Game actions, card generation, persistence, localisation, and PWA registration belong to later steps; Play buttons temporarily navigate to `/play/1`; generation will be connected in the quick-play step. Creation settings and generated-card previews will remain within `/create`.
+MUI uses primary colour `#134b38`, with red and gold theme accents and system fonts. Individual card Play buttons open their saved `/play/<id>` routes; header/home quick-play actions still use the temporary `/play/1` route. Creation settings and generated-card previews remain within `/create`.
 
 Local requirements and planning documents are kept in the git-ignored `docs/` directory: [implementation-steps.md](docs/implementation-steps.md), [requirements.md](docs/requirements.md), and [Tech requirements.md](<docs/Tech requirements.md>).
 
