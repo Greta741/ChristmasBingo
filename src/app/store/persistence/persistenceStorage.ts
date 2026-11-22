@@ -80,6 +80,10 @@ function validateSerializedState(serializedState: string) {
     schemaVersion: persistMetadata.version,
     categories: parseStoredProperty(storedState, 'categories'),
     language: parseStoredProperty(storedState, 'language'),
+    freeCenter:
+      'freeCenter' in storedState
+        ? parseStoredProperty(storedState, 'freeCenter')
+        : false,
   })
 
   if (!validationResult.success) {

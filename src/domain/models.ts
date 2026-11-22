@@ -4,6 +4,14 @@ export const CUSTOM_PROMPT_MAX_LENGTH = 200
 export type Language = 'lt' | 'en'
 export type CardCelebration = 'bingo' | 'fullCard'
 
+export enum FreeCenterShape {
+  Gift = 'gift',
+  Star = 'star',
+  Tree = 'tree',
+  Bell = 'bell',
+  Snowflake = 'snowflake',
+}
+
 export enum CategoryId {
   Easy = 'easy',
   Medium = 'medium',
@@ -45,12 +53,15 @@ export type CategoriesState = Record<CategoryId, CategoryState>
 export interface AppState {
   categories: CategoriesState
   language: Language | null
+  freeCenter: boolean
 }
 
 export interface BingoCell {
   promptId: string
   text: string
   found: boolean
+  isFree?: boolean
+  freeCenterShape?: FreeCenterShape
 }
 
 export type Tuple5<T> = [T, T, T, T, T]

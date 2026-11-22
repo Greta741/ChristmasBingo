@@ -14,7 +14,8 @@ import { PageHeader } from '../../components/layout/PageHeader'
 import { AllocationControls } from './components/AllocationControls'
 import { CreateActions } from './components/CreateActions'
 import { CreationDecorations } from './components/CreationDecorations'
-import { useAppSelector } from '../../app/store/hooks'
+import { useAppDispatch, useAppSelector } from '../../app/store/hooks'
+import { setFreeCenter } from '../../app/store/appStateSlice'
 import { bingoGenerator } from '../../services/bingoGenerator'
 import { bingoCardRepository } from '../../services/bingoCardRepository'
 import type { BingoCard } from '../../domain/models'
@@ -90,6 +91,8 @@ export function CreateView() {
   const categories = useAppSelector((state) => state.categories)
   const [cards, setCards] = useState<BingoCard[]>([])
   const [batchSize, setBatchSize] = useState(1)
+  const dispatch = useAppDispatch()
+  const freeCenter = useAppSelector((state) => state.freeCenter)
   const [saving, setSaving] = useState(false)
   const [unsavedCards, setUnsavedCards] = useState<BingoCard[]>([])
   const [generationError, setGenerationError] = useState(false)
@@ -124,7 +127,7 @@ export function CreateView() {
     let batch: BingoCard[]
     try {
       batch = Array.from({ length: batchSize }, () =>
-        bingoGenerator.generateCard(categories, language),
+        bingoGenerator.generateCard(categories, language, freeCenter),
       )
     } catch {
       setGenerationError(true)
@@ -152,10 +155,12 @@ export function CreateView() {
               title={t('create.title')}
               description={t('create.description')}
             />
-            <AllocationControls />
+            <AllocationControls minimumPrompts={freeCenter ? 24 : 25} />
             <CreateActions
               batchSize={batchSize}
               onBatchSizeChange={setBatchSize}
+              freeCenter={freeCenter}
+              onFreeCenterChange={(value) => dispatch(setFreeCenter(value))}
             />
           </CreationContent>
           <GenerateBar>
@@ -163,7 +168,11 @@ export function CreateView() {
               variant="contained"
               color="primary"
               sx={{ minWidth: 220 }}
-              disabled={available < 25 || saving || unsavedCards.length > 0}
+              disabled={
+                available < (freeCenter ? 24 : 25) ||
+                saving ||
+                unsavedCards.length > 0
+              }
               loading={saving}
               onClick={generate}
             >

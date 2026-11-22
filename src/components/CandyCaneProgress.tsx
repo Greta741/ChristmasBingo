@@ -1,15 +1,21 @@
 import Box from '@mui/material/Box'
 import { useTranslation } from 'react-i18next'
 
-export function CandyCaneProgress({ marked }: { marked: number }) {
+export function CandyCaneProgress({
+  marked,
+  total = 25,
+}: {
+  marked: number
+  total?: number
+}) {
   const { t } = useTranslation()
   return (
     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
       <Box
         role="progressbar"
-        aria-label={t('history.progress', { marked })}
+        aria-label={t('history.progress', { marked, total })}
         aria-valuemin={0}
-        aria-valuemax={25}
+        aria-valuemax={total}
         aria-valuenow={marked}
         sx={{
           flex: 1,
@@ -24,7 +30,7 @@ export function CandyCaneProgress({ marked }: { marked: number }) {
       >
         <Box
           sx={{
-            width: `${(marked / 25) * 100}%`,
+            width: `${total > 0 ? (marked / total) * 100 : 0}%`,
             height: '100%',
             borderRadius: 'inherit',
             backgroundImage:
@@ -34,7 +40,7 @@ export function CandyCaneProgress({ marked }: { marked: number }) {
         />
       </Box>
       <Box sx={{ flexShrink: 0, fontSize: '0.7rem', fontWeight: 700 }}>
-        {marked}/25
+        {marked}/{total}
       </Box>
     </Box>
   )

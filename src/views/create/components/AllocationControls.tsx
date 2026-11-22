@@ -33,7 +33,11 @@ const AllocationHeading = styled('div')(({ theme }) => ({
   gap: theme.spacing(1),
 }))
 
-export function AllocationControls() {
+export function AllocationControls({
+  minimumPrompts = 25,
+}: {
+  minimumPrompts?: number
+}) {
   const { t } = useTranslation()
   const categories = useAppSelector((state) => state.categories)
   const total = Object.values(categories).reduce(
@@ -60,9 +64,11 @@ export function AllocationControls() {
             aria-live="polite"
           />
         </AllocationHeading>
-        {available < 25 && (
+        {available < minimumPrompts && (
           <Alert severity="warning">
-            {t('allocation.insufficient', { missing: 25 - available })}
+            {t('allocation.insufficient', {
+              missing: minimumPrompts - available,
+            })}
           </Alert>
         )}
         <CategoryGrid>

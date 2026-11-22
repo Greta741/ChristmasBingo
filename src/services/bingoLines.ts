@@ -1,4 +1,5 @@
 import type { BingoGrid } from '../domain/models'
+import { isCellMarked } from '../domain/isCellMarked'
 
 export function getCompletedLines(cells: BingoGrid) {
   const lines = [
@@ -10,5 +11,5 @@ export function getCompletedLines(cells: BingoGrid) {
     { id: 'diagonal-down', cells: cells.map((row, index) => row[index]) },
     { id: 'diagonal-up', cells: cells.map((row, index) => row[4 - index]) },
   ]
-  return lines.filter((line) => line.cells.every((cell) => cell.found))
+  return lines.filter((line) => line.cells.every(isCellMarked))
 }

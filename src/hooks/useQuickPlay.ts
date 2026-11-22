@@ -10,6 +10,7 @@ export function useQuickPlay() {
   const { i18n } = useTranslation()
   const navigate = useNavigate()
   const categories = useAppSelector((state) => state.categories)
+  const freeCenter = useAppSelector((state) => state.freeCenter)
   const [starting, setStarting] = useState(false)
   const [startError, setStartError] = useState(false)
   const busy = useRef(false)
@@ -34,6 +35,7 @@ export function useQuickPlay() {
         bingoGenerator.generateCard(
           categories,
           i18n.resolvedLanguage === 'lt' ? 'lt' : 'en',
+          freeCenter,
         )
       pendingCard.current = card
       await bingoCardRepository.saveCard(card)

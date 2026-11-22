@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next'
 import { Link, useParams } from 'react-router'
 import { BingoCardFrame } from '../../components/BingoCardFrame'
 import { BingoCardGrid } from '../../components/BingoCardGrid'
+import { getCardProgress } from '../../domain/getCardProgress'
 import type { BingoCard, BingoGrid, CardCelebration } from '../../domain/models'
 import { bingoCardRepository } from '../../services/bingoCardRepository'
 import { getCompletedLines } from '../../services/bingoLines'
@@ -58,7 +59,7 @@ function SavedCard({ id }: { id: string }) {
 
   async function toggleCell(promptId: string) {
     const cell = card?.cells.flat().find((entry) => entry.promptId === promptId)
-    if (!cell || pendingRef.current.has(promptId)) return
+    if (!cell || cell.isFree || pendingRef.current.has(promptId)) return
     const previousFound = cell.found
     pendingRef.current.add(promptId)
     setPendingCells(new Set(pendingRef.current))
@@ -145,9 +146,7 @@ function SavedCard({ id }: { id: string }) {
             </Alert>
           )}
           <Box sx={{ mb: 1.5, color: 'text.secondary' }}>
-            <CandyCaneProgress
-              marked={card.cells.flat().filter((cell) => cell.found).length}
-            />
+            <CandyCaneProgress {...getCardProgress(card.cells)} />
           </Box>
           <BingoCardGrid
             cells={card.cells}

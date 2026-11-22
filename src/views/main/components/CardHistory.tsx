@@ -20,6 +20,9 @@ import type { BingoCard } from '../../../domain/models'
 import { bingoCardRepository } from '../../../services/bingoCardRepository'
 import { getCompletedLines } from '../../../services/bingoLines'
 import { CandyCaneProgress } from '../../../components/CandyCaneProgress'
+import { isCellMarked } from '../../../domain/isCellMarked'
+import { getCardProgress } from '../../../domain/getCardProgress'
+import { FreeCenterIcon } from '../../../components/FreeCenterIcon'
 
 const PAGE_SIZE = 12
 
@@ -138,7 +141,6 @@ export function CardHistory() {
         }}
       >
         {cards.map((card) => {
-          const found = card.cells.flat().filter((cell) => cell.found).length
           const winningCells = new Set(
             getCompletedLines(card.cells).flatMap((line) =>
               line.cells.map((cell) => cell.promptId),
@@ -262,13 +264,14 @@ export function CardHistory() {
                 </IconButton>
               </Box>
               <Box sx={{ mb: 1.25, color: 'text.secondary' }}>
-                <CandyCaneProgress marked={found} />
+                <CandyCaneProgress {...getCardProgress(card.cells)} />
               </Box>
               <Box
                 aria-hidden="true"
                 sx={{
                   display: 'grid',
                   gridTemplateColumns: 'repeat(5, minmax(0, 1fr))',
+                  gridTemplateRows: 'repeat(5, minmax(0, 1fr))',
                   gap: '3px',
                   aspectRatio: '1',
                 }}
@@ -278,16 +281,32 @@ export function CardHistory() {
                     key={cell.promptId}
                     sx={{
                       border: '1px solid #d9cba9',
+                      position: 'relative',
+                      minWidth: 0,
+                      minHeight: 0,
+                      overflow: 'hidden',
                       borderRadius: '2px',
-                      bgcolor: cell.found
-                        ? winningCells.has(cell.promptId)
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      color: isCellMarked(cell) ? '#fff8e8' : '#17372e',
+                      bgcolor: isCellMarked(cell)
+                        ? cell.isFree || winningCells.has(cell.promptId)
                           ? '#a33b40'
                           : '#134b38'
                         : (Math.floor(index / 5) + (index % 5)) % 2 === 0
                           ? '#fffdf7'
                           : '#f0e6ce',
                     }}
-                  />
+                  >
+                    {cell.isFree && (
+                      <FreeCenterIcon
+                        compact
+                        shape={cell.freeCenterShape}
+                        label={cell.text}
+                      />
+                    )}
+                  </Box>
                 ))}
               </Box>
               <Box sx={{ flex: 1 }} />

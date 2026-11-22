@@ -40,6 +40,7 @@ const initialState: AppState = {
     },
   },
   language: null,
+  freeCenter: false,
 }
 
 const appStateSlice = createSlice({
@@ -113,6 +114,9 @@ const appStateSlice = createSlice({
     setLanguagePreference: (state, action: PayloadAction<Language | null>) => {
       state.language = action.payload
     },
+    setFreeCenter: (state, action: PayloadAction<boolean>) => {
+      state.freeCenter = action.payload
+    },
   },
 })
 
@@ -123,5 +127,6 @@ export const {
   replaceCategoryPrompts,
   setCategoryAmount,
   setLanguagePreference,
+  setFreeCenter,
 } = appStateSlice.actions
 export const appStateReducer = appStateSlice.reducer

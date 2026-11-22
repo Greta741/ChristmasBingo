@@ -19,7 +19,7 @@ const persistConfig: PersistConfig<AppState> = {
   key: 'christmas-bingo',
   version: LOCAL_STORAGE_SCHEMA_VERSION,
   storage: persistenceStorage,
-  whitelist: ['categories', 'language'],
+  whitelist: ['categories', 'language', 'freeCenter'],
 }
 
 const persistedReducer = persistReducer(persistConfig, appStateReducer)

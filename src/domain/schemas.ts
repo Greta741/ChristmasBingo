@@ -4,6 +4,7 @@ import {
   CARD_NAME_MAX_LENGTH,
   CUSTOM_PROMPT_MAX_LENGTH,
   CategoryId,
+  FreeCenterShape,
   PromptSource,
   type AppState,
   type BasePrompt,
@@ -119,6 +120,7 @@ export const categoriesStateSchema: z.ZodType<CategoriesState> = z
 const appStateShape = {
   categories: categoriesStateSchema,
   language: languageSchema.nullable(),
+  freeCenter: z.boolean().default(false),
 }
 
 export const appStateSchema: z.ZodType<AppState> = z.object(appStateShape)
@@ -127,6 +129,8 @@ export const bingoCellSchema: z.ZodType<BingoCell> = z.object({
   promptId: z.string().min(1),
   text: z.string(),
   found: z.boolean(),
+  isFree: z.boolean().optional(),
+  freeCenterShape: z.enum(FreeCenterShape).optional(),
 })
 
 export const bingoRowSchema = z.tuple([

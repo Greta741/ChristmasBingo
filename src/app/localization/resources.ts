@@ -23,6 +23,7 @@ export const resources = {
         insufficient:
           'Nepakanka dekoracijų. Pridėk dar bent {{missing}} skirtingų dekoracijų.',
         batchSize: 'Kortelių skaičius',
+        freeCenter: 'Nemokamas centras',
         generate: 'Generuoti korteles',
         generationError:
           'Nepavyko sugeneruoti kortelių. Patikrink dekoracijų paskirstymą.',
@@ -64,7 +65,7 @@ export const resources = {
         goToPage: 'Puslapis {{page}}',
         previous: 'Ankstesnis puslapis',
         next: 'Kitas puslapis',
-        progress: 'Rasta: {{marked}} / 25',
+        progress: 'Rasta: {{marked}} / {{total}}',
         loadMore: 'Rodyti daugiau',
         retry: 'Bandyti dar kartą',
         loadError: 'Nepavyko įkelti kortelių.',
@@ -145,6 +146,7 @@ export const resources = {
         insufficient:
           'Not enough decorations. Add at least {{missing}} more distinct decorations.',
         batchSize: 'Number of cards',
+        freeCenter: 'Free center',
         generate: 'Generate cards',
         generationError:
           'Could not generate cards. Check the decoration allocation.',
@@ -186,7 +188,7 @@ export const resources = {
         goToPage: 'Page {{page}}',
         previous: 'Previous page',
         next: 'Next page',
-        progress: 'Found: {{marked}} / 25',
+        progress: 'Found: {{marked}} / {{total}}',
         loadMore: 'Show more',
         retry: 'Try again',
         loadError: 'Could not load cards.',

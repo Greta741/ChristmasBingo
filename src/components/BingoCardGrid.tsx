@@ -1,6 +1,8 @@
 import Box from '@mui/material/Box'
 import ButtonBase from '@mui/material/ButtonBase'
 import type { BingoGrid } from '../domain/models'
+import { isCellMarked } from '../domain/isCellMarked'
+import { FreeCenterIcon } from './FreeCenterIcon'
 
 export function BingoCardGrid({
   cells,
@@ -51,14 +53,14 @@ export function BingoCardGrid({
                 borderBottom: 1,
                 borderColor: '#d9cba9',
                 backgroundColor:
-                  cell.found && !printMode
-                    ? winningCells?.has(cell.promptId)
+                  isCellMarked(cell) && !printMode
+                    ? cell.isFree || winningCells?.has(cell.promptId)
                       ? '#a33b40'
                       : '#134b38'
                     : (index + column) % 2 === 0
                       ? '#fffdf7'
                       : '#f5efdf',
-                color: cell.found && !printMode ? '#fff8e8' : '#17372e',
+                color: isCellMarked(cell) && !printMode ? '#fff8e8' : '#17372e',
                 position: 'relative',
                 isolation: 'isolate',
                 ...(!printMode &&
@@ -95,12 +97,17 @@ export function BingoCardGrid({
                 overflowWrap: 'anywhere',
               }}
             >
-              {onCellClick ? (
+              {cell.isFree ? (
+                <FreeCenterIcon
+                  shape={cell.freeCenterShape}
+                  label={cell.text}
+                />
+              ) : onCellClick ? (
                 <ButtonBase
                   onClick={() => onCellClick(cell.promptId)}
                   aria-pressed={cell.found}
                   aria-busy={pendingCells?.has(cell.promptId) || undefined}
-                  disabled={pendingCells?.has(cell.promptId)}
+                  disabled={cell.isFree || pendingCells?.has(cell.promptId)}
                   sx={{
                     width: '100%',
                     alignSelf: 'stretch',

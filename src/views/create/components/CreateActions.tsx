@@ -3,6 +3,9 @@ import RemoveIcon from '@mui/icons-material/Remove'
 import IconButton from '@mui/material/IconButton'
 import InputBase from '@mui/material/InputBase'
 import Typography from '@mui/material/Typography'
+import Box from '@mui/material/Box'
+import Switch from '@mui/material/Switch'
+import FormControlLabel from '@mui/material/FormControlLabel'
 import { styled } from '@mui/material/styles'
 import { useTranslation } from 'react-i18next'
 
@@ -13,6 +16,10 @@ const ActionBar = styled('div')(({ theme }) => ({
   justifyContent: 'center',
   gap: theme.spacing(2),
   padding: theme.spacing(1.5, 2),
+  [theme.breakpoints.up('sm')]: {
+    flexDirection: 'row',
+    gap: theme.spacing(4),
+  },
 }))
 
 const CountStepper = styled('div')(({ theme }) => ({
@@ -48,58 +55,90 @@ const CountInput = styled(InputBase)(({ theme }) => ({
 interface CreateActionsProps {
   batchSize: number
   onBatchSizeChange: (value: number) => void
+  freeCenter: boolean
+  onFreeCenterChange: (value: boolean) => void
 }
 
 export function CreateActions({
   batchSize,
   onBatchSizeChange,
+  freeCenter,
+  onFreeCenterChange,
 }: CreateActionsProps) {
   const { t } = useTranslation()
   return (
     <ActionBar>
-      <Typography
-        component="label"
-        htmlFor="batch-size"
-        variant="body2"
-        sx={{ fontWeight: 650, mb: -1 }}
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          gap: 2,
+        }}
       >
-        {t('allocation.batchSize')}
-      </Typography>
-      <CountStepper>
-        <IconButton
-          aria-label={t('allocation.decrease', {
-            category: t('allocation.batchSize'),
-          })}
-          disabled={batchSize <= 1}
-          color="primary"
-          onClick={() => onBatchSizeChange(batchSize - 1)}
-          sx={{ width: 44, height: 44 }}
+        <Typography
+          component="label"
+          htmlFor="batch-size"
+          variant="body2"
+          sx={{ fontWeight: 650, mb: -1 }}
         >
-          <RemoveIcon />
-        </IconButton>
-        <CountInput
-          type="number"
-          id="batch-size"
-          value={batchSize}
-          onChange={(event) => {
-            const value = Number(event.target.value)
-            if (Number.isInteger(value) && value >= 1 && value <= 4)
-              onBatchSizeChange(value)
-          }}
-          slotProps={{ input: { min: 1, max: 4, step: 1 } }}
-        />
-        <IconButton
-          aria-label={t('allocation.increase', {
-            category: t('allocation.batchSize'),
-          })}
-          disabled={batchSize >= 4}
-          color="primary"
-          onClick={() => onBatchSizeChange(batchSize + 1)}
-          sx={{ width: 44, height: 44 }}
-        >
-          <AddIcon />
-        </IconButton>
-      </CountStepper>
+          {t('allocation.batchSize')}
+        </Typography>
+        <CountStepper>
+          <IconButton
+            aria-label={t('allocation.decrease', {
+              category: t('allocation.batchSize'),
+            })}
+            disabled={batchSize <= 1}
+            color="primary"
+            onClick={() => onBatchSizeChange(batchSize - 1)}
+            sx={{ width: 44, height: 44 }}
+          >
+            <RemoveIcon />
+          </IconButton>
+          <CountInput
+            type="number"
+            id="batch-size"
+            value={batchSize}
+            onChange={(event) => {
+              const value = Number(event.target.value)
+              if (Number.isInteger(value) && value >= 1 && value <= 4)
+                onBatchSizeChange(value)
+            }}
+            slotProps={{ input: { min: 1, max: 4, step: 1 } }}
+          />
+          <IconButton
+            aria-label={t('allocation.increase', {
+              category: t('allocation.batchSize'),
+            })}
+            disabled={batchSize >= 4}
+            color="primary"
+            onClick={() => onBatchSizeChange(batchSize + 1)}
+            sx={{ width: 44, height: 44 }}
+          >
+            <AddIcon />
+          </IconButton>
+        </CountStepper>
+      </Box>
+      <FormControlLabel
+        labelPlacement="top"
+        sx={{
+          m: 0,
+          gap: 1,
+          '& .MuiFormControlLabel-label': {
+            fontSize: '0.875rem',
+            fontWeight: 650,
+          },
+        }}
+        control={
+          <Switch
+            checked={freeCenter}
+            onChange={(_event, checked) => onFreeCenterChange(checked)}
+            sx={{ '& .MuiSwitch-track': { backgroundColor: '#fff8e8' } }}
+          />
+        }
+        label={t('allocation.freeCenter')}
+      />
     </ActionBar>
   )
 }

@@ -1,9 +1,10 @@
 import { createId } from './createId'
 import { lithuanianCardNameGenerator } from './lithuanianCardNameGenerator'
 import { englishCardNameGenerator } from './englishCardNameGenerator'
-import { CategoryId, PromptSource } from '../domain/models'
+import { CategoryId, FreeCenterShape, PromptSource } from '../domain/models'
 import type {
   BingoCard,
+  BingoCell,
   BingoGrid,
   CategoriesState,
   Language,
@@ -48,17 +49,33 @@ export const bingoGenerator = {
     return shuffle(eligible).slice(0, count)
   },
 
-  generateCard(categories: CategoriesState, language: Language): BingoCard {
+  generateCard(
+    categories: CategoriesState,
+    language: Language,
+    freeCenter = false,
+  ): BingoCard {
+    const promptCount = freeCenter ? 24 : 25
     if (
       unique(Object.values(categories).flatMap((category) => category.prompts))
-        .length < 25
+        .length < promptCount
     )
-      throw new Error('At least 25 unique prompts are required')
+      throw new Error(`At least ${promptCount} unique prompts are required`)
     const total = Object.values(categories).reduce(
       (sum, category) => sum + category.amount,
       0,
     )
     if (total > 25) throw new Error('Allocation exceeds 25 cells')
+    const allocatedCategories = Object.values(CategoryId).filter(
+      (id) => categories[id].amount > 0,
+    )
+    // If all 25 slots are allocated, choose a category uniformly to make room.
+    // Otherwise the free center takes one of the unallocated random slots.
+    const reducedCategory =
+      freeCenter && total === 25
+        ? allocatedCategories[
+            Math.floor(Math.random() * allocatedCategories.length)
+          ]
+        : undefined
     const selected: Prompt[] = []
     const excluded = new Set<string>()
     const add = (prompts: Prompt[]) => {
@@ -69,18 +86,18 @@ export const bingoGenerator = {
       add(
         this.getRandomPromptsFromCategory(
           categories[id].prompts,
-          categories[id].amount,
+          categories[id].amount - (id === reducedCategory ? 1 : 0),
           excluded,
         ),
       )
     }
-    while (selected.length < 25) {
+    while (selected.length < promptCount) {
       const id = this.getRandomCategory(categories, excluded)
       add(
         this.getRandomPromptsFromCategory(categories[id].prompts, 1, excluded),
       )
     }
-    const cells = shuffle(selected).map((prompt) => ({
+    const cells: BingoCell[] = shuffle(selected).map((prompt) => ({
       promptId: prompt.id,
       text:
         prompt.source === PromptSource.BuiltIn
@@ -88,6 +105,16 @@ export const bingoGenerator = {
           : prompt.text,
       found: false,
     }))
+    if (freeCenter) {
+      const shapes = Object.values(FreeCenterShape)
+      cells.splice(12, 0, {
+        promptId: `free-center-${createId()}`,
+        text: language === 'lt' ? 'Nemokamas centras' : 'Free space',
+        found: true,
+        isFree: true,
+        freeCenterShape: shapes[Math.floor(Math.random() * shapes.length)],
+      })
+    }
     return {
       id: createId(),
       name:

@@ -1,6 +1,7 @@
 import { CARD_STORE_NAME, CARD_ORDER_INDEX, withStore } from './indexedDb'
 import type { BingoCard, CardCelebration } from '../domain/models'
 import { getCompletedLines } from './bingoLines'
+import { isCellMarked } from '../domain/isCellMarked'
 import {
   bingoCardSchema,
   INDEXED_DB_SCHEMA_VERSION,
@@ -102,17 +103,17 @@ export const bingoCardRepository: BingoCardRepository = {
             .flat()
             .find((entry) => entry.promptId === promptId)
           if (!cell) throw new Error(`Card cell not found: ${promptId}`)
+          if (cell.isFree) {
+            setResult(null)
+            return
+          }
           const hadBingo = getCompletedLines(card.cells).length > 0
-          const wasFullCard = card.cells.flat().every((entry) => entry.found)
+          const wasFullCard = card.cells.flat().every(isCellMarked)
           cell.found = found
           const bingo =
-            found &&
-            !hadBingo &&
-            getCompletedLines(card.cells).length > 0
+            found && !hadBingo && getCompletedLines(card.cells).length > 0
           const fullCard =
-            found &&
-            !wasFullCard &&
-            card.cells.flat().every((entry) => entry.found)
+            found && !wasFullCard && card.cells.flat().every(isCellMarked)
           setResult(fullCard ? 'fullCard' : bingo ? 'bingo' : null)
           store.put(encode(card))
         })
