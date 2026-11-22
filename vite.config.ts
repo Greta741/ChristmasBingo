@@ -30,16 +30,28 @@ export default defineConfig(({ mode }) => {
           categories: ['games', 'entertainment'],
           icons: [
             {
-              src: 'icons/icon-transparent-192.png',
+              src: 'icons/icon-green-192.png',
               sizes: '192x192',
               type: 'image/png',
               purpose: 'any',
             },
             {
-              src: 'icons/icon-transparent-512.png',
+              src: 'icons/icon-green-512.png',
               sizes: '512x512',
               type: 'image/png',
               purpose: 'any',
+            },
+            {
+              src: 'icons/icon-maskable-green-192.png',
+              sizes: '192x192',
+              type: 'image/png',
+              purpose: 'maskable',
+            },
+            {
+              src: 'icons/icon-maskable-green-512.png',
+              sizes: '512x512',
+              type: 'image/png',
+              purpose: 'maskable',
             },
           ],
         },
