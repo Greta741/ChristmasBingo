@@ -7,20 +7,33 @@ import { useTranslation } from 'react-i18next'
 
 export function BingoCardFrame({
   titleId,
-  subtitle,
+  name,
+  createdAt,
   children,
   headingComponent = 'h2',
   printMode = false,
   squareOnMobile = false,
 }: {
   titleId: string
-  subtitle: string
+  name: string
+  createdAt: string
   children: ReactNode
   headingComponent?: 'h1' | 'h2'
   printMode?: boolean
   squareOnMobile?: boolean
 }) {
-  const { t } = useTranslation()
+  const { i18n } = useTranslation()
+  const createdAtLabel = new Date(createdAt).toLocaleString(
+    i18n.resolvedLanguage === 'lt' ? 'lt-LT' : 'en-GB',
+    {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false,
+    },
+  )
   return (
     <Paper
       component="section"
@@ -52,6 +65,8 @@ export function BingoCardFrame({
           position: 'relative',
           overflow: 'hidden',
           textAlign: 'center',
+          display: 'flex',
+          flexDirection: 'column',
           py: 2.5,
           px: { xs: 6, sm: 9 },
           color: '#fff8e8',
@@ -94,17 +109,21 @@ export function BingoCardFrame({
           ))}
         </Box>
         <Typography
-          component="p"
+          component="time"
+          dateTime={createdAt}
           sx={{
             position: 'relative',
+            display: 'block',
             color: '#e5c780',
             fontSize: printMode ? '0.5rem' : '0.65rem',
             letterSpacing: '0.15em',
             textTransform: 'uppercase',
-            mb: 0.5,
+            order: printMode ? 0 : 1,
+            mb: printMode ? 0.5 : 0,
+            mt: printMode ? 0 : 0.5,
           }}
         >
-          {subtitle}
+          {createdAtLabel}
         </Typography>
         <Typography
           id={titleId}
@@ -115,9 +134,10 @@ export function BingoCardFrame({
             fontSize: printMode ? '0.85rem' : { xs: '1.6rem', sm: '2rem' },
             fontWeight: 700,
             lineHeight: 1.15,
+            overflowWrap: 'anywhere',
           }}
         >
-          {t('app.name')}
+          {name}
         </Typography>
       </Box>
       <Box

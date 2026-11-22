@@ -134,7 +134,8 @@ function SavedCard({ id }: { id: string }) {
       ) : card ? (
         <BingoCardFrame
           titleId="play-card-title"
-          subtitle={card.name}
+          name={card.name}
+          createdAt={card.createdAt}
           headingComponent="h1"
           squareOnMobile
         >

@@ -24,7 +24,7 @@ import { CandyCaneProgress } from '../../../components/CandyCaneProgress'
 const PAGE_SIZE = 12
 
 export function CardHistory() {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const [cards, setCards] = useState<BingoCard[]>([])
   const [loading, setLoading] = useState(true)
   const [loadError, setLoadError] = useState(false)
@@ -208,11 +208,35 @@ export function CardHistory() {
                     sx={{
                       fontWeight: 700,
                       fontSize: '0.85rem',
+                      lineHeight: 1.4,
+                      minHeight: { xs: '2.8em', sm: 0 },
                       fontFamily: 'Georgia, serif',
                       overflowWrap: 'anywhere',
                     }}
                   >
                     {card.name}
+                  </Typography>
+                  <Typography
+                    component="time"
+                    dateTime={card.createdAt}
+                    sx={{
+                      display: 'block',
+                      mt: 0.5,
+                      fontSize: '0.65rem',
+                      color: '#e5c780',
+                    }}
+                  >
+                    {new Date(card.createdAt).toLocaleString(
+                      i18n.resolvedLanguage === 'lt' ? 'lt-LT' : 'en-GB',
+                      {
+                        year: 'numeric',
+                        month: '2-digit',
+                        day: '2-digit',
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        hour12: false,
+                      },
+                    )}
                   </Typography>
                 </Box>
                 <IconButton

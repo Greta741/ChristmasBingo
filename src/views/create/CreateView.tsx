@@ -250,7 +250,8 @@ export function CreateView() {
               key={card.id}
               titleId={`preview-title-${cardIndex}`}
               squareOnMobile
-              subtitle={`${new Date(card.createdAt).toLocaleDateString(i18n.resolvedLanguage === 'lt' ? 'lt-LT' : 'en-GB')}${cards.length > 1 ? ` - ${cardIndex + 1}` : ''}`}
+              name={card.name}
+              createdAt={card.createdAt}
             >
               <BingoCardGrid cells={card.cells} />
               <Button

@@ -20,7 +20,8 @@ function PrintCard({ card, index }: { card: BingoCard; index: number }) {
     <Box sx={{ minWidth: 0, minHeight: 0 }}>
       <BingoCardFrame
         titleId={`print-card-${index}`}
-        subtitle={card.name}
+        name={card.name}
+        createdAt={card.createdAt}
         printMode
       >
         <BingoCardGrid cells={card.cells} printMode />

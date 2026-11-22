@@ -1,4 +1,6 @@
 import { createId } from './createId'
+import { lithuanianCardNameGenerator } from './lithuanianCardNameGenerator'
+import { englishCardNameGenerator } from './englishCardNameGenerator'
 import { CategoryId, PromptSource } from '../domain/models'
 import type {
   BingoCard,
@@ -88,7 +90,10 @@ export const bingoGenerator = {
     }))
     return {
       id: createId(),
-      name: new Date().toLocaleString(language),
+      name:
+        language === 'lt'
+          ? lithuanianCardNameGenerator.generate()
+          : englishCardNameGenerator.generate(),
       createdAt: new Date().toISOString(),
       language,
       cells: Array.from({ length: 5 }, (_, row) =>

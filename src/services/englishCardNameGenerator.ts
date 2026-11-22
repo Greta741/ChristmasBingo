@@ -1,0 +1,57 @@
+const adjectives = [
+  'Merry',
+  'Cozy',
+  'Snowy',
+  'Golden',
+  'Silver',
+  'Magical',
+  'Festive',
+  'Playful',
+  'Sparkling',
+  'Frosty',
+  'Scarlet',
+  'Emerald',
+  'Jolly',
+  'Secret',
+  'Sleepy',
+  'Winter',
+  'Wobbly',
+  'Sneaky',
+  'Grumpy',
+  'Fluffy',
+  'Overstuffed',
+  'Jiggly',
+]
+
+const nouns = [
+  'Reindeer',
+  'Elf',
+  'Bell',
+  'Snowflake',
+  'Snowman',
+  'Cookie',
+  'Gingerbread',
+  'Lantern',
+  'Ornament',
+  'Pinecone',
+  'Sleigh',
+  'Miracle',
+  'Stocking',
+  'Ribbon',
+  'Moose',
+  'Candy',
+  'Fruitcake',
+  'Sprout',
+  'Pudding',
+  'Marshmallow',
+  'Mittens',
+  'Goose',
+  'Slipper',
+  'Snowball',
+]
+
+export const englishCardNameGenerator = {
+  generate(): string {
+    return `${adjectives[Math.floor(Math.random() * adjectives.length)]} ${nouns[Math.floor(Math.random() * nouns.length)]}`
+  },
+}
