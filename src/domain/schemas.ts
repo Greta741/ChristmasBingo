@@ -120,7 +120,7 @@ export const categoriesStateSchema: z.ZodType<CategoriesState> = z
 const appStateShape = {
   categories: categoriesStateSchema,
   language: languageSchema.nullable(),
-  freeCenter: z.boolean().default(false),
+  freeCenter: z.boolean().default(true),
 }
 
 export const appStateSchema: z.ZodType<AppState> = z.object(appStateShape)

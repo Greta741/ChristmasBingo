@@ -2,7 +2,7 @@ import Box from '@mui/material/Box'
 import ButtonBase from '@mui/material/ButtonBase'
 import type { BingoGrid } from '../domain/models'
 import { isCellMarked } from '../domain/isCellMarked'
-import { FreeCenterIcon } from './FreeCenterIcon'
+import { FreeCenterContent } from './FreeCenterContent'
 
 export function BingoCardGrid({
   cells,
@@ -98,9 +98,10 @@ export function BingoCardGrid({
               }}
             >
               {cell.isFree ? (
-                <FreeCenterIcon
+                <FreeCenterContent
                   shape={cell.freeCenterShape}
                   label={cell.text}
+                  printMode={printMode}
                 />
               ) : onCellClick ? (
                 <ButtonBase

@@ -40,7 +40,7 @@ const initialState: AppState = {
     },
   },
   language: null,
-  freeCenter: false,
+  freeCenter: true,
 }
 
 const appStateSlice = createSlice({

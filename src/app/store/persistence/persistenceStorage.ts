@@ -83,7 +83,7 @@ function validateSerializedState(serializedState: string) {
     freeCenter:
       'freeCenter' in storedState
         ? parseStoredProperty(storedState, 'freeCenter')
-        : false,
+        : true,
   })
 
   if (!validationResult.success) {
