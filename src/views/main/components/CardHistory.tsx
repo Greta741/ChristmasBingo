@@ -18,6 +18,8 @@ import { Link } from 'react-router'
 import { useTranslation } from 'react-i18next'
 import type { BingoCard } from '../../../domain/models'
 import { bingoCardRepository } from '../../../services/bingoCardRepository'
+import { getCompletedLines } from '../../../services/bingoLines'
+import { CandyCaneProgress } from '../../../components/CandyCaneProgress'
 
 const PAGE_SIZE = 12
 
@@ -126,7 +128,7 @@ export function CardHistory() {
           m: 0,
           p: 0,
           display: 'grid',
-          gap: 2,
+          gap: { xs: 1, sm: 2 },
           gridTemplateColumns: {
             xs: 'repeat(2, minmax(0, 1fr))',
             sm: 'repeat(3, minmax(0, 1fr))',
@@ -137,6 +139,11 @@ export function CardHistory() {
       >
         {cards.map((card) => {
           const found = card.cells.flat().filter((cell) => cell.found).length
+          const winningCells = new Set(
+            getCompletedLines(card.cells).flatMap((line) =>
+              line.cells.map((cell) => cell.promptId),
+            ),
+          )
           return (
             <Paper
               component="li"
@@ -207,15 +214,6 @@ export function CardHistory() {
                   >
                     {card.name}
                   </Typography>
-                  <Typography
-                    sx={{
-                      mt: 0.5,
-                      fontSize: '0.8rem',
-                      color: '#e5c780',
-                    }}
-                  >
-                    {t('history.progress', { marked: found })}
-                  </Typography>
                 </Box>
                 <IconButton
                   size="small"
@@ -239,6 +237,9 @@ export function CardHistory() {
                   <DeleteOutlineIcon fontSize="small" />
                 </IconButton>
               </Box>
+              <Box sx={{ mb: 1.25, color: 'text.secondary' }}>
+                <CandyCaneProgress marked={found} />
+              </Box>
               <Box
                 aria-hidden="true"
                 sx={{
@@ -255,7 +256,9 @@ export function CardHistory() {
                       border: '1px solid #d9cba9',
                       borderRadius: '2px',
                       bgcolor: cell.found
-                        ? '#134b38'
+                        ? winningCells.has(cell.promptId)
+                          ? '#a33b40'
+                          : '#134b38'
                         : (Math.floor(index / 5) + (index % 5)) % 2 === 0
                           ? '#fffdf7'
                           : '#f0e6ce',

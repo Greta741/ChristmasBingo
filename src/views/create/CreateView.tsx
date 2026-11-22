@@ -38,7 +38,10 @@ const PreviewArea = styled('div')(({ theme }) => ({
   marginInline: 'auto',
   boxSizing: 'border-box',
   [theme.breakpoints.down('sm')]: {
-    paddingInline: theme.spacing(0.5),
+    padding: 0,
+    paddingBlock: theme.spacing(2),
+    gap: theme.spacing(2),
+    gridTemplateColumns: 'minmax(0, 1fr)',
   },
   [theme.breakpoints.up('md')]: {
     gridTemplateColumns: 'repeat(auto-fit, minmax(0, 520px))',
@@ -246,6 +249,7 @@ export function CreateView() {
             <BingoCardFrame
               key={card.id}
               titleId={`preview-title-${cardIndex}`}
+              squareOnMobile
               subtitle={`${new Date(card.createdAt).toLocaleDateString(i18n.resolvedLanguage === 'lt' ? 'lt-LT' : 'en-GB')}${cards.length > 1 ? ` - ${cardIndex + 1}` : ''}`}
             >
               <BingoCardGrid cells={card.cells} />

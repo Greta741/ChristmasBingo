@@ -15,7 +15,7 @@ export function MainView() {
   return (
     <>
       {!showHistory && <ChristmasHero />}
-      <Container>
+      <Container sx={{ px: { xs: 1, sm: 3 } }}>
         <Box
           component="section"
           id="card-history"
