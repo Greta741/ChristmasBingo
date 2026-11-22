@@ -7,8 +7,8 @@ export const FUNNY_DEFAULT_PROMPTS = defineDefaultPrompts([
     categoryId: CategoryId.Funny,
     source: PromptSource.BuiltIn,
     text: {
-      lt: '„Elektros sąskaita bus kosminė“ – namas su absurdišku kiekiu lempučių.',
-      en: '“The electricity bill will be astronomical” – a house with an absurd number of lights.',
+      lt: 'Elektros sąskaita bus kosminė - absurdiškas lempučių kiekis',
+      en: 'The electricity bill will be astronomical - an absurd number of lights',
     },
   },
   {
@@ -16,27 +16,15 @@ export const FUNNY_DEFAULT_PROMPTS = defineDefaultPrompts([
     categoryId: CategoryId.Funny,
     source: PromptSource.BuiltIn,
     text: {
-      lt: '„Grinčas gyvena čia“ – visi kaimynai pasipuošę, o vienas namas visiškai tamsus.',
-      en: '“The Grinch lives here” – all the neighbours have decorated, but one house is completely dark.',
+      lt: '„Grinčas gyvena čia“ – visiškai tamsus namas tarp papuoštų',
+      en: '“The Grinch lives here” – a completely dark house among decorated ones',
     },
   },
   {
     id: 'funny-03',
     categoryId: CategoryId.Funny,
     source: PromptSource.BuiltIn,
-    text: {
-      lt: '„Kalėdų Senelis prisidirbo“ – keistai pakibęs arba nuvirtęs Senelis.',
-      en: '“Santa got himself into trouble” – a strangely suspended or toppled-over Santa.',
-    },
-  },
-  {
-    id: 'funny-04',
-    categoryId: CategoryId.Funny,
-    source: PromptSource.BuiltIn,
-    text: {
-      lt: '„Per anksti atėjo Kalėdos“ – Helovino ir kalėdinių dekoracijų mišinys.',
-      en: '“Christmas came too early” – a mix of Halloween and Christmas decorations.',
-    },
+    text: { lt: 'Kalėdų senelis patekęs į bėdą', en: 'Santa Claus in trouble' },
   },
   {
     id: 'funny-05',
@@ -45,15 +33,6 @@ export const FUNNY_DEFAULT_PROMPTS = defineDefaultPrompts([
     text: {
       lt: '„Mažiau yra daugiau“ – tik viena kukli dekoracija.',
       en: '“Less is more” – just one modest decoration.',
-    },
-  },
-  {
-    id: 'funny-06',
-    categoryId: CategoryId.Funny,
-    source: PromptSource.BuiltIn,
-    text: {
-      lt: '„Pamiršo nupuošti“ – akivaizdžiai sena, išblukusi dekoracija.',
-      en: '“Forgot to take it down” – an obviously old, faded decoration.',
     },
   },
   {
@@ -88,8 +67,8 @@ export const FUNNY_DEFAULT_PROMPTS = defineDefaultPrompts([
     categoryId: CategoryId.Funny,
     source: PromptSource.BuiltIn,
     text: {
-      lt: '„Kalėdinis chaosas“ – bent penki skirtingi dekoracijų stiliai viename kieme.',
-      en: '“Christmas chaos” – at least five different decoration styles in one yard.',
+      lt: '„Kalėdinis chaosas“ – bent 3 skirtingi dekoracijų stiliai viename kieme.',
+      en: '“Christmas chaos” – at least 3 different decoration styles in one yard.',
     },
   },
 ])

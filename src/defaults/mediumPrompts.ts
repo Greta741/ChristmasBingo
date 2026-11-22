@@ -6,40 +6,25 @@ export const MEDIUM_DEFAULT_PROMPTS = defineDefaultPrompts([
     id: 'medium-01',
     categoryId: CategoryId.Medium,
     source: PromptSource.BuiltIn,
-    text: {
-      lt: 'Sniego senis (dekoracija arba tikras)',
-      en: 'Snowman (decoration or real one)',
-    },
+    text: { lt: 'Sniego senis', en: 'Snowman' },
   },
   {
     id: 'medium-02',
     categoryId: CategoryId.Medium,
     source: PromptSource.BuiltIn,
-    text: { lt: 'Kalėdų Senelio rogės', en: "Santa Claus's sleigh" },
-  },
-  {
-    id: 'medium-03',
-    categoryId: CategoryId.Medium,
-    source: PromptSource.BuiltIn,
-    text: { lt: 'Elnias su rogėmis', en: 'Reindeer with a sleigh' },
+    text: { lt: 'Rogės', en: 'Sleigh' },
   },
   {
     id: 'medium-04',
     categoryId: CategoryId.Medium,
     source: PromptSource.BuiltIn,
-    text: { lt: 'Kalėdinis elfas', en: 'Christmas elf' },
+    text: { lt: 'Elfas', en: 'Elf' },
   },
   {
     id: 'medium-05',
     categoryId: CategoryId.Medium,
     source: PromptSource.BuiltIn,
     text: { lt: 'Saldainio lazdelė', en: 'Candy cane' },
-  },
-  {
-    id: 'medium-06',
-    categoryId: CategoryId.Medium,
-    source: PromptSource.BuiltIn,
-    text: { lt: 'Spragtukas', en: 'Nutcracker' },
   },
   {
     id: 'medium-07',
@@ -51,16 +36,7 @@ export const MEDIUM_DEFAULT_PROMPTS = defineDefaultPrompts([
     id: 'medium-08',
     categoryId: CategoryId.Medium,
     source: PromptSource.BuiltIn,
-    text: { lt: 'Didelis raudonas kaspinas', en: 'Large red bow' },
-  },
-  {
-    id: 'medium-09',
-    categoryId: CategoryId.Medium,
-    source: PromptSource.BuiltIn,
-    text: {
-      lt: 'Kalėdinis vainikas ant durų',
-      en: 'Christmas wreath on a door',
-    },
+    text: { lt: 'Didelis kaspinas', en: 'Large bow' },
   },
   {
     id: 'medium-10',
@@ -73,8 +49,8 @@ export const MEDIUM_DEFAULT_PROMPTS = defineDefaultPrompts([
     categoryId: CategoryId.Medium,
     source: PromptSource.BuiltIn,
     text: {
-      lt: 'Papuoštas tikras augantis medis',
-      en: 'Decorated real growing tree',
+      lt: 'Papuoštas medis (ne eglutė)',
+      en: 'Decorated tree (not a Christmas tree)',
     },
   },
   {
@@ -87,15 +63,6 @@ export const MEDIUM_DEFAULT_PROMPTS = defineDefaultPrompts([
     },
   },
   {
-    id: 'medium-13',
-    categoryId: CategoryId.Medium,
-    source: PromptSource.BuiltIn,
-    text: {
-      lt: 'Kalėdų Senelis, lipantis į namą',
-      en: 'Santa Claus climbing into a house',
-    },
-  },
-  {
     id: 'medium-14',
     categoryId: CategoryId.Medium,
     source: PromptSource.BuiltIn,
@@ -105,9 +72,51 @@ export const MEDIUM_DEFAULT_PROMPTS = defineDefaultPrompts([
     },
   },
   {
-    id: 'medium-15',
+    id: 'medium-16',
     categoryId: CategoryId.Medium,
     source: PromptSource.BuiltIn,
-    text: { lt: 'Pingvinas', en: 'Penguin' },
+    text: { lt: 'Mėlynos Lemputės', en: 'Blue lights' },
+  },
+  {
+    id: 'medium-17',
+    categoryId: CategoryId.Medium,
+    source: PromptSource.BuiltIn,
+    text: { lt: 'Trys vienodos dekoracijos', en: 'Three matching decorations' },
+  },
+  {
+    id: 'medium-18',
+    categoryId: CategoryId.Medium,
+    source: PromptSource.BuiltIn,
+    text: { lt: 'Kalėdinė kojinė', en: 'Christmas stocking' },
+  },
+  {
+    id: 'medium-19',
+    categoryId: CategoryId.Medium,
+    source: PromptSource.BuiltIn,
+    text: { lt: 'Kalėdinis žibintas', en: 'Christmas lantern' },
+  },
+  {
+    id: 'medium-20',
+    categoryId: CategoryId.Medium,
+    source: PromptSource.BuiltIn,
+    text: { lt: 'Sidabrinė dekoracija', en: 'Silver decoration' },
+  },
+  {
+    id: 'medium-21',
+    categoryId: CategoryId.Medium,
+    source: PromptSource.BuiltIn,
+    text: {
+      lt: 'Unikaliai papuoštos durys (be vainiko)',
+      en: 'Uniquely decorated door (without a wreath)',
+    },
+  },
+  {
+    id: 'medium-22',
+    categoryId: CategoryId.Medium,
+    source: PromptSource.BuiltIn,
+    text: {
+      lt: 'Papuošta eglutė be lempučių',
+      en: 'Decorated Christmas tree without lights',
+    },
   },
 ])

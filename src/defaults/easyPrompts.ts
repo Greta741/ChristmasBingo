@@ -12,7 +12,7 @@ export const EASY_DEFAULT_PROMPTS = defineDefaultPrompts([
     id: 'easy-02',
     categoryId: CategoryId.Easy,
     source: PromptSource.BuiltIn,
-    text: { lt: 'Šiaurės elnias', en: 'Reindeer' },
+    text: { lt: 'Elnias', en: 'Reindeer' },
   },
   {
     id: 'easy-03',
@@ -82,5 +82,53 @@ export const EASY_DEFAULT_PROMPTS = defineDefaultPrompts([
     categoryId: CategoryId.Easy,
     source: PromptSource.BuiltIn,
     text: { lt: 'Elektrinė žvakė lange', en: 'Electric candle in a window' },
+  },
+  {
+    id: 'easy-13',
+    categoryId: CategoryId.Easy,
+    source: PromptSource.BuiltIn,
+    text: {
+      lt: 'Kalėdinis vainikas ant durų',
+      en: 'Christmas wreath on a door',
+    },
+  },
+  {
+    id: 'easy-14',
+    categoryId: CategoryId.Easy,
+    source: PromptSource.BuiltIn,
+    text: { lt: 'Papuoštas balkonas', en: 'Decorated balcony' },
+  },
+  {
+    id: 'easy-15',
+    categoryId: CategoryId.Easy,
+    source: PromptSource.BuiltIn,
+    text: { lt: 'Auksinės spalvos dekoracija', en: 'Gold decoration' },
+  },
+  {
+    id: 'easy-16',
+    categoryId: CategoryId.Easy,
+    source: PromptSource.BuiltIn,
+    text: { lt: 'Raudona dekoracija', en: 'Red decoration' },
+  },
+  {
+    id: 'easy-17',
+    categoryId: CategoryId.Easy,
+    source: PromptSource.BuiltIn,
+    text: { lt: 'Žalia dekoracija', en: 'Green decoration' },
+  },
+  {
+    id: 'easy-18',
+    categoryId: CategoryId.Easy,
+    source: PromptSource.BuiltIn,
+    text: { lt: 'Balta dekoracija', en: 'White decoration' },
+  },
+  {
+    id: 'easy-19',
+    categoryId: CategoryId.Easy,
+    source: PromptSource.BuiltIn,
+    text: {
+      lt: 'Dvi dekoracijos viename lange',
+      en: 'Two decorations in one window',
+    },
   },
 ])

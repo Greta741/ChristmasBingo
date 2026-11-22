@@ -3,58 +3,34 @@ import { defineDefaultPrompts } from './defineDefaultPrompts'
 
 export const HARD_DEFAULT_PROMPTS = defineDefaultPrompts([
   {
-    id: 'hard-01',
+    id: 'hard-13',
     categoryId: CategoryId.Hard,
     source: PromptSource.BuiltIn,
-    text: { lt: 'Kalėdinis dinozauras', en: 'Christmas dinosaur' },
+    text: { lt: 'Pingvinas', en: 'Penguin' },
   },
   {
     id: 'hard-02',
     categoryId: CategoryId.Hard,
     source: PromptSource.BuiltIn,
-    text: { lt: 'Baltasis lokys', en: 'Polar bear' },
+    text: { lt: 'Meška', en: 'Bear' },
   },
   {
     id: 'hard-03',
     categoryId: CategoryId.Hard,
     source: PromptSource.BuiltIn,
-    text: { lt: 'Kalėdinis traukinukas', en: 'Christmas train' },
+    text: { lt: 'Traukinukas', en: 'Miniature train' },
   },
   {
     id: 'hard-04',
     categoryId: CategoryId.Hard,
     source: PromptSource.BuiltIn,
-    text: {
-      lt: 'Judanti kalėdinė dekoracija',
-      en: 'Moving Christmas decoration',
-    },
+    text: { lt: 'Judanti dekoracija', en: 'Moving decoration' },
   },
   {
     id: 'hard-05',
     categoryId: CategoryId.Hard,
     source: PromptSource.BuiltIn,
-    text: {
-      lt: 'Dekoracijos, grojančios muziką',
-      en: 'Decorations playing music',
-    },
-  },
-  {
-    id: 'hard-06',
-    categoryId: CategoryId.Hard,
-    source: PromptSource.BuiltIn,
-    text: {
-      lt: 'Kalėdų Senelis su neįprasta transporto priemone',
-      en: 'Santa Claus with an unusual vehicle',
-    },
-  },
-  {
-    id: 'hard-07',
-    categoryId: CategoryId.Hard,
-    source: PromptSource.BuiltIn,
-    text: {
-      lt: 'Rudolfas su raudona nosimi',
-      en: 'Rudolph with a red nose',
-    },
+    text: { lt: 'Grojanti dekoracija', en: 'Decoration playing music' },
   },
   {
     id: 'hard-08',
@@ -69,19 +45,7 @@ export const HARD_DEFAULT_PROMPTS = defineDefaultPrompts([
     id: 'hard-09',
     categoryId: CategoryId.Hard,
     source: PromptSource.BuiltIn,
-    text: {
-      lt: 'Kalėdų Senelis ant kopėčių',
-      en: 'Santa Claus on a ladder',
-    },
-  },
-  {
-    id: 'hard-10',
-    categoryId: CategoryId.Hard,
-    source: PromptSource.BuiltIn,
-    text: {
-      lt: 'Šviečianti Betliejaus žvaigždė',
-      en: 'Illuminated Star of Bethlehem',
-    },
+    text: { lt: 'Kalėdų senelis ant kopėčių', en: 'Santa Claus on a ladder' },
   },
   {
     id: 'hard-11',
@@ -99,6 +63,21 @@ export const HARD_DEFAULT_PROMPTS = defineDefaultPrompts([
     text: {
       lt: 'Daugiau nei penkios papuoštos eglutės viename kieme',
       en: 'More than five decorated Christmas trees in one yard',
+    },
+  },
+  {
+    id: 'hard-14',
+    categoryId: CategoryId.Hard,
+    source: PromptSource.BuiltIn,
+    text: { lt: 'Prakartėlė', en: 'Nativity scene' },
+  },
+  {
+    id: 'hard-15',
+    categoryId: CategoryId.Hard,
+    source: PromptSource.BuiltIn,
+    text: {
+      lt: 'Eglutė su bent trim skirtingom lemputėm',
+      en: 'Christmas tree with at least three different types of lights',
     },
   },
 ])
