@@ -17,8 +17,8 @@ export default defineConfig(({ mode }) => {
         includeManifestIcons: false,
         manifest: {
           id: base,
-          name: 'Kalėdinis bingo',
-          short_name: 'Bingo',
+          name: 'Christmas Bingo',
+          short_name: 'Christmas Bingo',
           description:
             'Kalėdinių dekoracijų bingo pasivaikščiojimams su šeima ir draugais.',
           lang: 'lt',
@@ -30,25 +30,25 @@ export default defineConfig(({ mode }) => {
           categories: ['games', 'entertainment'],
           icons: [
             {
-              src: 'icons/icon-green-192.png',
+              src: 'icons/icon-green-padded-192.png',
               sizes: '192x192',
               type: 'image/png',
               purpose: 'any',
             },
             {
-              src: 'icons/icon-green-512.png',
+              src: 'icons/icon-green-padded-512.png',
               sizes: '512x512',
               type: 'image/png',
               purpose: 'any',
             },
             {
-              src: 'icons/icon-maskable-green-192.png',
+              src: 'icons/icon-maskable-green-padded-192.png',
               sizes: '192x192',
               type: 'image/png',
               purpose: 'maskable',
             },
             {
-              src: 'icons/icon-maskable-green-512.png',
+              src: 'icons/icon-maskable-green-padded-512.png',
               sizes: '512x512',
               type: 'image/png',
               purpose: 'maskable',
