@@ -37,7 +37,7 @@ export const resources = {
         name: 'Kalėdinis bingo',
         loading: 'Kraunama…',
         skipToContent: 'Pereiti prie turinio',
-        footer: 'Maži atradimai. Daugiau kalėdinės nuotaikos.',
+        footer: 'Jaukių švenčių ir smagaus bingo!',
       },
       navigation: {
         label: 'Pagrindinė navigacija',
@@ -159,7 +159,7 @@ export const resources = {
         name: 'Christmas Bingo',
         loading: 'Loading…',
         skipToContent: 'Skip to content',
-        footer: 'Small discoveries. More Christmas cheer.',
+        footer: 'Happy holidays and happy bingo!',
       },
       navigation: {
         label: 'Main navigation',

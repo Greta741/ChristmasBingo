@@ -6,11 +6,13 @@ export function BingoCardGrid({
   cells,
   onCellClick,
   pendingCells,
+  winningCells,
   printMode = false,
 }: {
   cells: BingoGrid
   onCellClick?: (promptId: string) => void
   pendingCells?: ReadonlySet<string>
+  winningCells?: ReadonlySet<string>
   printMode?: boolean
 }) {
   return (
@@ -50,11 +52,40 @@ export function BingoCardGrid({
                 borderColor: '#d9cba9',
                 backgroundColor:
                   cell.found && !printMode
-                    ? '#134b38'
+                    ? winningCells?.has(cell.promptId)
+                      ? '#a33b40'
+                      : '#134b38'
                     : (index + column) % 2 === 0
                       ? '#fffdf7'
                       : '#f5efdf',
                 color: cell.found && !printMode ? '#fff8e8' : '#17372e',
+                position: 'relative',
+                isolation: 'isolate',
+                ...(!printMode &&
+                  winningCells?.has(cell.promptId) && {
+                    '&::before': {
+                      content: '""',
+                      position: 'absolute',
+                      inset: 0,
+                      backgroundImage: `url("data:image/svg+xml,${encodeURIComponent(
+                        `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">${Array.from(
+                          { length: 5 },
+                          (_, star) => {
+                            const seed = index * 17 + column * 29 + star * 37
+                            const x = 12 + ((seed * 13) % 76)
+                            const y = 12 + ((seed * 23) % 76)
+                            const size = 5 + (seed % 7)
+                            return `<path fill="#e5c780" d="M0 -${size} L${size * 0.28} -${size * 0.28} L${size} 0 L${size * 0.28} ${size * 0.28} L0 ${size} L-${size * 0.28} ${size * 0.28} L-${size} 0 L-${size * 0.28} -${size * 0.28}Z" transform="translate(${x} ${y}) rotate(${seed % 90})"/>`
+                          },
+                        ).join('')}</svg>`,
+                      )}")`,
+                      backgroundSize: '100% 100%',
+                      backgroundRepeat: 'no-repeat',
+                      opacity: 0.18,
+                      pointerEvents: 'none',
+                      zIndex: -1,
+                    },
+                  }),
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',

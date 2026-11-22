@@ -3,13 +3,13 @@ import Alert from '@mui/material/Alert'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import LinearProgress from '@mui/material/LinearProgress'
-import Typography from '@mui/material/Typography'
 import { useTranslation } from 'react-i18next'
 import { Link, useParams } from 'react-router'
 import { BingoCardFrame } from '../../components/BingoCardFrame'
 import { BingoCardGrid } from '../../components/BingoCardGrid'
 import type { BingoCard, BingoGrid, CardCelebration } from '../../domain/models'
 import { bingoCardRepository } from '../../services/bingoCardRepository'
+import { getCompletedLines } from '../../services/bingoLines'
 import { BingoCelebration } from './BingoCelebration'
 
 export function PlayView() {
@@ -32,6 +32,13 @@ function SavedCard({ id }: { id: string }) {
   } | null>(null)
   const celebrationKey = useRef(0)
   const closeCelebration = useCallback(() => setCelebration(null), [])
+  const winningCells = new Set(
+    card
+      ? getCompletedLines(card.cells).flatMap((line) =>
+          line.cells.map((cell) => cell.promptId),
+        )
+      : [],
+  )
 
   function setCellFound(promptId: string, found: boolean) {
     setCard((previous) =>
@@ -135,18 +142,56 @@ function SavedCard({ id }: { id: string }) {
               {t('play.saveError')}
             </Alert>
           )}
-          <Typography
-            aria-live="polite"
-            sx={{ mb: 1.5, fontSize: '0.85rem', color: 'text.secondary' }}
-          >
-            {t('history.progress', {
-              marked: card.cells.flat().filter((cell) => cell.found).length,
-            })}
-          </Typography>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1.5 }}>
+            <Box
+              sx={{
+                order: 1,
+                flexShrink: 0,
+                fontSize: '0.7rem',
+                fontWeight: 700,
+                color: 'text.secondary',
+              }}
+            >
+              {card.cells.flat().filter((cell) => cell.found).length}/25
+            </Box>
+            <Box
+              role="progressbar"
+              aria-label={t('history.progress', {
+                marked: card.cells.flat().filter((cell) => cell.found).length,
+              })}
+              aria-valuemin={0}
+              aria-valuemax={25}
+              aria-valuenow={
+                card.cells.flat().filter((cell) => cell.found).length
+              }
+              sx={{
+                flex: 1,
+                minWidth: 0,
+                height: 14,
+                borderRadius: 999,
+                overflow: 'hidden',
+                bgcolor: '#eee5d3',
+                border: '1px solid #d9cba9',
+                boxShadow: 'inset 0 1px 3px rgba(19, 75, 56, 0.1)',
+              }}
+            >
+              <Box
+                sx={{
+                  width: `${(card.cells.flat().filter((cell) => cell.found).length / 25) * 100}%`,
+                  height: '100%',
+                  borderRadius: 'inherit',
+                  backgroundImage:
+                    'repeating-linear-gradient(45deg, #a33b40 0px, #a33b40 8px, #fffaf0 8px, #fffaf0 16px)',
+                  boxShadow: 'inset 0 2px 2px rgba(255, 255, 255, 0.35)',
+                }}
+              />
+            </Box>
+          </Box>
           <BingoCardGrid
             cells={card.cells}
             onCellClick={toggleCell}
             pendingCells={pendingCells}
+            winningCells={winningCells}
           />
         </BingoCardFrame>
       ) : (
