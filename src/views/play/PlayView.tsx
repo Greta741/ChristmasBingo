@@ -105,10 +105,11 @@ function SavedCard({ id }: { id: string }) {
       sx={{ maxWidth: { xs: 'none', sm: 520 }, mx: 'auto', width: '100%' }}
       aria-busy={loading}
     >
-      {celebration && (
+      {celebration && card && (
         <BingoCelebration
           key={celebration.key}
           kind={celebration.kind}
+          total={getCardProgress(card.cells).total}
           onClose={closeCelebration}
         />
       )}

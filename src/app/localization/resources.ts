@@ -87,7 +87,7 @@ export const resources = {
         title: 'Žaisti bingo',
         bingoMessage: 'Linija užpildyta! Tęsk atradimus!',
         fullCardTitle: 'Visos dekoracijos rastos!',
-        fullCardMessage: '25 iš 25! Kalėdinė misija įveikta!',
+        fullCardMessage: '{{total}} iš {{total}}! Kalėdinė misija įveikta!',
         closeCelebration: 'Uždaryti sveikinimą',
         saveError:
           'Nepavyko išsaugoti žymėjimo. Pakeitimas atšauktas – pabandyk paspausti langelį dar kartą.',
@@ -210,7 +210,8 @@ export const resources = {
         title: 'Play bingo',
         bingoMessage: 'Line complete! Keep exploring!',
         fullCardTitle: 'All decorations found!',
-        fullCardMessage: '25 out of 25! Christmas mission complete!',
+        fullCardMessage:
+          '{{total}} out of {{total}}! Christmas mission complete!',
         closeCelebration: 'Dismiss celebration',
         saveError:
           'Could not save the mark. The change was undone; try pressing the cell again.',

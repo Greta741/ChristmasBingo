@@ -8,9 +8,11 @@ import type { CardCelebration } from '../../domain/models'
 
 export function BingoCelebration({
   kind,
+  total,
   onClose,
 }: {
   kind: CardCelebration
+  total: number
   onClose: () => void
 }) {
   const { t } = useTranslation()
@@ -115,7 +117,9 @@ export function BingoCelebration({
           {fullCard ? t('play.fullCardTitle') : 'Bingo!'}
         </Typography>
         <Typography sx={{ fontSize: '0.9rem' }}>
-          {t(fullCard ? 'play.fullCardMessage' : 'play.bingoMessage')}
+          {t(fullCard ? 'play.fullCardMessage' : 'play.bingoMessage', {
+            total,
+          })}
         </Typography>
         <IconButton
           aria-label={t('play.closeCelebration')}
