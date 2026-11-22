@@ -49,6 +49,7 @@ export function BingoCelebration({
               opacity: 0,
             },
             '15%': { opacity: 1 },
+            '65%': { opacity: 1 },
             '100%': {
               transform:
                 'translate(var(--burst-x), var(--burst-y)) rotate(240deg) scale(0.5)',
@@ -61,7 +62,7 @@ export function BingoCelebration({
           },
         }}
       >
-        {Array.from({ length: fullCard ? 54 : 30 }, (_, index) => (
+        {Array.from({ length: fullCard ? 100 : 30 }, (_, index) => (
           <Box
             component="span"
             key={index}
@@ -69,12 +70,12 @@ export function BingoCelebration({
               position: 'absolute',
               top: fullCard ? '50%' : -30,
               left: fullCard ? '50%' : `${(index * 37) % 100}%`,
-              '--burst-x': `${Math.cos(index * 2.4) * (35 + (index % 4) * 8)}vw`,
-              '--burst-y': `${Math.sin(index * 2.4) * (35 + (index % 4) * 8)}vh`,
+              '--burst-x': `${Math.cos(index * 2.4) * (40 + (index % 5) * 10)}vw`,
+              '--burst-y': `${Math.sin(index * 2.4) * (40 + (index % 5) * 10)}vh`,
               color: ['#d8bc7b', '#a33b40', '#4d8760'][index % 3],
-              fontSize: `${12 + (index % 4) * 5}px`,
+              fontSize: `${(fullCard ? 24 : 12) + (index % 4) * (fullCard ? 8 : 5)}px`,
               opacity: 0,
-              animation: `${fullCard ? 'bingo-burst' : 'bingo-sparkle'} ${2.5 + (index % 3) * 0.3}s ${(index % 5) * 0.12}s ${fullCard ? 'ease-out' : 'ease-in'} both`,
+              animation: `${fullCard ? 'bingo-burst' : 'bingo-sparkle'} ${(fullCard ? 3.4 : 2.5) + (index % 3) * 0.3}s ${(index % 5) * (fullCard ? 0.08 : 0.03)}s ${fullCard ? 'ease-out' : 'linear'} both`,
             }}
           >
             ✦
