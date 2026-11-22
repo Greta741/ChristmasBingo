@@ -27,7 +27,17 @@ export function LocalizationGate({ children }: LocalizationGateProps) {
       }
 
       document.documentElement.lang = language
-      document.title = i18n.t('app.name')
+      const appName = i18n.t('app.name')
+      document.title = appName
+      document
+        .querySelector('meta[name="apple-mobile-web-app-title"]')
+        ?.setAttribute('content', appName)
+      document
+        .querySelector('link[rel="manifest"]')
+        ?.setAttribute(
+          'href',
+          `${import.meta.env.BASE_URL}manifest-${language}.webmanifest`,
+        )
 
       if (persistedLanguage === null) {
         dispatch(setLanguagePreference(language))
