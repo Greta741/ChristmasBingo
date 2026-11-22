@@ -107,11 +107,16 @@ export const bingoCardRepository: BingoCardRepository = {
             setResult(null)
             return
           }
-          const hadBingo = getCompletedLines(card.cells).length > 0
+          const completedLinesBefore = new Set(
+            getCompletedLines(card.cells).map((line) => line.id),
+          )
           const wasFullCard = card.cells.flat().every(isCellMarked)
           cell.found = found
           const bingo =
-            found && !hadBingo && getCompletedLines(card.cells).length > 0
+            found &&
+            getCompletedLines(card.cells).some(
+              (line) => !completedLinesBefore.has(line.id),
+            )
           const fullCard =
             found && !wasFullCard && card.cells.flat().every(isCellMarked)
           setResult(fullCard ? 'fullCard' : bingo ? 'bingo' : null)
