@@ -61,6 +61,7 @@ export function AppLayout() {
         tabIndex={-1}
         maxWidth={false}
         disableGutters={fullWidth}
+        sx={pathname.startsWith('/play/') ? { p: { xs: 0, sm: 3 } } : undefined}
       >
         <Outlet />
       </MainContainer>

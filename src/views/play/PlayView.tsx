@@ -100,7 +100,10 @@ function SavedCard({ id }: { id: string }) {
   }, [id, revision])
 
   return (
-    <Box sx={{ maxWidth: 520, mx: 'auto', width: '100%' }} aria-busy={loading}>
+    <Box
+      sx={{ maxWidth: { xs: 'none', sm: 520 }, mx: 'auto', width: '100%' }}
+      aria-busy={loading}
+    >
       {celebration && (
         <BingoCelebration
           key={celebration.key}
@@ -133,6 +136,7 @@ function SavedCard({ id }: { id: string }) {
           titleId="play-card-title"
           subtitle={card.name}
           headingComponent="h1"
+          squareOnMobile
         >
           {saveError && (
             <Alert severity="error" sx={{ mb: 1.5 }}>

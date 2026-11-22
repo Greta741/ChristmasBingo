@@ -11,12 +11,14 @@ export function BingoCardFrame({
   children,
   headingComponent = 'h2',
   printMode = false,
+  squareOnMobile = false,
 }: {
   titleId: string
   subtitle: string
   children: ReactNode
   headingComponent?: 'h1' | 'h2'
   printMode?: boolean
+  squareOnMobile?: boolean
 }) {
   const { t } = useTranslation()
   return (
@@ -28,7 +30,10 @@ export function BingoCardFrame({
         alignSelf: 'start',
         overflow: 'hidden',
         border: '1px solid #c6ab70',
-        borderRadius: 3,
+        borderRadius: squareOnMobile ? { xs: 0, sm: 3 } : 3,
+        ...(squareOnMobile && {
+          borderTop: { xs: '3px solid #d8bc7b', sm: '1px solid #c6ab70' },
+        }),
         backgroundColor: '#fffaf0',
         boxShadow: '0 6px 24px rgba(19, 75, 56, 0.08)',
         ...(printMode && {

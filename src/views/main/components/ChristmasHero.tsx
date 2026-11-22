@@ -12,7 +12,6 @@ import { ChristmasScene } from './ChristmasScene'
 const HeroSection = styled(Paper)(({ theme }) => ({
   position: 'relative',
   overflow: 'hidden',
-  marginBottom: theme.spacing(2.5),
   backgroundColor: '#0d3529',
   borderRadius: 0,
   borderTop: '1px solid rgba(255, 255, 255, 0.24)',

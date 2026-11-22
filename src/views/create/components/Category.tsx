@@ -49,10 +49,13 @@ const Section = styled('section')(({ theme }) => ({
   '& .MuiChip-root': {
     height: 'auto',
     minHeight: 20,
-    fontSize: '0.65rem',
+    fontSize: '0.7rem',
     lineHeight: 1.3,
     backgroundColor: theme.palette.primary.main,
     color: theme.palette.primary.contrastText,
+    [theme.breakpoints.up('sm')]: {
+      fontSize: '0.75rem',
+    },
   },
   '& .MuiChip-label': { whiteSpace: 'normal', padding: '3px 7px' },
   '& .MuiChip-root .MuiChip-deleteIcon': {
@@ -69,7 +72,7 @@ const PromptBadges = styled('div')(({ theme }) => ({
   flexWrap: 'wrap',
   alignContent: 'flex-start',
   gap: theme.spacing(0.5),
-  height: 100,
+  height: 160,
   overflowY: 'auto',
   marginBottom: theme.spacing(2),
   '&:focus-visible': {

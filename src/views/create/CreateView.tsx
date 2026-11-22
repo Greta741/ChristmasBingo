@@ -37,6 +37,9 @@ const PreviewArea = styled('div')(({ theme }) => ({
   maxWidth: 1120,
   marginInline: 'auto',
   boxSizing: 'border-box',
+  [theme.breakpoints.down('sm')]: {
+    paddingInline: theme.spacing(0.5),
+  },
   [theme.breakpoints.up('md')]: {
     gridTemplateColumns: 'repeat(auto-fit, minmax(0, 520px))',
   },
