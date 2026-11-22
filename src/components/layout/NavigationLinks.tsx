@@ -48,6 +48,25 @@ export function NavigationLinks({
         spacing={0.5}
       >
         <Button
+          onClick={async () => {
+            if (await startPlaying()) onNavigate?.()
+          }}
+          loading={starting}
+          startIcon={<PlayArrowRoundedIcon />}
+          fullWidth={vertical}
+        >
+          {t('navigation.play')}
+        </Button>
+        <Button
+          component={Link}
+          to="/?section=history"
+          onClick={onNavigate}
+          startIcon={<GridViewRoundedIcon />}
+          fullWidth={vertical}
+        >
+          {t('navigation.history')}
+        </Button>
+        <Button
           component={Link}
           to="/create"
           onClick={onNavigate}
@@ -65,25 +84,6 @@ export function NavigationLinks({
           }}
         >
           {t('navigation.create')}
-        </Button>
-        <Button
-          component={Link}
-          to="/?section=history"
-          onClick={onNavigate}
-          startIcon={<GridViewRoundedIcon />}
-          fullWidth={vertical}
-        >
-          {t('navigation.history')}
-        </Button>
-        <Button
-          onClick={async () => {
-            if (await startPlaying()) onNavigate?.()
-          }}
-          loading={starting}
-          startIcon={<PlayArrowRoundedIcon />}
-          fullWidth={vertical}
-        >
-          {t('navigation.play')}
         </Button>
         <LanguageSelector fullWidth={vertical} />
       </NavigationStack>

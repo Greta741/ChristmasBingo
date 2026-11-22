@@ -22,7 +22,7 @@ export function BingoCardFrame({
   printMode?: boolean
   squareOnMobile?: boolean
 }) {
-  const { i18n } = useTranslation()
+  const { t, i18n } = useTranslation()
   const createdAtLabel = new Date(createdAt).toLocaleString(
     i18n.resolvedLanguage === 'lt' ? 'lt-LT' : 'en-GB',
     {
@@ -109,8 +109,8 @@ export function BingoCardFrame({
           ))}
         </Box>
         <Typography
-          component="time"
-          dateTime={createdAt}
+          component={printMode ? 'p' : 'time'}
+          dateTime={printMode ? undefined : createdAt}
           sx={{
             position: 'relative',
             display: 'block',
@@ -123,7 +123,7 @@ export function BingoCardFrame({
             mt: printMode ? 0 : 0.5,
           }}
         >
-          {createdAtLabel}
+          {printMode ? t('app.name') : createdAtLabel}
         </Typography>
         <Typography
           id={titleId}

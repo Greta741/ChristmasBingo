@@ -73,7 +73,7 @@ function PrintSheet({ ids }: { ids: string[] }) {
     <>
       <GlobalStyles
         styles={{
-          '@page': { size: 'A4 portrait', margin: '10mm' },
+          '@page': { size: 'A4 portrait', margin: '23.5mm 13mm' },
           body: { backgroundColor: '#fff', margin: 0 },
           '@media print': {
             html: { margin: 0, padding: 0 },
@@ -83,7 +83,7 @@ function PrintSheet({ ids }: { ids: string[] }) {
               printColorAdjust: 'exact',
               WebkitPrintColorAdjust: 'exact',
             },
-            '.print-sheet': { margin: '0 !important' },
+            '.print-sheet': { margin: '0 auto !important' },
             '.print-status': { display: 'none !important' },
             '.MuiTooltip-popper': { display: 'none !important' },
           },
@@ -155,7 +155,7 @@ function PrintSheet({ ids }: { ids: string[] }) {
               '&, & *': {
                 backgroundColor: 'transparent !important',
                 backgroundImage: 'none !important',
-                color: '#111 !important',
+                color: '#000 !important',
                 borderColor: '#444 !important',
                 boxShadow: 'none !important',
               },

@@ -11,7 +11,7 @@ export function FooterEasterEgg() {
   const { t } = useTranslation()
   const reducedMotion = useMediaQuery('(prefers-reduced-motion: reduce)')
   const isDesktop = useMediaQuery((theme) => theme.breakpoints.up('sm'))
-  const duration = isDesktop ? 10000 : 3000
+  const duration = isDesktop ? 12000 : 4000
   const [passing, setPassing] = useState(false)
 
   useEffect(() => {

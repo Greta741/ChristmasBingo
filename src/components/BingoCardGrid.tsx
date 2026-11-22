@@ -60,7 +60,12 @@ export function BingoCardGrid({
                     : (index + column) % 2 === 0
                       ? '#fffdf7'
                       : '#f5efdf',
-                color: isCellMarked(cell) && !printMode ? '#fff8e8' : '#17372e',
+                color:
+                  printMode && cell.isFree
+                    ? '#a33b40'
+                    : isCellMarked(cell) && !printMode
+                      ? '#fff8e8'
+                      : '#17372e',
                 position: 'relative',
                 isolation: 'isolate',
                 ...(!printMode &&
