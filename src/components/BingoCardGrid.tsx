@@ -6,13 +6,11 @@ export function BingoCardGrid({
   cells,
   onCellClick,
   pendingCells,
-  winningCells,
   printMode = false,
 }: {
   cells: BingoGrid
   onCellClick?: (promptId: string) => void
   pendingCells?: ReadonlySet<string>
-  winningCells?: ReadonlySet<string>
   printMode?: boolean
 }) {
   return (
@@ -57,9 +55,6 @@ export function BingoCardGrid({
                       ? '#fffdf7'
                       : '#f5efdf',
                 color: cell.found && !printMode ? '#fff8e8' : '#17372e',
-                boxShadow: winningCells?.has(cell.promptId)
-                  ? 'inset 0 0 0 2px #e5c780'
-                  : undefined,
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',

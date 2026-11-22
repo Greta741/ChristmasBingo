@@ -10,7 +10,6 @@ import { BingoCardFrame } from '../../components/BingoCardFrame'
 import { BingoCardGrid } from '../../components/BingoCardGrid'
 import type { BingoCard, BingoGrid, CardCelebration } from '../../domain/models'
 import { bingoCardRepository } from '../../services/bingoCardRepository'
-import { getCompletedLines } from '../../services/bingoLines'
 import { BingoCelebration } from './BingoCelebration'
 
 export function PlayView() {
@@ -33,13 +32,6 @@ function SavedCard({ id }: { id: string }) {
   } | null>(null)
   const celebrationKey = useRef(0)
   const closeCelebration = useCallback(() => setCelebration(null), [])
-  const winningCells = new Set(
-    card
-      ? getCompletedLines(card.cells).flatMap((line) =>
-          line.cells.map((cell) => cell.promptId),
-        )
-      : [],
-  )
 
   function setCellFound(promptId: string, found: boolean) {
     setCard((previous) =>
@@ -155,7 +147,6 @@ function SavedCard({ id }: { id: string }) {
             cells={card.cells}
             onCellClick={toggleCell}
             pendingCells={pendingCells}
-            winningCells={winningCells}
           />
         </BingoCardFrame>
       ) : (
