@@ -86,7 +86,7 @@ const PromptBadges = styled('div')(({ theme }) => ({
 }))
 
 export function Category({ categoryId }: { categoryId: CategoryId }) {
-  const [expanded, setExpanded] = useState(categoryId === CategoryId.Easy)
+  const [expanded, setExpanded] = useState(false)
   const [customText, setCustomText] = useState('')
   const [confirmReset, setConfirmReset] = useState(false)
   const isMobile = useMediaQuery((theme) => theme.breakpoints.down('sm'))
