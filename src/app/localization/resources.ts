@@ -60,6 +60,9 @@ export const resources = {
           'Šviečiantys langai, papuoštos eglutės ir maži atradimai! Išeik pasivaikščioti ir surink savo bingo!',
       },
       history: {
+        continue: 'Tęsti',
+        view: 'Peržiūrėti',
+        completed: 'Užpildyta',
         title: 'Mano kortelės',
         pagination: 'Kortelių istorijos puslapiai',
         goToPage: 'Puslapis {{page}}',
@@ -183,6 +186,9 @@ export const resources = {
           'Glowing windows, decorated Christmas trees, and little discoveries! Go for a walk and complete your bingo!',
       },
       history: {
+        continue: 'Continue',
+        view: 'View',
+        completed: 'Completed',
         title: 'My cards',
         pagination: 'Card history pages',
         goToPage: 'Page {{page}}',

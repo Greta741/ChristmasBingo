@@ -27,7 +27,7 @@ import { FreeCenterIcon } from '../../../components/FreeCenterIcon'
 const PAGE_SIZE = 12
 
 export function CardHistory() {
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
   const [cards, setCards] = useState<BingoCard[]>([])
   const [loading, setLoading] = useState(true)
   const [loadError, setLoadError] = useState(false)
@@ -131,12 +131,12 @@ export function CardHistory() {
           m: 0,
           p: 0,
           display: 'grid',
-          gap: { xs: 1, sm: 2 },
+          gap: 1.25,
           gridTemplateColumns: {
-            xs: 'repeat(2, minmax(0, 1fr))',
-            sm: 'repeat(3, minmax(0, 1fr))',
-            md: 'repeat(4, minmax(0, 1fr))',
-            lg: 'repeat(6, minmax(0, 1fr))',
+            xs: 'minmax(0, 1fr)',
+            sm: 'repeat(2, minmax(0, 1fr))',
+            lg: 'repeat(3, minmax(0, 1fr))',
+            xl: 'repeat(4, minmax(0, 1fr))',
           },
         }}
       >
@@ -146,6 +146,9 @@ export function CardHistory() {
               line.cells.map((cell) => cell.promptId),
             ),
           )
+          const progress = getCardProgress(card.cells)
+          const complete = progress.marked === progress.total
+          const started = progress.marked > 0 && !complete
           return (
             <Paper
               component="li"
@@ -154,134 +157,36 @@ export function CardHistory() {
               sx={{
                 minWidth: 0,
                 display: 'flex',
-                flexDirection: 'column',
+                alignItems: 'center',
+                gap: 1.5,
                 p: 1.25,
-                borderColor: '#c6ab70',
-                overflow: 'hidden',
-                bgcolor: '#fffaf0',
-                boxShadow: '0 4px 16px rgba(19, 75, 56, 0.08)',
+                borderColor: '#e6ddce',
+                borderRadius: '14px',
+                bgcolor: '#fcf8ef',
+                boxShadow: '0 2px 5px rgba(65, 48, 24, 0.09)',
               }}
             >
-              <Box
-                sx={{
-                  position: 'relative',
-                  overflow: 'hidden',
-                  mx: -1.25,
-                  mt: -1.25,
-                  mb: 1.25,
-                  px: 1.25,
-                  pt: 1.5,
-                  pb: 1.5,
-                  color: '#fff8e8',
-                  bgcolor: '#134b38',
-                  backgroundImage:
-                    'radial-gradient(ellipse at top left, #32664b, transparent 90%)',
-                  borderBottom: '2px solid #d8bc7b',
-                }}
-              >
-                <Box
-                  aria-hidden="true"
-                  sx={{
-                    position: 'absolute',
-                    inset: 0,
-                    textAlign: 'center',
-                    color: '#e5c780',
-                    lineHeight: 1,
-                    opacity: 0.12,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-around',
-                    pointerEvents: 'none',
-                  }}
-                >
-                  <Box component="span" sx={{ fontSize: '2rem' }}>
-                    ✦
-                  </Box>
-                  <Box component="span" sx={{ fontSize: '4rem' }}>
-                    ✦
-                  </Box>
-                  <Box component="span" sx={{ fontSize: '3rem' }}>
-                    ✦
-                  </Box>
-                </Box>
-                <Box sx={{ position: 'relative', minWidth: 0, pr: 4 }}>
-                  <Typography
-                    component="h3"
-                    sx={{
-                      fontWeight: 700,
-                      fontSize: '0.85rem',
-                      lineHeight: 1.4,
-                      minHeight: { xs: '2.8em', sm: 0 },
-                      fontFamily: 'Georgia, serif',
-                      overflowWrap: 'anywhere',
-                    }}
-                  >
-                    {card.name}
-                  </Typography>
-                  <Typography
-                    component="time"
-                    dateTime={card.createdAt}
-                    sx={{
-                      display: 'block',
-                      mt: 0.5,
-                      fontSize: '0.65rem',
-                      color: '#e5c780',
-                    }}
-                  >
-                    {new Date(card.createdAt).toLocaleString(
-                      i18n.resolvedLanguage === 'lt' ? 'lt-LT' : 'en-GB',
-                      {
-                        year: 'numeric',
-                        month: '2-digit',
-                        day: '2-digit',
-                        hour: '2-digit',
-                        minute: '2-digit',
-                        hour12: false,
-                      },
-                    )}
-                  </Typography>
-                </Box>
-                <IconButton
-                  size="small"
-                  disabled={loading || deleting}
-                  aria-label={t('history.deleteCard', { name: card.name })}
-                  onClick={() => {
-                    setDeleteError(false)
-                    setSelected(card)
-                  }}
-                  sx={{
-                    position: 'absolute',
-                    top: 0,
-                    right: 0,
-                    color: '#fff8e8',
-                    '&.Mui-disabled': { color: '#fff8e8', opacity: 0.4 },
-                    width: 44,
-                    height: 44,
-                    flexShrink: 0,
-                  }}
-                >
-                  <DeleteOutlineIcon fontSize="small" />
-                </IconButton>
-              </Box>
-              <Box sx={{ mb: 1.25, color: 'text.secondary' }}>
-                <CandyCaneProgress {...getCardProgress(card.cells)} />
-              </Box>
               <Box
                 aria-hidden="true"
                 sx={{
                   display: 'grid',
                   gridTemplateColumns: 'repeat(5, minmax(0, 1fr))',
                   gridTemplateRows: 'repeat(5, minmax(0, 1fr))',
-                  gap: '3px',
+                  gap: '2px',
+                  width: { xs: 72, sm: 88 },
+                  flexShrink: 0,
                   aspectRatio: '1',
+                  p: '2px',
+                  border: '1px solid #ede2cf',
+                  borderRadius: '6px',
                 }}
               >
                 {card.cells.flat().map((cell, index) => (
                   <Box
                     key={cell.promptId}
                     sx={{
-                      border: '1px solid #d9cba9',
                       position: 'relative',
+                      border: '1px solid #d9cba9',
                       minWidth: 0,
                       minHeight: 0,
                       overflow: 'hidden',
@@ -292,7 +197,7 @@ export function CardHistory() {
                       color: isCellMarked(cell) ? '#fff8e8' : '#17372e',
                       bgcolor: isCellMarked(cell)
                         ? cell.isFree || winningCells.has(cell.promptId)
-                          ? '#a33b40'
+                          ? '#ae2530'
                           : '#134b38'
                         : (Math.floor(index / 5) + (index % 5)) % 2 === 0
                           ? '#fffdf7'
@@ -309,18 +214,90 @@ export function CardHistory() {
                   </Box>
                 ))}
               </Box>
-              <Box sx={{ flex: 1 }} />
-              <Button
-                component={Link}
-                to={`/play/${encodeURIComponent(card.id)}`}
-                variant="contained"
-                color="secondary"
-                fullWidth
-                startIcon={<PlayArrowRoundedIcon />}
-                sx={{ mt: 1.5 }}
-              >
-                {t('navigation.play')}
-              </Button>
+              <Box sx={{ flex: 1, minWidth: 0 }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                  <Typography
+                    component="h3"
+                    sx={{
+                      flex: 1,
+                      minWidth: 0,
+                      fontWeight: 800,
+                      fontSize: { xs: '0.9rem', sm: '1rem' },
+                      lineHeight: 1.2,
+                      overflowWrap: 'anywhere',
+                    }}
+                  >
+                    {card.name}
+                  </Typography>
+                  <IconButton
+                    size="small"
+                    disabled={loading || deleting}
+                    aria-label={t('history.deleteCard', { name: card.name })}
+                    title={t('history.delete')}
+                    onClick={() => {
+                      setDeleteError(false)
+                      setSelected(card)
+                    }}
+                    sx={{ color: 'primary.main', flexShrink: 0 }}
+                  >
+                    <DeleteOutlineIcon fontSize="small" />
+                  </IconButton>
+                </Box>
+                <Typography
+                  component="time"
+                  dateTime={card.createdAt}
+                  sx={{
+                    display: 'block',
+                    color: 'primary.main',
+                    fontSize: '0.7rem',
+                    fontWeight: 600,
+                    lineHeight: 1.2,
+                  }}
+                >
+                  {new Date(card.createdAt).toLocaleDateString('lt-LT')}{' '}
+                  {new Date(card.createdAt).toLocaleTimeString('lt-LT', {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: false,
+                  })}
+                </Typography>
+                <Box sx={{ my: 0.5, pr: { sm: 4 }, color: 'text.primary' }}>
+                  {complete ? (
+                    <Typography sx={{ fontSize: '0.75rem', fontWeight: 600 }}>
+                      {t('history.completed')} · {progress.marked}/
+                      {progress.total}
+                    </Typography>
+                  ) : (
+                    <CandyCaneProgress {...progress} />
+                  )}
+                </Box>
+                <Button
+                  component={Link}
+                  to={'/play/' + encodeURIComponent(card.id)}
+                  variant={started ? 'contained' : 'outlined'}
+                  color={started ? 'secondary' : 'primary'}
+                  fullWidth
+                  startIcon={<PlayArrowRoundedIcon />}
+                  sx={{
+                    minHeight: 28,
+                    py: 0,
+                    borderRadius: '8px',
+                    fontWeight: 750,
+                    width: { xs: '100%', sm: 'calc(100% - 32px)' },
+                    ...(started && {
+                      backgroundImage: 'linear-gradient(#b52b36, #9d202a)',
+                    }),
+                  }}
+                >
+                  {t(
+                    complete
+                      ? 'history.view'
+                      : started
+                        ? 'history.continue'
+                        : 'navigation.play',
+                  )}
+                </Button>
+              </Box>
             </Paper>
           )
         })}
