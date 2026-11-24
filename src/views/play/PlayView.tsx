@@ -4,6 +4,7 @@ import Alert from '@mui/material/Alert'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import LinearProgress from '@mui/material/LinearProgress'
+import useMediaQuery from '@mui/material/useMediaQuery'
 import { useTranslation } from 'react-i18next'
 import { Link, useParams } from 'react-router'
 import { BingoCardFrame } from '../../components/BingoCardFrame'
@@ -13,6 +14,7 @@ import type { BingoCard, BingoGrid, CardCelebration } from '../../domain/models'
 import { bingoCardRepository } from '../../services/bingoCardRepository'
 import { getCompletedLines } from '../../services/bingoLines'
 import { BingoCelebration } from './BingoCelebration'
+import { CardChristmasLights } from './CardChristmasLights'
 
 export function PlayView() {
   const { id = '' } = useParams()
@@ -28,6 +30,43 @@ function SavedCard({ id }: { id: string }) {
   const [saveError, setSaveError] = useState(false)
   const [pendingCells, setPendingCells] = useState<Set<string>>(new Set())
   const pendingRef = useRef(new Set<string>())
+  const reducedMotion = useMediaQuery('(prefers-reduced-motion: reduce)')
+  const [lights, setLights] = useState(false)
+  const taps = useRef({ promptId: '', count: 0, last: 0, start: 0 })
+
+  function tapCell(promptId: string) {
+    if (
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
+      lights
+    ) {
+      taps.current.count = 0
+      return
+    }
+    const cell = card?.cells.flat().find((entry) => entry.promptId === promptId)
+    if (!cell || cell.isFree) return
+    const now = performance.now()
+    const previous = taps.current
+    const continuing =
+      previous.promptId === promptId &&
+      now - previous.last <= 400 &&
+      now - previous.start <= 1600
+    taps.current = {
+      promptId,
+      count: continuing ? previous.count + 1 : 1,
+      last: now,
+      start: continuing ? previous.start : now,
+    }
+    if (taps.current.count === 5) {
+      taps.current.count = 0
+      setLights(true)
+    }
+  }
+
+  useEffect(() => {
+    if (!lights) return
+    const timer = window.setTimeout(() => setLights(false), 2600)
+    return () => window.clearTimeout(timer)
+  }, [lights])
   const [celebration, setCelebration] = useState<{
     key: number
     kind: CardCelebration
@@ -102,9 +141,15 @@ function SavedCard({ id }: { id: string }) {
 
   return (
     <Box
-      sx={{ maxWidth: { xs: 'none', sm: 520 }, mx: 'auto', width: '100%' }}
+      sx={{
+        position: 'relative',
+        maxWidth: { xs: 'none', sm: 520 },
+        mx: 'auto',
+        width: '100%',
+      }}
       aria-busy={loading}
     >
+      {card && lights && !reducedMotion && <CardChristmasLights />}
       {celebration && card && (
         <BingoCelebration
           key={celebration.key}
@@ -152,6 +197,7 @@ function SavedCard({ id }: { id: string }) {
           <BingoCardGrid
             cells={card.cells}
             onCellClick={toggleCell}
+            onCellTap={tapCell}
             pendingCells={pendingCells}
             winningCells={winningCells}
           />

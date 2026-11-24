@@ -7,12 +7,14 @@ import { FreeCenterContent } from './FreeCenterContent'
 export function BingoCardGrid({
   cells,
   onCellClick,
+  onCellTap,
   pendingCells,
   winningCells,
   printMode = false,
 }: {
   cells: BingoGrid
   onCellClick?: (promptId: string) => void
+  onCellTap?: (promptId: string) => void
   pendingCells?: ReadonlySet<string>
   winningCells?: ReadonlySet<string>
   printMode?: boolean
@@ -45,6 +47,14 @@ export function BingoCardGrid({
             <Box
               key={cell.promptId}
               role="cell"
+              onPointerDown={
+                onCellTap && !cell.isFree
+                  ? (event) => {
+                      if (event.isPrimary && event.button === 0)
+                        onCellTap(cell.promptId)
+                    }
+                  : undefined
+              }
               sx={{
                 minWidth: 0,
                 minHeight: printMode ? 0 : { xs: 72, sm: 88 },
@@ -110,6 +120,17 @@ export function BingoCardGrid({
                 />
               ) : onCellClick ? (
                 <ButtonBase
+                  onKeyDown={
+                    onCellTap
+                      ? (event) => {
+                          if (
+                            !event.repeat &&
+                            (event.key === 'Enter' || event.key === ' ')
+                          )
+                            onCellTap(cell.promptId)
+                        }
+                      : undefined
+                  }
                   onClick={() => onCellClick(cell.promptId)}
                   aria-pressed={cell.found}
                   aria-busy={pendingCells?.has(cell.promptId) || undefined}
