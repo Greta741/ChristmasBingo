@@ -158,8 +158,8 @@ export function CardHistory() {
                 minWidth: 0,
                 display: 'flex',
                 alignItems: 'center',
-                gap: 1.5,
-                p: 1.25,
+                gap: 1,
+                p: 0.75,
                 borderColor: '#e6ddce',
                 borderRadius: '14px',
                 bgcolor: '#fcf8ef',
@@ -173,7 +173,7 @@ export function CardHistory() {
                   gridTemplateColumns: 'repeat(5, minmax(0, 1fr))',
                   gridTemplateRows: 'repeat(5, minmax(0, 1fr))',
                   gap: '2px',
-                  width: { xs: 72, sm: 88 },
+                  width: 88,
                   flexShrink: 0,
                   aspectRatio: '1',
                   p: '2px',
@@ -238,7 +238,7 @@ export function CardHistory() {
                       setDeleteError(false)
                       setSelected(card)
                     }}
-                    sx={{ color: 'primary.main', flexShrink: 0 }}
+                    sx={{ color: 'primary.main', flexShrink: 0, p: 0.25 }}
                   >
                     <DeleteOutlineIcon fontSize="small" />
                   </IconButton>
@@ -261,7 +261,7 @@ export function CardHistory() {
                     hour12: false,
                   })}
                 </Typography>
-                <Box sx={{ my: 0.5, pr: { sm: 4 }, color: 'text.primary' }}>
+                <Box sx={{ my: 0.5, pr: { sm: 1 }, color: 'text.primary' }}>
                   {complete ? (
                     <Typography sx={{ fontSize: '0.75rem', fontWeight: 600 }}>
                       {t('history.completed')} · {progress.marked}/
@@ -274,13 +274,14 @@ export function CardHistory() {
                 <Button
                   component={Link}
                   to={'/play/' + encodeURIComponent(card.id)}
-                  variant={started ? 'contained' : 'outlined'}
+                  variant={complete ? 'outlined' : 'contained'}
                   color={started ? 'secondary' : 'primary'}
                   fullWidth
                   startIcon={<PlayArrowRoundedIcon />}
                   sx={{
                     minHeight: 28,
                     py: 0,
+                    px: 1,
                     borderRadius: '8px',
                     fontWeight: 750,
                     width: { xs: '100%', sm: 'calc(100% - 32px)' },
