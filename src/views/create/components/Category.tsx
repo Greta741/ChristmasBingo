@@ -86,7 +86,7 @@ const PromptBadges = styled('div')(({ theme }) => ({
 }))
 
 export function Category({ categoryId }: { categoryId: CategoryId }) {
-  const [expanded, setExpanded] = useState(false)
+  const [expanded, setExpanded] = useState(categoryId === CategoryId.Easy)
   const [customText, setCustomText] = useState('')
   const [confirmReset, setConfirmReset] = useState(false)
   const isMobile = useMediaQuery((theme) => theme.breakpoints.down('sm'))
@@ -109,8 +109,24 @@ export function Category({ categoryId }: { categoryId: CategoryId }) {
     customText.trim().length <= CUSTOM_PROMPT_MAX_LENGTH
 
   return (
-    <Section aria-labelledby={`${categoryId}-title`}>
-      <Typography id={`${categoryId}-title`} component="h3" variant="h2">
+    <Section
+      aria-labelledby={`${categoryId}-title`}
+      sx={{ py: { xs: expanded ? 1.5 : 0.5, sm: 1.5 } }}
+    >
+      <Typography
+        id={`${categoryId}-title`}
+        component="h3"
+        variant="h2"
+        sx={{
+          borderBottom: '1px solid',
+          borderColor: 'divider',
+          mx: -1.5,
+          px: 1.5,
+          pb: { xs: expanded ? 0.75 : 0, sm: 0.75 },
+          mb: { xs: expanded ? 0.75 : 0, sm: 0.75 },
+          borderBottomWidth: { xs: expanded ? 1 : 0, sm: 1 },
+        }}
+      >
         <Stack
           component={isMobile ? ButtonBase : 'div'}
           direction="row"
@@ -119,7 +135,7 @@ export function Category({ categoryId }: { categoryId: CategoryId }) {
           aria-controls={isMobile ? `${categoryId}-prompts` : undefined}
           sx={{
             width: '100%',
-            minHeight: { xs: 44, sm: 0 },
+            minHeight: { xs: expanded ? 44 : 36, sm: 0 },
             gap: 1,
             justifyContent: 'space-between',
             alignItems: 'center',
@@ -136,7 +152,12 @@ export function Category({ categoryId }: { categoryId: CategoryId }) {
             {label}
           </Box>
           <Typography component="span" aria-live="polite">
-            {category.amount} / {capacity}
+            {isMobile
+              ? t('allocation.categoryCount', {
+                  count: category.amount,
+                  total: capacity,
+                })
+              : `${category.amount} / ${capacity}`}
           </Typography>
           {isMobile && (
             <ExpandMoreIcon
@@ -149,7 +170,17 @@ export function Category({ categoryId }: { categoryId: CategoryId }) {
         id={`${categoryId}-prompts`}
         sx={{ display: { xs: expanded ? 'block' : 'none', sm: 'block' } }}
       >
-        <Stack direction="row" spacing={1} sx={{ alignItems: 'center', mb: 1 }}>
+        <Stack
+          direction="row"
+          spacing={1}
+          sx={{
+            alignItems: 'center',
+            mb: 1,
+            borderRadius: 2,
+            px: { xs: 1, sm: 0 },
+            '& .MuiIconButton-root': { width: 32, height: 32, p: 0.5 },
+          }}
+        >
           <IconButton
             disabled={category.amount === 0}
             aria-label={t('allocation.decrease', { category: label })}
@@ -158,6 +189,7 @@ export function Category({ categoryId }: { categoryId: CategoryId }) {
             <RemoveIcon />
           </IconButton>
           <Slider
+            size="small"
             min={0}
             max={Math.max(capacity, 1)}
             step={1}
@@ -178,6 +210,13 @@ export function Category({ categoryId }: { categoryId: CategoryId }) {
             <AddIcon />
           </IconButton>
         </Stack>
+        {isMobile && (
+          <Box sx={{ mb: 1 }}>
+            <Typography sx={{ fontSize: '0.85rem', fontWeight: 750 }}>
+              {t('allocation.availablePrompts', { count: capacity })}
+            </Typography>
+          </Box>
+        )}
         <PromptBadges
           tabIndex={0}
           role="region"

@@ -82,6 +82,9 @@ const GenerateBar = styled('div')(({ theme }) => ({
     padding: theme.spacing(1.5, 2),
     paddingBottom: `max(${theme.spacing(1.5)}, env(safe-area-inset-bottom))`,
     backgroundColor: theme.palette.secondary.main,
+    flexDirection: 'column',
+    gap: theme.spacing(1),
+    color: theme.palette.secondary.contrastText,
     '& > button': { width: '100%', minWidth: 0 },
   },
 }))
@@ -155,13 +158,17 @@ export function CreateView() {
               title={t('create.title')}
               description={t('create.description')}
             />
-            <AllocationControls minimumPrompts={freeCenter ? 24 : 25} />
-            <CreateActions
-              batchSize={batchSize}
-              onBatchSizeChange={setBatchSize}
-              freeCenter={freeCenter}
-              onFreeCenterChange={(value) => dispatch(setFreeCenter(value))}
-            />
+            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+              <AllocationControls minimumPrompts={freeCenter ? 24 : 25} />
+              <Box sx={{ order: { xs: -1, sm: 0, md: -1 } }}>
+                <CreateActions
+                  batchSize={batchSize}
+                  onBatchSizeChange={setBatchSize}
+                  freeCenter={freeCenter}
+                  onFreeCenterChange={(value) => dispatch(setFreeCenter(value))}
+                />
+              </Box>
+            </Box>
           </CreationContent>
           <GenerateBar>
             <Button

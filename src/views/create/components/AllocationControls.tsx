@@ -1,5 +1,4 @@
 import Alert from '@mui/material/Alert'
-import Chip from '@mui/material/Chip'
 import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
 import { styled } from '@mui/material/styles'
@@ -15,9 +14,10 @@ const AllocationSection = styled('section')(({ theme }) => ({
 
 const CategoryGrid = styled('div')(({ theme }) => ({
   display: 'grid',
-  gap: theme.spacing(1.5),
+  gap: theme.spacing(1),
   gridTemplateColumns: 'minmax(0, 1fr)',
   [theme.breakpoints.up('sm')]: {
+    gap: theme.spacing(1.5),
     gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
   },
   [theme.breakpoints.up('lg')]: {
@@ -56,13 +56,12 @@ export function AllocationControls({
           <Typography id="allocation-title" component="h2" variant="h2">
             {t('allocation.title')}
           </Typography>
-          <Chip
-            color="primary"
-            variant="outlined"
-            sx={{ bgcolor: 'background.paper' }}
-            label={t('allocation.total', { total })}
+          <Typography
             aria-live="polite"
-          />
+            sx={{ whiteSpace: 'nowrap', ml: 'auto', fontWeight: 650 }}
+          >
+            {t('allocation.categoryCount', { count: total, total: 25 })}
+          </Typography>
         </AllocationHeading>
         {available < minimumPrompts && (
           <Alert severity="warning">

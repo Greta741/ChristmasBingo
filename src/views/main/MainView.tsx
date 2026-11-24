@@ -20,13 +20,13 @@ export function MainView() {
           component="section"
           id="card-history"
           aria-labelledby="history-heading"
-          sx={{ py: 3 }}
+          sx={{ pt: 2, pb: 3 }}
         >
           <Typography
             id="history-heading"
             component={showHistory ? 'h1' : 'h2'}
             variant={showHistory ? 'h1' : 'h2'}
-            sx={{ mb: 2.5 }}
+            sx={{ mb: 1.5 }}
           >
             {t('history.title')}
           </Typography>

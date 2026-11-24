@@ -15,21 +15,67 @@ const ActionBar = styled('div')(({ theme }) => ({
   alignItems: 'center',
   justifyContent: 'center',
   gap: theme.spacing(2),
-  padding: theme.spacing(1.5, 2),
+  padding: theme.spacing(1, 1.5),
+  [theme.breakpoints.down('sm')]: {
+    alignItems: 'stretch',
+    gap: theme.spacing(0.75),
+    backgroundColor: '#fcf8ef',
+    color: theme.palette.primary.main,
+    borderRadius: theme.shape.borderRadius,
+    '& > .MuiBox-root': {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      gap: theme.spacing(1),
+    },
+    '& label': { marginBottom: 0 },
+    '& .MuiFormControlLabel-root': {
+      flexDirection: 'row-reverse',
+      justifyContent: 'space-between',
+      borderTop: `1px solid ${theme.palette.divider}`,
+      paddingTop: theme.spacing(0.75),
+    },
+    '& .MuiSwitch-track': {
+      backgroundColor: `${theme.palette.primary.main} !important`,
+    },
+  },
   [theme.breakpoints.up('sm')]: {
     flexDirection: 'row',
+    gap: theme.spacing(3),
+  },
+  [theme.breakpoints.up('md')]: {
+    width: 'fit-content',
+    marginInline: 'auto',
+    maxWidth: '100%',
+    boxSizing: 'border-box',
+    justifyContent: 'center',
+    backgroundColor: '#fcf8ef',
+    color: theme.palette.primary.main,
+    borderRadius: theme.shape.borderRadius,
+    padding: theme.spacing(1.5, 3),
     gap: theme.spacing(4),
+    '& > .MuiBox-root': { flexDirection: 'row', gap: theme.spacing(2) },
+    '& .MuiTypography-root, & .MuiFormControlLabel-label': { fontSize: '1rem' },
+    '& label': { marginBottom: 0 },
+    '& .MuiFormControlLabel-root': {
+      flexDirection: 'row-reverse',
+      paddingLeft: theme.spacing(3),
+      borderLeft: `1px solid ${theme.palette.divider}`,
+    },
   },
 }))
 
 const CountStepper = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
-  padding: 2,
+  padding: 1,
   borderRadius: theme.shape.borderRadius,
   backgroundColor: theme.palette.background.paper,
   color: theme.palette.primary.main,
   '& .MuiIconButton-root': { borderRadius: 8 },
+  [theme.breakpoints.up('md')]: {
+    padding: 2,
+    '& .MuiIconButton-root': { width: 40, height: 40, padding: 8 },
+  },
   '&:focus-within': {
     outline: '2px solid #efcf8c',
     outlineOffset: 3,
@@ -37,14 +83,20 @@ const CountStepper = styled('div')(({ theme }) => ({
 }))
 
 const CountInput = styled(InputBase)(({ theme }) => ({
-  width: 56,
+  width: 28,
+  fontSize: '0.875rem',
   color: theme.palette.text.primary,
   fontWeight: 700,
+  [theme.breakpoints.up('md')]: {
+    width: 44,
+    fontSize: '1rem',
+    '& input': { paddingBlock: '4px' },
+  },
   borderInline: `1px solid ${theme.palette.divider}`,
   '& input': {
     textAlign: 'center',
     MozAppearance: 'textfield',
-    padding: '6px 0',
+    padding: '1px 0',
   },
   '& input::-webkit-inner-spin-button, & input::-webkit-outer-spin-button': {
     WebkitAppearance: 'none',
@@ -73,7 +125,7 @@ export function CreateActions({
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          gap: 2,
+          gap: 1,
         }}
       >
         <Typography
@@ -92,7 +144,7 @@ export function CreateActions({
             disabled={batchSize <= 1}
             color="primary"
             onClick={() => onBatchSizeChange(batchSize - 1)}
-            sx={{ width: 44, height: 44 }}
+            sx={{ width: 28, height: 28, p: 0.25 }}
           >
             <RemoveIcon />
           </IconButton>
@@ -114,7 +166,7 @@ export function CreateActions({
             disabled={batchSize >= 4}
             color="primary"
             onClick={() => onBatchSizeChange(batchSize + 1)}
-            sx={{ width: 44, height: 44 }}
+            sx={{ width: 28, height: 28, p: 0.25 }}
           >
             <AddIcon />
           </IconButton>
@@ -132,9 +184,13 @@ export function CreateActions({
         }}
         control={
           <Switch
+            size="small"
             checked={freeCenter}
             onChange={(_event, checked) => onFreeCenterChange(checked)}
-            sx={{ '& .MuiSwitch-track': { backgroundColor: '#fff8e8' } }}
+            sx={{
+              transform: { xs: 'scale(1.1)', md: 'scale(1.35)' },
+              '& .MuiSwitch-track': { backgroundColor: '#fff8e8' },
+            }}
           />
         }
         label={t('allocation.freeCenter')}

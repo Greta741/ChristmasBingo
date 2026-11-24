@@ -2,6 +2,21 @@ export const resources = {
   lt: {
     translation: {
       allocation: {
+        freeCenterHint: 'Vidurinis langelis jau pažymėtas.',
+        categoryCount: '{{count}} iš {{total}}',
+        availablePrompts: 'Dekoracijos ({{count}})',
+        selectedPrompts: 'Kortelei bus atrinkta {{count}} iš šio sąrašo.',
+        assigned: 'Kortelei paskirstyta {{count}} iš {{total}}',
+        generateCount_one: 'Sukurti {{count}} kortelę',
+        generateCount_few: 'Sukurti {{count}} korteles',
+        generateCount_many: 'Sukurti {{count}} kortelės',
+        generateCount_other: 'Sukurti {{count}} kortelių',
+        quantity: {
+          easy: 'Lengvų dekoracijų kortelėje',
+          medium: 'Vidutinių dekoracijų kortelėje',
+          hard: 'Sunkių dekoracijų kortelėje',
+          funny: 'Juokingų dekoracijų kortelėje',
+        },
         title: 'Dekoracijų paskirstymas',
         edit: 'Pasirinkti dekoracijas',
         close: 'Uždaryti dekoracijų pasirinkimą',
@@ -24,7 +39,7 @@ export const resources = {
           'Nepakanka dekoracijų. Pridėk dar bent {{missing}} skirtingų dekoracijų.',
         batchSize: 'Kortelių skaičius',
         freeCenter: 'Nemokamas centras',
-        generate: 'Generuoti korteles',
+        generate: 'Generuoti',
         generationError:
           'Nepavyko sugeneruoti kortelių. Patikrink dekoracijų paskirstymą.',
         saveError:
@@ -128,6 +143,20 @@ export const resources = {
   en: {
     translation: {
       allocation: {
+        freeCenterHint: 'The center square is already marked.',
+        categoryCount: '{{count}} of {{total}}',
+        availablePrompts: 'Decorations ({{count}})',
+        selectedPrompts:
+          '{{count}} from this list will be selected for the card.',
+        assigned: '{{count}} of {{total}} squares allocated',
+        generateCount_one: 'Create {{count}} card',
+        generateCount_other: 'Create {{count}} cards',
+        quantity: {
+          easy: 'Easy decorations per card',
+          medium: 'Medium decorations per card',
+          hard: 'Hard decorations per card',
+          funny: 'Funny decorations per card',
+        },
         title: 'Decoration allocation',
         edit: 'Choose decorations',
         close: 'Close decoration selection',
@@ -150,7 +179,7 @@ export const resources = {
           'Not enough decorations. Add at least {{missing}} more distinct decorations.',
         batchSize: 'Number of cards',
         freeCenter: 'Free center',
-        generate: 'Generate cards',
+        generate: 'Generate',
         generationError:
           'Could not generate cards. Check the decoration allocation.',
         saveError:

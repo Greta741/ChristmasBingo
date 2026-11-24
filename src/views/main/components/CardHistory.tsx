@@ -284,7 +284,7 @@ export function CardHistory() {
                     px: 1,
                     borderRadius: '8px',
                     fontWeight: 750,
-                    width: { xs: '100%', sm: 'calc(100% - 32px)' },
+                    width: '100%',
                     ...(started && {
                       backgroundImage: 'linear-gradient(#b52b36, #9d202a)',
                     }),
