@@ -9,7 +9,7 @@ const fade = keyframes`
   0%, 100% { opacity: 0; }
   12%, 85% { opacity: 1; }
 `
-const colors = ['#ff5757', '#ffc94d', '#62df8b', '#80caff']
+const colors = ['#ff5757', '#62df8b', '#ffc94d', '#80caff']
 
 export function CardChristmasLights() {
   return (
@@ -38,7 +38,8 @@ export function CardChristmasLights() {
     >
       {Array.from({ length: 36 }, (_, index) => {
         const side = Math.floor(index / 9)
-        const fraction = (index % 9) / 8
+        const position = (index % 9) / 8
+        const fraction = side < 2 ? position : 1 - position
         // Keep bulbs on the straight sections, clear of the rounded corners.
         const offset = {
           xs: `calc(${12 * (1 - 2 * fraction)}px + ${fraction * 100}%)`,
