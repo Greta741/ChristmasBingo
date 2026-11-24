@@ -22,7 +22,7 @@ export function FestiveBranch({
       }}
     >
       <path
-        d="M0 0 Q32 25 68 68 M12 14 L36 13 M22 25 L48 24 M33 36 L59 34 M44 47 L70 45 M14 16 L10 38 M25 28 L20 51 M36 39 L32 63"
+        d="M0 0 Q32 25 68 68 M18 14 L36 13 M29 25 L48 24 M37 35 L59 32 M44 47 L70 45 M14 14 L10 38 M25 24 L20 51 M36 35 L32 65"
         fill="none"
         stroke="#7da68a"
         strokeWidth="3"
